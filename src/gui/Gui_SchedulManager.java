@@ -164,14 +164,16 @@ public class Gui_SchedulManager extends JFrame implements WindowListener {
 		//graphical
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
-		Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+		
 		pack();
+	
+		load();	//load saved settings from harddisk
+		
+		Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (screenDim.width - Integer.valueOf(getSize().width))/2;
 		int y = (screenDim.height - Integer.valueOf(getSize().height))/2;
 		setLocation(x, y);
 		setVisible(true);
-		
-		load();	//load saved settings from harddisk
 		
 		fillTableWithSchedulJobs();
 		keepUpdate = new Thread_KeepTableSchedulUpdated(this,controlJob);
