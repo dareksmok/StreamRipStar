@@ -52,8 +52,6 @@ public class Gui_AboutStreamRipStar3 extends JDialog
 	private SRSTextfield licenceName = new SRSTextfield("GPLV3");
 	private SRSLabel version = new SRSLabel("Version :");
 	private SRSTextfield versionName = new SRSTextfield(misc.StreamRipStar.releaseVersion);
-	private SRSLabel revision = new SRSLabel("Revision :");
-	private SRSTextfield revisionnumber = new SRSTextfield(misc.StreamRipStar.releaseRevision+"");
 	private SRSLabel streamRipStarSourceforgeSite = new SRSLabel("StreamRipStars Projektpage :");
 	private SRSTextfield streamRipStarSourceforgeAddress = new SRSTextfield("http://developer.berlios.de/projects/streamripstar/");
 	private SRSLabel streamRipStarHomepage = new SRSLabel("StreamRipStars Wiki :");
@@ -130,11 +128,6 @@ public class Gui_AboutStreamRipStar3 extends JDialog
 		panel.add(versionName,c);
 		c.gridx = 0;
 		c.gridy = 6;
-		panel.add(revision,c);
-		c.gridx = 1;
-		panel.add(revisionnumber,c);
-		c.gridx = 0;
-		c.gridy = 7;
 		panel.add(streamRipStarSourceforgeSite,c);
 		c.gridx = 1;
 		panel.add(streamRipStarSourceforgeAddress,c);
@@ -211,7 +204,6 @@ public class Gui_AboutStreamRipStar3 extends JDialog
 		programmerName.setEditable(edit);
 		iconAndGrapName.setEditable(edit);
 		licenceName.setEditable(edit);
-		revisionnumber.setEditable(edit);
 		versionName.setEditable(edit);
 		streamRipStarSourceforgeAddress.setEditable(edit);
 		streamRipStarHomepageAddress.setEditable(edit);
@@ -227,7 +219,6 @@ public class Gui_AboutStreamRipStar3 extends JDialog
     		programming.setText(trans.getString("programming"));
     		IconsAndGrap.setText(trans.getString("IconsAndGrap"));
     		license.setText(trans.getString("license"));
-    		revision.setText(trans.getString("revision"));
     		version.setText(trans.getString("version"));
     		streamRipStarSourceforgeSite.setText(trans.getString("streamRipStarSourceforgeSite"));
     		streamRipStarHomepage.setText(trans.getString("streamRipStarHomepage"));
