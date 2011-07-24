@@ -23,7 +23,7 @@ import thread.Thread_Control_Schedul;
 import control.Control_Stream;
 import control.SRSOutput;
 
-public class Gui_AddSchedul extends JDialog implements WindowListener{
+public class Add_Schedule_Task extends JDialog implements WindowListener{
 	private static final long serialVersionUID = 1L;
 
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
@@ -77,7 +77,7 @@ public class Gui_AddSchedul extends JDialog implements WindowListener{
 	 * @param controlDB: object to control the xml-file access
 	 * @param oldJob: the job witch should be updated
 	 */
-	public Gui_AddSchedul(Gui_SchedulManager schedulManager, boolean createNew,
+	public Add_Schedule_Task(Gui_SchedulManager schedulManager, boolean createNew,
 			Control_Stream controlStreams, Thread_Control_Schedul controlJob, SchedulJob oldJob)
 	{
 		super(schedulManager,"Add Schedule Job");
@@ -439,7 +439,7 @@ public class Gui_AddSchedul extends JDialog implements WindowListener{
 							schedulManager.addSchedulJobToTable(job);
 							dispose();
 						} else {
-							JOptionPane.showMessageDialog(Gui_AddSchedul.this,trans.getString("AddJob.AlreadyExist"));
+							JOptionPane.showMessageDialog(Add_Schedule_Task.this,trans.getString("AddJob.AlreadyExist"));
 						}
 
 					} else {
@@ -454,7 +454,7 @@ public class Gui_AddSchedul extends JDialog implements WindowListener{
 							schedulManager.updateTable(oldJob);
 							dispose();
 						} else {
-							JOptionPane.showMessageDialog(Gui_AddSchedul.this,trans.getString("jobDoesntExistAnymore"));
+							JOptionPane.showMessageDialog(Add_Schedule_Task.this,trans.getString("jobDoesntExistAnymore"));
 						}
 					}
 				

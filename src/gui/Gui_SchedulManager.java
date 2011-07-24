@@ -301,7 +301,7 @@ public class Gui_SchedulManager extends JFrame implements WindowListener {
 	 */
 	public class AddListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			new Gui_AddSchedul(getMe(),true, controlStreams, controlJob, null);
+			new Add_Schedule_Task(getMe(),true, controlStreams, controlJob, null);
 		}
 	}
 	
@@ -324,7 +324,7 @@ public class Gui_SchedulManager extends JFrame implements WindowListener {
 		if(table.getSelectedRow() >= 0 )
 		{
 			int x = Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString());
-			new Gui_AddSchedul(getMe(),false, controlStreams,
+			new Add_Schedule_Task(getMe(),false, controlStreams,
 					controlJob,controlJob.getSchedulJobByID(x));
 		}
 	}

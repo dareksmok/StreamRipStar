@@ -1099,11 +1099,11 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	}
 	
 	public void openExportGui() {
-		new Gui_Export(controlStreams,this);
+		new Export_Streams(controlStreams,this);
 	}
 	
 	public void openImportGui() {
-		new Gui_Import(Gui_StreamRipStar.this,controlStreams);
+		new Import_Streams(Gui_StreamRipStar.this,controlStreams);
 	}
 	
 	/**
@@ -1365,7 +1365,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	
 	class AboutDialogListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			new Gui_AboutStreamRipStar3(controlStreams,Gui_StreamRipStar.this);
+			new About_StreamRipStar(controlStreams,Gui_StreamRipStar.this);
 		}
 	}
 	

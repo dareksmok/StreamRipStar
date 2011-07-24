@@ -45,7 +45,7 @@ import control.Control_PlayList;
 import control.Control_Stream;
 import control.SRSOutput;
 
-public class Gui_Export extends JDialog
+public class Export_Streams extends JDialog
 {
 	private static final long serialVersionUID = 1L;
 	private ResourceBundle toolTips = ResourceBundle.getBundle("translations.ToolTips");
@@ -102,7 +102,7 @@ public class Gui_Export extends JDialog
 	
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
 	
-	public Gui_Export(Control_Stream controlStream, Gui_StreamRipStar mainGui)
+	public Export_Streams(Control_Stream controlStream, Gui_StreamRipStar mainGui)
 	{
 		super(mainGui, "Exportiere Stream");
 		this.controlStream = controlStream;
@@ -299,7 +299,7 @@ public class Gui_Export extends JDialog
 		}
 	}
 	
-	private Gui_Export getMe()
+	private Export_Streams getMe()
 	{
 		return this;
 	}

@@ -138,7 +138,7 @@ public class Gui_TablePanel extends JPanel
 							
 							if(url.endsWith(".pls") || url.endsWith(".m3u")) {
 								SRSOutput.getInstance().log("Right extension");
-								new Gui_Import(getMainGui(),getControlStreams(), url);
+								new Import_Streams(getMainGui(),getControlStreams(), url);
 							} else {
 								SRSOutput.getInstance().log("Wrong extension");
 							}
@@ -158,7 +158,7 @@ public class Gui_TablePanel extends JPanel
 								String url = URLDecoder.decode(fileURI.getPath(),"UTF-8");
 								if(url.endsWith(".pls") || url.endsWith(".m3u")) {
 									SRSOutput.getInstance().log("Right extension");
-									new Gui_Import(getMainGui(),getControlStreams() ,url);
+									new Import_Streams(getMainGui(),getControlStreams() ,url);
 								} else {
 									SRSOutput.getInstance().log("Wrong extension");
 								}

@@ -37,7 +37,7 @@ import control.SRSOutput;
  * @author Johannes Putzke
  *
  */
-public class Gui_AboutStreamRipStar3 extends JDialog
+public class About_StreamRipStar extends JDialog
 {
 	private static final long serialVersionUID = 1L;
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
@@ -76,7 +76,7 @@ public class Gui_AboutStreamRipStar3 extends JDialog
 	 * @param controlStreams The used controlstream, where you can start the webbrowser
 	 * @param mainWindow The parent window for this dialog 
 	 */
-	public Gui_AboutStreamRipStar3(Control_Stream controlStreams, JFrame mainWindow) {
+	public About_StreamRipStar(Control_Stream controlStreams, JFrame mainWindow) {
 		super(mainWindow);
 		this.controlStreams = controlStreams;
 		ImageIcon tmpIcon = new ImageIcon((URL)getClass().getResource("/Icons/aboutDialog/hintergrund.png"));
