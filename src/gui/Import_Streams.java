@@ -39,7 +39,7 @@ import control.Control_PlayList;
 import control.Control_Stream;
 import control.SRSOutput;
 
-public class Gui_Import extends JDialog {
+public class Import_Streams extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
 	
@@ -79,7 +79,7 @@ public class Gui_Import extends JDialog {
 	private Gui_StreamRipStar mainGui = null;
 	private Control_Stream controlStreams = null;
 	
-	public Gui_Import(Gui_StreamRipStar gui, Control_Stream controlStreams)	{
+	public Import_Streams(Gui_StreamRipStar gui, Control_Stream controlStreams)	{
 		super(gui,"importiere Stream");
 		this.mainGui = gui;
 		this.controlStreams = controlStreams;
@@ -90,7 +90,7 @@ public class Gui_Import extends JDialog {
 	}
 	
 	//Open importframe and load the file in url
-	public Gui_Import(Gui_StreamRipStar gui, Control_Stream controlStreams ,String url)	{
+	public Import_Streams(Gui_StreamRipStar gui, Control_Stream controlStreams ,String url)	{
 		super(gui,"importiere Stream");
 		this.mainGui = gui;
 		this.controlStreams = controlStreams;
@@ -230,7 +230,7 @@ public class Gui_Import extends JDialog {
 		}
 	}
 	
-	private Gui_Import getMe() {
+	private Import_Streams getMe() {
 		return this;
 	}
 	
