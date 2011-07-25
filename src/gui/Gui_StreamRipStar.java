@@ -141,6 +141,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	private JMenuItem tuneInto = new JMenuItem("Listen To",tuneIntoMenu);
 	private JMenuItem openWebsite = new JMenuItem("Open Website");
 	private JMenuItem streamRipStarPref = new JMenuItem("Preferences",settingsMenu);
+	private JMenuItem savePrefs = new JMenuItem("Save Preferences",settingsMenu);
 	private JMenuItem openMusicFolder = new JMenuItem("Open Musicfolder",musicfolderMenu);
 	private JMenuItem streamOptions = new JMenuItem("Options");
 	private JMenuItem stream4AllOptions = new JMenuItem("Overwrite Options For Every Stream");
@@ -388,6 +389,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 		streamMenu.add(playNextStream);
 		
 		programmMenu.add(streamRipStarPref);
+		programmMenu.add(savePrefs);
 		programmMenu.add(importStream);
 		programmMenu.add(exportStream);
 		programmMenu.add(streamBrowserItem);
@@ -427,6 +429,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 
 //		add listener
 		streamRipStarPref.addActionListener(new PreferencesListener());
+		savePrefs.addActionListener(new SavePreferencesListener());
 		importStream.addActionListener(new ImportListener());
 		exportStream.addActionListener(new ExportListener());
 		schedulManagerItem.addActionListener(new ScheduleListener());
@@ -1184,6 +1187,14 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 		public void actionPerformed(ActionEvent e)
 		{
 			new Gui_Settings2(Gui_StreamRipStar.this);
+		}
+	}
+	
+	class SavePreferencesListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			new Save_Settings(Gui_StreamRipStar.this);
 		}
 	}
 	
