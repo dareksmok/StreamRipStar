@@ -3,17 +3,17 @@ package gui;
 /* Written by Johannes Putzke*/
 /* eMail: die_eule@gmx.net*/ 
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Label;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -30,6 +30,12 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileFilter;
+import javax.xml.stream.XMLEventFactory;
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.XMLEvent;
+
 import control.Control_Stream;
 import control.SRSOutput;
 
@@ -56,8 +62,7 @@ public class Save_Settings extends JDialog
 	private JLabel explainLabel = new JLabel("Here you can save your settings to make a backup or send it to your friends.");
 	
 	private JFileChooser dirChooser = new JFileChooser();
-	
-	private Control_Stream controlStream = null;
+
 	private Gui_StreamRipStar mainGui;
 
 	private TitledBorder exportBoarder = BorderFactory.createTitledBorder("What do you want to save?");
@@ -67,9 +72,7 @@ public class Save_Settings extends JDialog
 		super(mainGui, "Save Settings");
 		this.mainGui = mainGui;
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
-		
-		controlStream = mainGui.getControlStream();
-		
+
 		init();
 		setLanguage();
 		setVisible(true);
@@ -192,10 +195,55 @@ public class Save_Settings extends JDialog
 			
 			int i = dirChooser.showOpenDialog(getMe());
 			
+			
+			
 			if(i == JFileChooser.APPROVE_OPTION)
 			{
 				
 			}
+			
+			String savePath;
+			
+			XMLOutputFactory outputFactory = XMLOutputFactory.newInstance(); 
+			
+			try {
+				XMLEventWriter writer = outputFactory.createXMLEventWriter(new FileOutputStream("/Settings-StreamRipStar.xml" ) );
+				XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+				
+				//header for the file
+				XMLEvent header = eventFactory.createStartDocument();
+				XMLEvent startRootSettings = eventFactory.createStartElement( "", "", "Export of StreamRipStar" );
+				
+				//save preferences/Settings
+				XMLEvent prefsMainWindow = eventFactory.createAttribute( "Prefs-MainWindow",  "");
+				XMLEvent prefsScheduleManagerWindow = eventFactory.createAttribute( "ScheduleManager",  "");
+				XMLEvent prefsSettings = eventFactory.createAttribute( "Settings-StreamRipStar",  "");
+				XMLEvent prefsManagerWindow = eventFactory.createAttribute( "Streambrowser",  "");
+				//save streams
+				XMLEvent prefsAllStreams = eventFactory.createAttribute( "Streams",  "");
+				XMLEvent prefsDefaultStream = eventFactory.createAttribute( "DefaultStream",  "");
+				//Schedules
+				XMLEvent prefsSchedules = eventFactory.createAttribute( "Scheduls",  "");
+				
+				XMLEvent endRoot = eventFactory.createEndElement( "", "", "Export of StreamRipStar" );
+				XMLEvent endDocument = eventFactory.createEndDocument();
+				
+				//finally write into file
+				writer.add( header ); 
+				writer.add( startRootSettings );
+				
+				writer.add( prefsMainWindow );
+				
+				writer.add( endRoot ); 
+				writer.add( endDocument ); 
+				writer.close();
+
+			} catch (FileNotFoundException f) {
+				SRSOutput.getInstance().logE("Save_Settings: No configuartion file found:"+f.getStackTrace().toString());
+			} catch (XMLStreamException f) {
+				SRSOutput.getInstance().logE("Save_Settings: XMLStreamExeption:"+f.getStackTrace().toString());;
+			} 
+			
 		}
 	}
 }
