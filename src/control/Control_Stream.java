@@ -931,6 +931,7 @@ public class Control_Stream
 		
 		else
 		{
+			SRSOutput.getInstance().logD("Start external audio player with command:  \""+ path + " " + content+"\n");
 			new Control_RunExternProgram(path + " " + content).run();
 		}
 	}
@@ -953,6 +954,7 @@ public class Control_Stream
 		
 		else 
 		{
+			SRSOutput.getInstance().logD("Start web browser with command: \""+ path + " " + url+"\"");
 			new Control_RunExternProgram(path + " " + url).run();
 		}
 	}

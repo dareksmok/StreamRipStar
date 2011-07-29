@@ -192,58 +192,70 @@ public class Save_Settings extends JDialog
 		public void actionPerformed(ActionEvent e)
 		{	
 			dirChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			
+
 			int i = dirChooser.showOpenDialog(getMe());
 			
-			
+			String savePath = "";
 			
 			if(i == JFileChooser.APPROVE_OPTION)
 			{
+				//make sure, it has a file extension (.SRSProps) 
+				if(dirChooser.getSelectedFile().toString().toLowerCase().endsWith(".srsprops"))
+				{
+					savePath = dirChooser.getSelectedFile().toString();
+				}
+				else
+				{
+					savePath = dirChooser.getSelectedFile().toString() + ".SRSProps";
+				}
 				
-			}
-			
-			String savePath;
-			
-			XMLOutputFactory outputFactory = XMLOutputFactory.newInstance(); 
-			
-			try {
-				XMLEventWriter writer = outputFactory.createXMLEventWriter(new FileOutputStream("/Settings-StreamRipStar.xml" ) );
-				XMLEventFactory eventFactory = XMLEventFactory.newInstance();
 				
-				//header for the file
-				XMLEvent header = eventFactory.createStartDocument();
-				XMLEvent startRootSettings = eventFactory.createStartElement( "", "", "Export of StreamRipStar" );
+				XMLOutputFactory outputFactory = XMLOutputFactory.newInstance(); 
 				
-				//save preferences/Settings
-				XMLEvent prefsMainWindow = eventFactory.createAttribute( "Prefs-MainWindow",  "");
-				XMLEvent prefsScheduleManagerWindow = eventFactory.createAttribute( "ScheduleManager",  "");
-				XMLEvent prefsSettings = eventFactory.createAttribute( "Settings-StreamRipStar",  "");
-				XMLEvent prefsManagerWindow = eventFactory.createAttribute( "Streambrowser",  "");
-				//save streams
-				XMLEvent prefsAllStreams = eventFactory.createAttribute( "Streams",  "");
-				XMLEvent prefsDefaultStream = eventFactory.createAttribute( "DefaultStream",  "");
-				//Schedules
-				XMLEvent prefsSchedules = eventFactory.createAttribute( "Scheduls",  "");
-				
-				XMLEvent endRoot = eventFactory.createEndElement( "", "", "Export of StreamRipStar" );
-				XMLEvent endDocument = eventFactory.createEndDocument();
-				
-				//finally write into file
-				writer.add( header ); 
-				writer.add( startRootSettings );
-				
-				writer.add( prefsMainWindow );
-				
-				writer.add( endRoot ); 
-				writer.add( endDocument ); 
-				writer.close();
+				try {
+					XMLEventWriter writer = outputFactory.createXMLEventWriter(new FileOutputStream(savePath) );
+					XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+					
+					//header for the file
+					XMLEvent header = eventFactory.createStartDocument();
+					XMLEvent startRootSettings = eventFactory.createStartElement( "", "", "Export of StreamRipStar" );
+					
+					//save preferences/Settings
+					XMLEvent prefsMainWindow = eventFactory.createAttribute( "Prefs-MainWindow",  "");
+					XMLEvent prefsScheduleManagerWindow = eventFactory.createAttribute( "ScheduleManager",  "");
+					XMLEvent prefsSettings = eventFactory.createAttribute( "Settings-StreamRipStar",  "");
+					XMLEvent prefsManagerWindow = eventFactory.createAttribute( "Streambrowser",  "");
+					//save streams
+					XMLEvent prefsAllStreams = eventFactory.createAttribute( "Streams",  "");
+					XMLEvent prefsDefaultStream = eventFactory.createAttribute( "DefaultStream",  "");
+					//Schedules
+					XMLEvent prefsSchedules = eventFactory.createAttribute( "Scheduls",  "");
+					
+					XMLEvent endRoot = eventFactory.createEndElement( "", "", "Export of StreamRipStar" );
+					XMLEvent endDocument = eventFactory.createEndDocument();
+					
+					//finally write into file
+					writer.add( header ); 
+					writer.add( startRootSettings );
+					
+					writer.add( prefsMainWindow );
+					writer.add( prefsScheduleManagerWindow );
+					writer.add( prefsSettings );
+					writer.add( prefsManagerWindow );
+					writer.add( prefsAllStreams );
+					writer.add( prefsDefaultStream );
+					writer.add( prefsSchedules );
+					
+					writer.add( endRoot ); 
+					writer.add( endDocument ); 
+					writer.close();
 
-			} catch (FileNotFoundException f) {
-				SRSOutput.getInstance().logE("Save_Settings: No configuartion file found:"+f.getStackTrace().toString());
-			} catch (XMLStreamException f) {
-				SRSOutput.getInstance().logE("Save_Settings: XMLStreamExeption:"+f.getStackTrace().toString());;
-			} 
-			
+				} catch (FileNotFoundException f) {
+					SRSOutput.getInstance().logE("Save_Settings: No configuartion file found:"+f.getStackTrace());
+				} catch (XMLStreamException f) {
+					SRSOutput.getInstance().logE("Save_Settings: XMLStreamExeption:"+f.getStackTrace());;
+				} 
+			}
 		}
 	}
 }

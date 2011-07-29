@@ -473,8 +473,10 @@ public class Gui_TablePanel extends JPanel
 		{
 			//Test if a relay stream is running and connect to them
 			//else will connect to stream address directly 
-			if(stream[0].getStatus() && stream[0].connectToRelayCB) {
-				if(mainGui.useInternalAudioPlayer()) {
+			if(stream[0].getStatus() && stream[0].connectToRelayCB)
+			{
+				if(mainGui.useInternalAudioPlayer())
+				{
 					stopInternalAudioPlayer();
 					player = new AudioPlayer(stream[0], mainGui);
 					player.start();
@@ -482,8 +484,10 @@ public class Gui_TablePanel extends JPanel
 					controlStreams.startMp3Player("http://127.0.0.1:"+stream[0].relayServerPortTF);
 				}
 				
-			} else if(stream[0].address != null  && !stream[0].address.equals("")) {
-				if(mainGui.useInternalAudioPlayer()) {
+			} else if(stream[0].address != null  && !stream[0].address.equals(""))
+			{
+				if(mainGui.useInternalAudioPlayer())
+				{
 					stopInternalAudioPlayer();
 					player = new AudioPlayer(stream[0], mainGui);
 					player.start();
