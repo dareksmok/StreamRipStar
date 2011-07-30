@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ResourceBundle;
+import java.util.Vector;
+
 import misc.Stream;
 import control.SRSOutput;
 import gui.Gui_StreamRipStar;
@@ -25,8 +27,8 @@ public class AudioPlayer_Mplayer extends Thread{
 	private SRSOutput lg = SRSOutput.getInstance();
 	
 	private String mplayerPath = "/usr/bin/mplayer";
-	private String mplayerOptions = "";
 	private int MPLAYER_CACHE = 128;
+	private Vector<String> options = new Vector<String>(0,1);
 	
 	private BufferedReader inStream = null;
 	private BufferedWriter outStream = null;
@@ -56,13 +58,18 @@ public class AudioPlayer_Mplayer extends Thread{
 		{
 			//do we need the local or the stream from the net?
 			if(stream.getStatus() && stream.connectToRelayCB) {
-				mplayerOptions += " http://127.0.0.1:"+stream.relayServerPortTF;
+				options.add("http://127.0.0.1:"+stream.relayServerPortTF);
 	    	} else {
-	    		mplayerOptions += stream.address;		
+	    		options.add(stream.address);		
 	    	}
 			
 			//collect the options
-			mplayerOptions += " -slave -quiet -cache "+MPLAYER_CACHE; 
+			options.add(0,mplayerPath);
+			options.add("-slave");
+			options.add("-quiet");
+			options.add("-cache");
+			options.add(String.valueOf(MPLAYER_CACHE));
+
 			//say, we are loading the stream
 			if (mainGui != null)
 			{
@@ -70,8 +77,10 @@ public class AudioPlayer_Mplayer extends Thread{
 			}
 			
 			//start the process itself
-			lg.log("AudioPlayer: Start music with mplayer command: "+mplayerPath+" "+mplayerOptions);
-			mplayerProcess = Runtime.getRuntime().exec(mplayerPath+" "+mplayerOptions);
+			lg.log("AudioPlayer: Start music with mplayer command: "+mplayerPath+" "+options.toString());
+//			mplayerProcess = Runtime.getRuntime().exec(mplayerPath+" "+mplayerOptions);
+//			
+			mplayerProcess = new ProcessBuilder(options).start();
 			
 			//create the streams we need to interact
 			inStream = new BufferedReader(new InputStreamReader(mplayerProcess.getInputStream()));
@@ -90,9 +99,9 @@ public class AudioPlayer_Mplayer extends Thread{
 			}
 		 
 		} catch (IOException e) {
-			lg.logE("Error while executing mplayer: "+mplayerPath+" "+mplayerOptions+e.getMessage());
+			lg.logE("Error while executing mplayer: "+options.toString()+e.getMessage());
 		} catch (Exception e) {
-			lg.logE("Error while executing mplayer: "+mplayerPath+" "+mplayerOptions+e.getMessage());
+			lg.logE("Error while executing mplayer: "+options.toString()+e.getMessage());
 		}  
 	}
 	
