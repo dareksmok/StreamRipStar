@@ -56,7 +56,7 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 	private JCheckBox weeklyCB = new JCheckBox("weekly");
 	private JCheckBox atStartCB = new JCheckBox("at Start");
 	
-	private JComboBox nameBox;
+	private JComboBox<String> nameBox;
 	private String[] streamNames;
 	private String[] streamNames_short;
 	private final int MAX_STREAM_NAME_LENGTH = 40;
@@ -142,7 +142,7 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 			}
 			
 			//finally create nameBox
-			nameBox = new JComboBox(streamNames_short);
+			nameBox = new JComboBox<String>(streamNames_short);
 			
 			
 		} else {
