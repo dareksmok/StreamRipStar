@@ -185,7 +185,7 @@ public class Gui_Settings2 extends JDialog
 			lookAndFeelList[i] = lookAndFeelInfos[i].getName();
 		}
 		
-		LookAndFeelBox = new JComboBox(lookAndFeelList);
+		LookAndFeelBox = new JComboBox<String>(lookAndFeelList);
 
 		translationTA.setEditable(false);
 
@@ -988,7 +988,7 @@ public class Gui_Settings2 extends JDialog
 		public void mouseReleased(MouseEvent arg0) {}
 	}
 	
-	private class IconCellRenderer implements ListCellRenderer
+	private class IconCellRenderer implements ListCellRenderer<Object>
 	{
 		protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
 

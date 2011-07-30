@@ -56,7 +56,7 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 	private JCheckBox weeklyCB = new JCheckBox("weekly");
 	private JCheckBox atStartCB = new JCheckBox("at Start");
 	
-	private JComboBox nameBox;
+	private JComboBox<String> nameBox;
 	private String[] streamNames;
 	private String[] streamNames_short;
 	private final int MAX_STREAM_NAME_LENGTH = 40;
@@ -142,7 +142,7 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 			}
 			
 			//finally create nameBox
-			nameBox = new JComboBox(streamNames_short);
+			nameBox = new JComboBox<String>(streamNames_short);
 			
 			
 		} else {
@@ -207,7 +207,7 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 			}
 			
 			//finally create nameBox
-			nameBox = new JComboBox(streamNames_short);
+			nameBox = new JComboBox<String>(streamNames_short);
 			
 			//look for the right streamID and select the appropriate name
 			for(int i=0; i < streams.capacity(); i++) {
@@ -315,7 +315,7 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 		c.weightx = 0.0;
 		buttonPanel.add(abortButton,c);
 		
-		this.nameBox.setRenderer(new MyComboBoxRenderer());
+		nameBox.setRenderer(new MyComboBoxRenderer());
 		
 		//add listeners
 		addButton.addActionListener(new AddListener());
@@ -476,11 +476,11 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 	public void windowDeiconified (WindowEvent e) { }
 	public void windowActivated (WindowEvent e) { }
 	public void windowDeactivated (WindowEvent e) { }
-	
+
 	private class MyComboBoxRenderer extends BasicComboBoxRenderer
 	{
-		private static final long serialVersionUID = 8399268144344845430L;
-
+		private static final long serialVersionUID = 839926814434484550L;
+		
 		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
 		{
 			if (isSelected)
