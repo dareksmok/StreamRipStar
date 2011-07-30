@@ -238,5 +238,7 @@
   ----------------------------
  
  0.6 Beta3 -> 0.6 Beta4
- -add: can now remember the size of the window and the columns in the schedule manager
- -add: in schedule manager: double click on the enable column toggle its status (from enable to disable, and vice versa)
+ - add: can now remember the size of the window and the columns in the schedule manager
+ - add: in schedule manager: double click on the enable column toggle its status (from enable to disable, and vice versa)
+ - fix: doesn't show "hear music" icon when doesn't use the internal player
+ - show more debug messages
