@@ -140,8 +140,9 @@ public class AudioPlayer_Mplayer extends Thread{
 	public void setAudioVolum(int volumePercent)
 	{
 		try {
-			outStream.write("volume "+volumePercent + " 100");
-			lg.logD("AudioPlayer: set new volume to"+volumePercent);
+			outStream.write("volume "+volumePercent + " 100\n");
+			outStream.flush();
+			lg.logD("AudioPlayer: set new volume to "+volumePercent);
 		} catch (IOException e) {
 			lg.logE("Error while set a new playback of mplayer: "+e.getMessage());
 		}
