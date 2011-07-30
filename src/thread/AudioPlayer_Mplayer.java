@@ -1,7 +1,10 @@
 package thread;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ResourceBundle;
 import misc.Stream;
 import control.SRSOutput;
@@ -24,6 +27,9 @@ public class AudioPlayer_Mplayer extends Thread{
 	private String mplayerPath = "/usr/bin/mplayer";
 	private String mplayerOptions = "";
 	private int MPLAYER_CACHE = 128;
+	
+	private BufferedReader inStream = null;
+	private BufferedWriter outStream = null;
 	
 	private Process mplayerProcess = null;
 	
@@ -55,6 +61,8 @@ public class AudioPlayer_Mplayer extends Thread{
 	    		mplayerOptions += stream.address;		
 	    	}
 			
+			//collect the options
+			mplayerOptions += "-slave -cache "+MPLAYER_CACHE; 
 			//say, we are loading the stream
 			if (mainGui != null)
 			{
@@ -65,9 +73,27 @@ public class AudioPlayer_Mplayer extends Thread{
 			lg.log("AudioPlayer: Start music with mplayer command: "+mplayerPath+mplayerOptions);
 			mplayerProcess = Runtime.getRuntime().exec(mplayerPath+mplayerOptions);
 			
+			//create the streams we need to interact
+			inStream = new BufferedReader(new InputStreamReader(mplayerProcess.getInputStream()));
+			outStream = new BufferedWriter(new OutputStreamWriter(mplayerProcess.getOutputStream()));
+			
+			String messages = "";
+			
+			//get the messages from mplayer
+			while((messages = inStream.readLine()) != null)
+			{
+				//if we have a new interpret and title update the gui
+				if(messages.startsWith("ICY Info: StreamTitle="))
+				{
+					mainGui.showMessageInTray(messages.substring(messages.indexOf("StreamTitle=\"")+13,messages.indexOf("';StreamUrl='")));
+				}
+			}
+		 
+		} catch (IOException e) {
+			lg.logE("Error while executing mplayer: "+mplayerPath+mplayerOptions+e.getMessage());
 		} catch (Exception e) {
-		    lg.logE("Fehler beim Ausführen von "+mplayerPath+mplayerOptions+e.getMessage());
-		}
+			lg.logE("Error while executing mplayer: "+mplayerPath+mplayerOptions+e.getMessage());
+		}  
 	}
 	
 	/**
@@ -76,17 +102,25 @@ public class AudioPlayer_Mplayer extends Thread{
 	 */
 	public void stopPlaying()
 	{
-		if(stream != null)
-		{
-			lg.logD("AudioPlayer: Try to stop the audio player with the stream: "+stream.name);
+		
+		try {
+			if(stream != null)
+			{
+				lg.logD("AudioPlayer: Try to stop the audio player with the stream: "+stream.name);
+			}
+			
+			mainGui.showMessageInTray("");
+			
+			outStream.write("stop\n");
+			
+			if(stream != null)
+			{
+				lg.logD("AudioPlayer: Audio Player with stream: "+stream.name + "has been stopped");
+			}
+		} catch (IOException e) {
+			lg.logE("Error while stopping playback of mplayer: "+e.getMessage());
 		}
 		
-		mainGui.showMessageInTray("");
-		
-		if(stream != null)
-		{
-			lg.logD("AudioPlayer: Audio Player with stream: "+stream.name + "has been stopped");
-		}
 	}
 	
 	/**
@@ -95,7 +129,12 @@ public class AudioPlayer_Mplayer extends Thread{
 	 */
 	public void setAudioVolum(int volumePercent)
 	{
-
-		lg.logD("AudioPlayer: set new volume to"+volumePercent);
+		try {
+			outStream.write("volume "+volumePercent + " 100");
+			lg.logD("AudioPlayer: set new volume to"+volumePercent);
+		} catch (IOException e) {
+			lg.logE("Error while set a new playback of mplayer: "+e.getMessage());
+		}
+		
 	}
 }
