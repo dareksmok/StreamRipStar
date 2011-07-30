@@ -56,13 +56,13 @@ public class AudioPlayer_Mplayer extends Thread{
 		{
 			//do we need the local or the stream from the net?
 			if(stream.getStatus() && stream.connectToRelayCB) {
-				mplayerOptions += "http://127.0.0.1:"+stream.relayServerPortTF;
+				mplayerOptions += " http://127.0.0.1:"+stream.relayServerPortTF;
 	    	} else {
 	    		mplayerOptions += stream.address;		
 	    	}
 			
 			//collect the options
-			mplayerOptions += "-slave -cache "+MPLAYER_CACHE; 
+			mplayerOptions += " -slave -quiet -cache "+MPLAYER_CACHE; 
 			//say, we are loading the stream
 			if (mainGui != null)
 			{
@@ -70,8 +70,8 @@ public class AudioPlayer_Mplayer extends Thread{
 			}
 			
 			//start the process itself
-			lg.log("AudioPlayer: Start music with mplayer command: "+mplayerPath+mplayerOptions);
-			mplayerProcess = Runtime.getRuntime().exec(mplayerPath+mplayerOptions);
+			lg.log("AudioPlayer: Start music with mplayer command: "+mplayerPath+" "+mplayerOptions);
+			mplayerProcess = Runtime.getRuntime().exec(mplayerPath+" "+mplayerOptions);
 			
 			//create the streams we need to interact
 			inStream = new BufferedReader(new InputStreamReader(mplayerProcess.getInputStream()));
@@ -85,14 +85,14 @@ public class AudioPlayer_Mplayer extends Thread{
 				//if we have a new interpret and title update the gui
 				if(messages.startsWith("ICY Info: StreamTitle="))
 				{
-					mainGui.showMessageInTray(messages.substring(messages.indexOf("StreamTitle=\"")+13,messages.indexOf("';StreamUrl='")));
+					mainGui.setTitleForAudioPlayer(stream.name ,messages.substring(messages.indexOf("StreamTitle=\'")+13,messages.indexOf("';StreamUrl='")),false);
 				}
 			}
 		 
 		} catch (IOException e) {
-			lg.logE("Error while executing mplayer: "+mplayerPath+mplayerOptions+e.getMessage());
+			lg.logE("Error while executing mplayer: "+mplayerPath+" "+mplayerOptions+e.getMessage());
 		} catch (Exception e) {
-			lg.logE("Error while executing mplayer: "+mplayerPath+mplayerOptions+e.getMessage());
+			lg.logE("Error while executing mplayer: "+mplayerPath+" "+mplayerOptions+e.getMessage());
 		}  
 	}
 	
@@ -109,9 +109,10 @@ public class AudioPlayer_Mplayer extends Thread{
 				lg.logD("AudioPlayer: Try to stop the audio player with the stream: "+stream.name);
 			}
 			
-			mainGui.showMessageInTray("");
+			mainGui.setTitleForAudioPlayer(stream.name ,"",false);
 			
 			outStream.write("stop\n");
+			outStream.flush();
 			
 			if(stream != null)
 			{

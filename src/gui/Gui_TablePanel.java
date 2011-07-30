@@ -44,6 +44,7 @@ import javax.swing.table.TableColumnModel;
 import misc.Stream;
 
 import thread.AudioPlayer;
+import thread.AudioPlayer_Mplayer;
 
 import control.Control_Stream;
 import control.SRSOutput;
@@ -51,8 +52,6 @@ import control.SRSOutput;
 public class Gui_TablePanel extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	
-	
 
 	private Object[] tableheader ={"Rec","Stream","Aktual Title"};
 	private String[][] Daten = {};
@@ -82,7 +81,7 @@ public class Gui_TablePanel extends JPanel
 	private ImageIcon recordIcon = new ImageIcon((URL)getClass().getResource("/Icons/record_middle.png"));
 	
 	private JPopupMenu popup;
-	private AudioPlayer player;
+	private AudioPlayer_Mplayer player;
 	
 	public Gui_TablePanel(Control_Stream controlStreams,Gui_StreamRipStar mainGui) {
 		this.controlStreams = controlStreams;
@@ -449,17 +448,6 @@ public class Gui_TablePanel extends JPanel
 	}
 	
 	/**
-	 * Initialize the first instance of the internal audio player. This must
-	 * be done, because gstreamer hangs for a while on the first start and we
-	 * loose control over all audio player, but the last one. -> all audio player
-	 * will play and can't be stopped anymore
-	 */
-	public void loadFirstAudioPlayer()
-	{
-		player = new AudioPlayer();
-	}
-	
-	/**
 	 * Looks for the selected stream in the stream table and
 	 * start playing it with the correct player. This can either 
 	 * be the internal or the external, which is defined in the 
@@ -478,7 +466,7 @@ public class Gui_TablePanel extends JPanel
 				if(mainGui.useInternalAudioPlayer())
 				{
 					stopInternalAudioPlayer();
-					player = new AudioPlayer(stream[0], mainGui);
+					player = new AudioPlayer_Mplayer(stream[0], mainGui);
 					player.start();
 				} else {
 					controlStreams.startMp3Player("http://127.0.0.1:"+stream[0].relayServerPortTF);
@@ -489,7 +477,7 @@ public class Gui_TablePanel extends JPanel
 				if(mainGui.useInternalAudioPlayer())
 				{
 					stopInternalAudioPlayer();
-					player = new AudioPlayer(stream[0], mainGui);
+					player = new AudioPlayer_Mplayer(stream[0], mainGui);
 					player.start();
 				} else {
 					controlStreams.startMp3Player(stream[0].address);
@@ -545,7 +533,7 @@ public class Gui_TablePanel extends JPanel
 		if(stream.getStatus() && stream.connectToRelayCB) {
 			if(mainGui.useInternalAudioPlayer()) {
 				stopInternalAudioPlayer();
-				player = new AudioPlayer(stream, mainGui);
+				player = new AudioPlayer_Mplayer(stream, mainGui);
 				player.start();
 			} else {
 				controlStreams.startMp3Player("http://127.0.0.1:"+stream.relayServerPortTF);
@@ -554,7 +542,7 @@ public class Gui_TablePanel extends JPanel
 		} else if(stream.address != null  && !stream.address.equals("")) {
 			if(mainGui.useInternalAudioPlayer()) {
 				stopInternalAudioPlayer();
-				player = new AudioPlayer(stream, mainGui);
+				player = new AudioPlayer_Mplayer(stream, mainGui);
 				player.start();
 			} else {
 				controlStreams.startMp3Player(stream.address);
