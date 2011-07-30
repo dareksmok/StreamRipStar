@@ -14,8 +14,10 @@ import control.SRSOutput;
 import gui.Gui_StreamRipStar;
 
 /**
- * Starts an instance for playing an stream with gstreamer. 
- * @author eule
+ * Starts an instance to play with mplayer. From here you can control the volume, the stream
+ * and fetch some other information about the stream.
+ * 
+ * @author Johannes Putzke
  *
  */
 public class AudioPlayer extends Thread{
