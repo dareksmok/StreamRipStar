@@ -1383,7 +1383,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	
 	class GoToHelpSiteListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			controlStreams.startWebBrowser("https://sourceforge.net/apps/mediawiki/stripper/");
+			controlStreams.startWebBrowser("https://github.com/Eule/StreamRipStar/wiki");
 		}
 	}
 	
