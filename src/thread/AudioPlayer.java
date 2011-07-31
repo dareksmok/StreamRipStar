@@ -43,10 +43,18 @@ public class AudioPlayer extends Thread{
 	
 	/**
 	 * Use this constructor, if you wan't to initialize the audio system
+	 *  @param mainGui Mainwindow
 	 */
-	public AudioPlayer()
+	public AudioPlayer(Gui_StreamRipStar mainGui )
 	{
-		Gst.init();
+		try {
+			Gst.init();
+		}
+		//if we get here an exception, we should disable the internal audio player with gstreamer
+		catch(java.lang.UnsatisfiedLinkError e) {
+			lg.logE("AudioPlayer: No gstreamer on System installed\n"+e.getMessage());
+			mainGui.setUseInternalAudioPlayer(false);
+		}
 	}
 	
 	public void run() {

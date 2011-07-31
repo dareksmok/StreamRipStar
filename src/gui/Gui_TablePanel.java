@@ -456,7 +456,7 @@ public class Gui_TablePanel extends JPanel
 	 */
 	public void loadFirstAudioPlayer()
 	{
-		player = new AudioPlayer();
+		player = new AudioPlayer(mainGui);
 	}
 	
 	/**

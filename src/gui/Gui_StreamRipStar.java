@@ -193,14 +193,17 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
         buildIconBar();
 		setSystemTray();
 		
+		//and pre-load the audio system; if it fails, the internal audio player is
+		//disabled automatically 
+		table.loadFirstAudioPlayer();
+		
 		if(useInternalPlayer) {
+			
 			//load the audio panel
 			audioPanel = new InternAudioControlPanel(this,volumeManager);
 			contPane.add(this.audioPanel, BorderLayout.SOUTH);
 			hearMusicButton.setEnabled(false);
-			
-			//and pre-load the audio system
-			table.loadFirstAudioPlayer();
+
 		}
 		
         //Center StreamRipStar
@@ -646,6 +649,15 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	 */
 	public Boolean useInternalAudioPlayer() {
 		return useInternalPlayer;
+	}
+	
+	/**
+	 * Set the variable to use the internal audio player
+	 * @param useItNow true if we should use, else false
+	 */
+	public void setUseInternalAudioPlayer(Boolean useItNow)
+	{ 
+		useInternalPlayer = useItNow;
 	}
 	
 	/**
