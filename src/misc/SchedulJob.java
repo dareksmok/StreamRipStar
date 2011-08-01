@@ -251,6 +251,15 @@ public class SchedulJob {
 	}
 	
 	/**
+	 * If the jobs just starts when StreamRipStar starts, then its a "atStartJob"
+	 * @return true, if its one, else false
+	 */
+	public boolean isAtStartJob()
+	{
+		return atStart;
+	}
+	
+	/**
 	 * 
 	 * @return true, if the old stoptime should be used
 	 */

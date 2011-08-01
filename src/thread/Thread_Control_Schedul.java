@@ -171,7 +171,7 @@ public class Thread_Control_Schedul extends Thread{
 					//or:
 					//the job is a daily or weekly job and is stop. This means
 					//the the stream was already started, but the user stopped it
-					else if(!job.isOnceJob() &&
+					else if(!job.isOnceJob() && !job.isAtStartJob() &&
 							(job.getStopTime() <= now.getTimeInMillis()  ||
 							!mainGui.getControlStream().getStreamByID(job.getStreamID()).getStatus() && mainGui.getControlStream().getStreamByID(job.getStreamID()).userStoppedRecording()))
 					{
