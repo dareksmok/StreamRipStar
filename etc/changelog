@@ -242,8 +242,14 @@
  - add: in schedule manager: double click on the enable column toggle its status (from enable to disable, and vice versa)
  - fix: doesn't show "hear music" icon when doesn't use the internal player
  - show more debug messages
+ 
    ----------------------------
  
  0.6 Beta4 -> 0.6 Beta5
 - fix: can't start StreamRipStar if gstreamer is not installed, even if is not in use
 - fix: set compiler switch to Java version 1.6
+
+   ----------------------------
+ 
+ 0.6 Beta5 -> 0.6 Beta6
+ - fix: streams doesn't start at the start of streamripper when the scheduler was used
