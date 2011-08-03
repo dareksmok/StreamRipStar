@@ -23,8 +23,8 @@ import control.SRSOutput;
  */
 public class StreamRipStar
 {	
-	public static final int releaseRevision = 600;
-	public static final String releaseVersion = "0.6 - Beta 5";
+	public static final int releaseRevision = 601;
+	public static final String releaseVersion = "0.6 - Beta 6";
 	private static boolean noConfiFileFound = false;
 	private static String lang="",reg ="", lnfClassName = null;
 	
