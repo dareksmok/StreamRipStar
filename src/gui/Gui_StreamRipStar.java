@@ -189,10 +189,10 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
         contPane.add(table, BorderLayout.CENTER);	//Add that shows all streams
         
         buildMenuBar();
-        setLanguage();
         loadProp();
         buildIconBar();
 		setSystemTray();
+		setLanguage();
 		
 		if(useInternalPlayer) {
 			//load the audio panel
