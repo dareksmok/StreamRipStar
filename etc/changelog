@@ -253,3 +253,4 @@
  
  0.6 Beta5 -> 0.6 Beta6
  - fix: streams doesn't start at the start of streamripper when the scheduler was used
+ - fix: some translation issues; tooltips shows the wrong translation
