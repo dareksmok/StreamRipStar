@@ -226,8 +226,19 @@ public class Gui_SchedulManager extends JFrame implements WindowListener {
 				x[4] = job.getStartTimeAsLocaleTime();
 				x[5] = job.getStopTimeAsLocaleTime();
 			} else {
-				x[4] = "At Start";
-				x[5] = "Never";
+				
+				try {
+					x[4] = trans.getString("JobMan.AtStart");
+					x[5] = trans.getString("JobMan.Never");
+				} catch (MissingResourceException e) {
+					SRSOutput.getInstance().logE( "Schedulmanager Gui: "+e.getMessage()); 
+					x[4] = "At Start";
+					x[5] = "Never";
+				} catch (NullPointerException e) {
+					SRSOutput.getInstance().logE( "Schedulmanager Gui: "+e.getMessage()); 
+					x[4] = "At Start";
+					x[5] = "Never";
+				}
 			}
 			x[6] = job.getComment();
 			
