@@ -139,6 +139,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	private JMenuItem streamBrowserItem = new JMenuItem("Streambrowser");
 	private JMenuItem schedulManagerItem = new JMenuItem("Schedulmanager");
 	private JMenuItem tuneInto = new JMenuItem("Listen To",tuneIntoMenu);
+	private JMenuItem showInfo = new JMenuItem("Show Information");
 	private JMenuItem openWebsite = new JMenuItem("Open Website");
 	private JMenuItem streamRipStarPref = new JMenuItem("Preferences",settingsMenu);
 	private JMenuItem savePrefs = new JMenuItem("Save Preferences",settingsMenu);
@@ -375,8 +376,9 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 		streamMenu.add(delStream);
 		streamMenu.addSeparator();
 		streamMenu.add(tuneInto);
-		streamMenu.add(openWebsite);
 		streamMenu.add(streamOptions);
+		streamMenu.add(showInfo);
+		streamMenu.add(openWebsite);
 		streamMenu.addSeparator();
 		streamMenu.add(stream4AllOptions);
 		streamMenu.addSeparator();
@@ -435,6 +437,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 		editStream.addActionListener(new EditStreamListener());
 		delStream.addActionListener(new DeleteListener());
 		tuneInto.addActionListener(new PlayMusikListener());
+		showInfo.addActionListener(new ShowStatsListener());
 		exit.addActionListener(new ExitListener(Gui_StreamRipStar.this));
 		openMusicFolder.addActionListener(new OpenMusikFolder());
 		openWebsite.addActionListener(new BrowserListener());
@@ -550,6 +553,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			editStream.setText(trans.getString("edit"));
 			delStream.setText(trans.getString("delete"));
 			tuneInto.setText(trans.getString("tune"));
+			showInfo.setText(trans.getString("mainWin.showInfo"));
 			openWebsite.setText(trans.getString("stream_website"));
 			streamOptions.setText(trans.getString("options"));
 			stream4AllOptions.setText(trans.getString("4AllOptions"));
