@@ -24,7 +24,7 @@ public class SRSOutput
 	private SimpleDateFormat formatter = new SimpleDateFormat ("yyyy.MM.dd '-' HH:mm:ss ");
 	private static SRSOutput instance = null;
 	private BufferedWriter writer = null;
-	private String path = new Control_GetPath().getStreamRipStarPath() + "/output.log";
+	private String path = "";
 	
 	
 	/**
@@ -37,19 +37,23 @@ public class SRSOutput
 	}
 	
 	/**
-	 * initalizie the log file and make it writeable
+	 * initalizie the log file and make it writable
 	 */
 	private void init() 
 	{
 		try 
 		{
+			path = new Control_GetPath().getStreamRipStarPath() + "/output.log";
 			writer = new BufferedWriter(new FileWriter(path,true));
 			log("StreamRipStar in version "+StreamRipStar.releaseVersion+
 					" and revision "+ StreamRipStar.releaseRevision + " has been started");	
 		}
 		catch (IOException e) 
 		{
-			System.err.println("Error in SRSOutput: Can't open the file: "+path);
+			System.err.println("Error in SRSOutput: Can't open the file for StreamRipStar");
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.err.println("Error in SRSOutput: Unkown error");
 			e.printStackTrace();
 		}
 	}
