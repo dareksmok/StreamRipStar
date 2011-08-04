@@ -10,6 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Vector;
+
 import misc.StreamRipStar;
 
 /**
@@ -25,19 +27,19 @@ public class SRSOutput
 	private static SRSOutput instance = null;
 	private BufferedWriter writer = null;
 	private String path = "";
-	
+	private Vector<String> tmpMessages = new Vector<String>(0,1);
+	private boolean hasInitDone = false;
 	
 	/**
-	 * This Constructor initalizise the outputstream writer an
+	 * This Constructor initialize the outputstream writer an
 	 */
 	private SRSOutput()
 	{
 		init();
-		
 	}
 	
 	/**
-	 * initalizie the log file and make it writable
+	 * initialize the log file and make it writable
 	 */
 	private void init() 
 	{
@@ -46,7 +48,23 @@ public class SRSOutput
 			path = new Control_GetPath().getStreamRipStarPath() + "/output.log";
 			writer = new BufferedWriter(new FileWriter(path,true));
 			log("StreamRipStar in version "+StreamRipStar.releaseVersion+
-					" and revision "+ StreamRipStar.releaseRevision + " has been started");	
+					" and revision "+ StreamRipStar.releaseRevision + " has been started");
+			
+			//print out the old messages
+			log("\n\n=== now the old messages from start ====\n\n");
+			for(int i=0; i < tmpMessages.capacity(); i++)
+			{
+				log(tmpMessages.get(i));
+			}
+			log("\n\n=== old messages done! ====\n\n");
+			
+			//now delete all old messages for the next time
+			tmpMessages.removeAllElements();
+			tmpMessages.setSize(0);
+			tmpMessages.trimToSize();
+			
+			//say we have init done successful 
+			hasInitDone = true;
 		}
 		catch (IOException e) 
 		{
@@ -66,6 +84,7 @@ public class SRSOutput
 		try 
 		{
 			writer.close();
+			hasInitDone= false;
 		}
 		catch (IOException e) 
 		{
@@ -83,6 +102,11 @@ public class SRSOutput
 		if(instance == null)
 		{
 			instance = new SRSOutput();
+		}
+		
+		if(!instance.hasInitDone)
+		{
+			instance.init();
 		}
 		
 		return instance;
@@ -170,10 +194,10 @@ public class SRSOutput
 		if(logLevel >= 1) {
 			try {
 				//first print to console
-				System.out.println("Message: "+logMessage);
+				System.out.println(logMessage);
 				
 				//then to the file
-				writer.write("Message: "+formatter.format(new Date())
+				writer.write(formatter.format(new Date())
 										+":\n"+logMessage+"\n\n");
 				writer.flush();
 			} catch (IOException e) {
@@ -187,7 +211,7 @@ public class SRSOutput
 
 	/**
 	 * Error log to output file and to the console. The message to the log file
-	 * gets the current date+time and the messageformat (here Error output)
+	 * gets the current date+time and the message format (here Error output)
 	 * 
 	 * @param logMessage The error message you want to log
 	 * @return true, if everything worked. Else false
@@ -214,7 +238,7 @@ public class SRSOutput
 	
 	/**
 	 * Debug log to output file and to the console. The message to the log file
-	 * gets the current date+time and the messageformat (here Debug output)
+	 * gets the current date+time and the message format (here Debug output)
 	 * 
 	 * @param logMessage The error message you want to log
 	 * @return true, if everything worked. Else false
@@ -257,21 +281,19 @@ public class SRSOutput
 	}
 	
 	/**
-	 * For testing
-	 * 
-	 * @param args
+	 * prints a message to stderr and save it in a temporary vector until a log-object
+	 * is created. After this, the messages are automatically printed out
 	 */
-	public static void main(String[] args)
+	public static synchronized void logTemp(String logMessage) 
 	{
-		SRSOutput.getInstance().log("Das ist eine Testnachricht");
-		SRSOutput.getInstance().log("Das ist eine Testnachricht und zwar die 2. Mal sehen\n wie sie mit Zeilenumbruch aussieht");
-		SRSOutput.getInstance().logE("Das ist eine Errornachricht");
-		SRSOutput.getInstance().logD("sollte nicht zu sehen sein");
-		SRSOutput.getInstance().setLoglevel(LOGLEVEL.Error);
-		SRSOutput.getInstance().logE("sollte da sein");
-		SRSOutput.getInstance().log("sollte nicht zu sehen sein");
-		SRSOutput.getInstance().logD("sollte nicht zu sehen sein");
-		SRSOutput.getInstance().setLoglevel(LOGLEVEL.Debug);
-		SRSOutput.getInstance().logD("sollte da sein");
+		//test if we have a instance with we can work with
+		if(instance == null)
+		{
+			instance = new SRSOutput();
+		}
+		//first print to console
+		System.err.println("Error: "+logMessage);
+		instance.tmpMessages.add(logMessage);
 	}
+	
 }
