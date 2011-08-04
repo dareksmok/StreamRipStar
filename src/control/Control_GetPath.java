@@ -48,7 +48,7 @@ public class Control_GetPath {
 					return path;
 				} else {
 					askWhereToSave();
-					SRSOutput.getInstance().log("Created new save path in : " + path);
+					SRSOutput.logTemp("Created new save path in : " + path);
 					return path;
 				}
 			}
@@ -61,7 +61,7 @@ public class Control_GetPath {
 					return path;
 				} else {
 					askWhereToSave();
-					SRSOutput.getInstance().log("Created new save path in : " + path);
+					SRSOutput.logTemp("Created new save path in : " + path);
 					return path;
 				}
 			}
@@ -72,11 +72,11 @@ public class Control_GetPath {
 				savePath = new File( home+sep+".StreamRipStar");
 				if( savePath.exists() && savePath.isDirectory() ) {
 					path = home+sep+".StreamRipStar";
-					SRSOutput.getInstance().log("Save Path exist in: " + path);
+					SRSOutput.logTemp("Save Path exist in: " + path);
 					return path;
 				} else {
 					askWhereToSave();
-					SRSOutput.getInstance().log("Created new save path in : " + path);
+					SRSOutput.logTemp("Created new save path in : " + path);
 					return path;
 				}
 			}
@@ -86,7 +86,7 @@ public class Control_GetPath {
 			}
 			else {
 				askWhereToSave();
-				SRSOutput.getInstance().log("Created new save path in : " + path);
+				SRSOutput.logTemp("Created new save path in : " + path);
 				return path;
 			}
 		}
