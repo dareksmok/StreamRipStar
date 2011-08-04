@@ -35,7 +35,7 @@ public class SRSOutput
 	 */
 	private SRSOutput()
 	{
-		init();
+		
 	}
 	
 	/**
@@ -272,7 +272,7 @@ public class SRSOutput
 			File outPutFile = new File(path);
 			outPutFile.delete();
 		} catch (NullPointerException e) {
-			//mache hier was
+			logTemp("SRSOutput: NullpointerException while deleting the old log file");
 		}
 		
 		init();
