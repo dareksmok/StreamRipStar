@@ -261,3 +261,8 @@
  - fix: streams doesn't start at the start of streamripper when the scheduler was used
  - fix: some translation issues; tooltips shows the wrong translation
  - add: complete menu items
+    
+    ----------------------------
+  0.6 Beta6 -> 0.6
+ - fix: starts with an endless log cycle
+ - fix: import .pls or .m3u streams doesn't work
