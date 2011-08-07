@@ -375,7 +375,7 @@ public class Import_Streams extends JDialog {
 				//now can add stream
 				//line by line
 				for(int i=0; i< toImportLines.capacity(); i++) {
-					String[] stream = new String[3];
+					String[] stream = new String[4];
 					//Name
 					stream[1] = importModel.getValueAt(toImportLines.get(i), 1).toString();
 					//Address
