@@ -59,7 +59,7 @@ public class Gui_Settings2 extends JDialog
 {
 	private static final long serialVersionUID = 1L;
 	
-	private JList<Object> list;
+	private JList list;
 	
 	private ImageIcon commonPrefIcon = new ImageIcon((URL)getClass().getResource("/Icons/preferences/LookAndFeel1.png"));
 	private ImageIcon pathPrefIcon = new ImageIcon((URL)getClass().getResource("/Icons/preferences/AudioAndPrograms1.png"));
@@ -133,13 +133,13 @@ public class Gui_Settings2 extends JDialog
 	
 	private String lookAndFeelBox_className = null;
 	
-	private JComboBox<String> langMenu = new JComboBox<String> (languages);
-	private JComboBox<String>  statusBox = new JComboBox<String> (actions);
-	private JComboBox<String>  nameBox = new JComboBox<String> (actions);
-	private JComboBox<String>  currentTrackBox = new JComboBox<String> (actions);
-	private JComboBox<String>  windowActionBox = new JComboBox<String> (windowActions);
-	private JComboBox<String>  LookAndFeelBox = new JComboBox<String> ();
-	private JComboBox<String>  logLevelBox = new JComboBox<String> (logLevel);
+	private JComboBox langMenu = new JComboBox (languages);
+	private JComboBox  statusBox = new JComboBox (actions);
+	private JComboBox  nameBox = new JComboBox (actions);
+	private JComboBox  currentTrackBox = new JComboBox (actions);
+	private JComboBox  windowActionBox = new JComboBox (windowActions);
+	private JComboBox  LookAndFeelBox = new JComboBox ();
+	private JComboBox  logLevelBox = new JComboBox (logLevel);
 	
 	private JCheckBox activeTrayIcon = new JCheckBox("Show Systemtray (requires restart)");
 	private JCheckBox showTextCheckBox = new JCheckBox("Show Text under Icons",true);
@@ -170,7 +170,7 @@ public class Gui_Settings2 extends JDialog
 				{"Audio and Programs",pathPrefIcon},
 				{"Language and Log",audioPlayerPrefIcon}};
 		
-		list = new JList<Object>(elements);
+		list = new JList(elements);
 		list.setCellRenderer(new IconCellRenderer());
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 	    list.setVisibleRowCount(-1);
@@ -185,7 +185,7 @@ public class Gui_Settings2 extends JDialog
 			lookAndFeelList[i] = lookAndFeelInfos[i].getName();
 		}
 		
-		LookAndFeelBox = new JComboBox<String>(lookAndFeelList);
+		LookAndFeelBox = new JComboBox(lookAndFeelList);
 
 		translationTA.setEditable(false);
 
@@ -988,7 +988,7 @@ public class Gui_Settings2 extends JDialog
 		public void mouseReleased(MouseEvent arg0) {}
 	}
 	
-	private class IconCellRenderer implements ListCellRenderer<Object>
+	private class IconCellRenderer implements ListCellRenderer
 	{
 		protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
 
