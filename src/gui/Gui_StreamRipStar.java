@@ -48,6 +48,8 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
+
+import misc.ShutDownHuck;
 import misc.Stream;
 import thread.Thread_Control_Schedul;
 import thread.Thread_FillTableWithStreams;
@@ -175,6 +177,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	public Gui_StreamRipStar(Boolean openPreferences)
 	{
 		super("StreamRipStar");
+		Runtime.getRuntime().addShutdownHook(new ShutDownHuck(this));
 		setIconImage( windowIcon.getImage() );
 
 		controlStreams = new Control_Stream(this);

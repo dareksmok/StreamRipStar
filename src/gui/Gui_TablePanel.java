@@ -465,7 +465,7 @@ public class Gui_TablePanel extends JPanel
 				if(mainGui.useInternalAudioPlayer())
 				{
 					stopInternalAudioPlayer();
-					AudioPlayer_Mplayer player = new AudioPlayer_Mplayer(stream[0], mainGui);
+					AudioPlayer_Mplayer player = new AudioPlayer_Mplayer(stream[0], mainGui);		
 					player.start();
 					allPlayers.add(player);
 				} else {
@@ -527,6 +527,7 @@ public class Gui_TablePanel extends JPanel
 		//else will connect to stream address directly 
 		if(stream.getStatus() && stream.connectToRelayCB) {
 			if(mainGui.useInternalAudioPlayer()) {
+				
 				stopInternalAudioPlayer();
 				AudioPlayer_Mplayer player = new AudioPlayer_Mplayer(stream, mainGui);
 				player.start();
