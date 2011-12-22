@@ -21,9 +21,12 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -77,7 +80,7 @@ public class Gui_TablePanel extends JPanel
 	private ImageIcon recordIcon = new ImageIcon((URL)getClass().getResource("/Icons/record_middle.png"));
 	
 	private JPopupMenu popup;
-	private AudioPlayer_Mplayer player;
+	private Vector<AudioPlayer_Mplayer> allPlayers = new Vector<AudioPlayer_Mplayer>(0,1);
 	
 	public Gui_TablePanel(Control_Stream controlStreams,Gui_StreamRipStar mainGui) {
 		this.controlStreams = controlStreams;
@@ -462,8 +465,9 @@ public class Gui_TablePanel extends JPanel
 				if(mainGui.useInternalAudioPlayer())
 				{
 					stopInternalAudioPlayer();
-					player = new AudioPlayer_Mplayer(stream[0], mainGui);
+					AudioPlayer_Mplayer player = new AudioPlayer_Mplayer(stream[0], mainGui);
 					player.start();
+					allPlayers.add(player);
 				} else {
 					controlStreams.startMp3Player("http://127.0.0.1:"+stream[0].relayServerPortTF);
 				}
@@ -473,8 +477,9 @@ public class Gui_TablePanel extends JPanel
 				if(mainGui.useInternalAudioPlayer())
 				{
 					stopInternalAudioPlayer();
-					player = new AudioPlayer_Mplayer(stream[0], mainGui);
+					AudioPlayer_Mplayer player = new AudioPlayer_Mplayer(stream[0], mainGui);
 					player.start();
+					allPlayers.add(player);
 				} else {
 					controlStreams.startMp3Player(stream[0].address);
 				}
@@ -498,9 +503,9 @@ public class Gui_TablePanel extends JPanel
 	 */
 	public synchronized void setAudioVolume(int percentage)
 	{
-		if(player != null  && percentage >= 0 && percentage <= 100)
+		if(allPlayers.lastElement() != null  && percentage >= 0 && percentage <= 100)
 		{
-			player.setAudioVolum(percentage);
+			allPlayers.lastElement().setAudioVolum(percentage);
 			SRSOutput.getInstance().logD("Lautstärke ist nun: "+percentage);
 		}
 	}
@@ -523,8 +528,9 @@ public class Gui_TablePanel extends JPanel
 		if(stream.getStatus() && stream.connectToRelayCB) {
 			if(mainGui.useInternalAudioPlayer()) {
 				stopInternalAudioPlayer();
-				player = new AudioPlayer_Mplayer(stream, mainGui);
+				AudioPlayer_Mplayer player = new AudioPlayer_Mplayer(stream, mainGui);
 				player.start();
+				allPlayers.add(player);
 			} else {
 				controlStreams.startMp3Player("http://127.0.0.1:"+stream.relayServerPortTF);
 			}
@@ -532,8 +538,9 @@ public class Gui_TablePanel extends JPanel
 		} else if(stream.address != null  && !stream.address.equals("")) {
 			if(mainGui.useInternalAudioPlayer()) {
 				stopInternalAudioPlayer();
-				player = new AudioPlayer_Mplayer(stream, mainGui);
+				AudioPlayer_Mplayer player = new AudioPlayer_Mplayer(stream, mainGui);
 				player.start();
+				allPlayers.add(player);
 			} else {
 				controlStreams.startMp3Player(stream.address);
 			}
@@ -548,9 +555,16 @@ public class Gui_TablePanel extends JPanel
 	 * Stops the Thread with the internal audioplayer, if there is one
 	 */
 	public synchronized void stopInternalAudioPlayer() {
-		if(player != null) {
-			player.stopPlaying();
-		}
+		for (final AudioPlayer_Mplayer player : allPlayers)
+		{
+			if(player != null)
+			{
+				player.stopPlaying();
+	            player.killThread();
+			}
+        }
+		
+		allPlayers.trimToSize();
 	}
 	
 	public Gui_StreamRipStar getMainGui() {

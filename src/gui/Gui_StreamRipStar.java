@@ -864,6 +864,9 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 				//save the settings for the mainwindow
 				saveProp();
 				
+				//stop all playing streams
+				table.stopInternalAudioPlayer();
+				
 				//stop all recording streams
 				controlStreams.stopAllStreams();
 				
@@ -879,6 +882,9 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 		else {
 			//save the settings for the mainwindow
 			saveProp();
+			
+			//stop all playing streams
+			table.stopInternalAudioPlayer();
 			
 			//stop all recording streams
 			controlStreams.stopAllStreams();

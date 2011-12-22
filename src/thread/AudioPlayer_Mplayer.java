@@ -19,7 +19,7 @@ import gui.Gui_StreamRipStar;
  * @author Johannes Putzke
  *
  */
-public class AudioPlayer_Mplayer extends Thread{
+public class AudioPlayer_Mplayer extends Thread {
 	
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
 	private Stream stream;
@@ -147,5 +147,13 @@ public class AudioPlayer_Mplayer extends Thread{
 			lg.logE("Error while set a new playback of mplayer: "+e.getMessage());
 		}
 		
+	}
+	
+	/**
+	 * Kills this thread
+	 */
+	public void killThread()
+	{
+		mplayerProcess.destroy();
 	}
 }
