@@ -35,8 +35,6 @@ import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
-
-import control.Control_Stream;
 import control.SRSOutput;
 
 public class Save_Settings extends JDialog
@@ -62,15 +60,11 @@ public class Save_Settings extends JDialog
 	private JLabel explainLabel = new JLabel("Here you can save your settings to make a backup or send it to your friends.");
 	
 	private JFileChooser dirChooser = new JFileChooser();
-
-	private Gui_StreamRipStar mainGui;
-
 	private TitledBorder exportBoarder = BorderFactory.createTitledBorder("What do you want to save?");
 	
 	public Save_Settings(Gui_StreamRipStar mainGui)
 	{
 		super(mainGui, "Save Settings");
-		this.mainGui = mainGui;
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 
 		init();

@@ -1,2 +1,3 @@
 - systray -> more functions
 - language panel in JList -> may with flags as indicators
+- recognize when no mplayer instance is running
