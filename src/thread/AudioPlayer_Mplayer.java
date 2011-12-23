@@ -94,7 +94,7 @@ public class AudioPlayer_Mplayer extends Thread {
 				//if we have a new interpret and title update the gui
 				if(messages.startsWith("ICY Info: StreamTitle="))
 				{
-					mainGui.setTitleForAudioPlayer(stream.name ,messages.substring(messages.indexOf("StreamTitle=\'")+13,messages.indexOf("';StreamUrl='")),false);
+					mainGui.setTitleForAudioPlayer(stream.name ,messages.substring(messages.indexOf("StreamTitle=\'")+13,messages.lastIndexOf("';")),false);
 				}
 			}
 		 

@@ -918,27 +918,35 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	/**
 	 * Set the title of the current song in the status field
 	 */
-	public void setTitleForAudioPlayer(String streamName, String title,boolean isErrorMessage) {
+	public void setTitleForAudioPlayer(String streamName, String title, boolean isErrorMessage) {
 		if(title != null && audioPanel != null) 
 		{
 			String gesTitle = streamName + " : " + title;
-			audioPanel.setTitle(gesTitle,isErrorMessage);
+			
 			
 			//if the title is empty, change the title to 
 			//the program name
-			if(title == null || title.equals(""))
+			if(title == null || title.trim().equals(""))
 			{
 				editWindowTitle("StreamRipStar");
-			}
-			else
-			{
+				//show title messages in the streamrbowser, too
+				audioPanel.setTitle("",isErrorMessage);
+				if(streamBrowser != null) 
+				{
+					streamBrowser.setStatusText("",isErrorMessage);
+					
+				}
+			} else {
 				editWindowTitle(title);
+				//show title messages in the streamrbowser, too
+				audioPanel.setTitle(gesTitle,isErrorMessage);
+				if(streamBrowser != null) 
+				{
+					streamBrowser.setStatusText(gesTitle,isErrorMessage);
+					
+				}
 			}
-			//show title messages in the streamrbowser, too
-			if(streamBrowser != null) 
-			{
-				streamBrowser.setStatusText(gesTitle,isErrorMessage);
-			}
+			
 		}
 	}
 
