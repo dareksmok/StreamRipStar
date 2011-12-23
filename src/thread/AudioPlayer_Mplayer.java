@@ -156,4 +156,22 @@ public class AudioPlayer_Mplayer extends Thread {
 	{
 		mplayerProcess.destroy();
 	}
+	
+	/**+
+	 * Looks if the process of the mplayer intstance has correct end
+	 * @return true, if the end was correct, else false
+	 */
+	public boolean isThreadDead()
+	{
+		
+		try {
+			//if there was an exit value, the thread is dead ;)
+			lg.logD("Mplayer exit value is: "+mplayerProcess.exitValue());
+				return true;
+		} catch (IllegalThreadStateException e) {
+			lg.logD("AudioPLayer_Mplayer: thread is still running and has no exit value");
+		}
+		
+		return false;
+	}
 }

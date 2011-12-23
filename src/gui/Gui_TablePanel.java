@@ -21,12 +21,9 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -553,9 +550,11 @@ public class Gui_TablePanel extends JPanel
 
 	
 	/**
-	 * Stops the Thread with the internal audioplayer, if there is one
+	 * Stops the Thread with the internal audio player, if there is one
 	 */
 	public synchronized void stopInternalAudioPlayer() {
+		//TODO remove here all not used players
+		// may try to use the stream, if is connected, remove it again
 		for (final AudioPlayer_Mplayer player : allPlayers)
 		{
 			if(player != null)
@@ -565,6 +564,14 @@ public class Gui_TablePanel extends JPanel
 			}
         }
 		
+		//delete all old processes
+		for(int i=allPlayers.capacity(); i > 0 ; i--)
+		{
+			if(allPlayers.get(i-1).isThreadDead())
+				allPlayers.remove(i-1);
+		}
+		
+		//make the vector small
 		allPlayers.trimToSize();
 	}
 	
