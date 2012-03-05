@@ -225,7 +225,7 @@ public class Thread_Control_Schedul extends Thread{
 		try {
 			XMLInputFactory factory = XMLInputFactory.newInstance(); 
 			XMLStreamReader parser;
-			parser = factory.createXMLStreamReader( new FileInputStream(loadPath+"/Scheduls.xml" ) );
+			parser = factory.createXMLStreamReader( new FileInputStream(loadPath+"/Scheduls.xml" ), "UTF-8"  );
 			while ( parser.hasNext() ) { 
 	 
 				switch ( parser.getEventType() ) { 
@@ -480,7 +480,7 @@ public class Thread_Control_Schedul extends Thread{
 		
 		try {
 			XMLEventWriter writer = outputFactory.createXMLEventWriter(
-					new FileOutputStream(savePath+"/Scheduls.xml" ) );
+					new FileOutputStream(savePath+"/Scheduls.xml" ), "UTF-8"  );
 			XMLEventFactory eventFactory = XMLEventFactory.newInstance();
 			
 			//header for the file

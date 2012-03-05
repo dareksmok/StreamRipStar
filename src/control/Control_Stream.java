@@ -51,7 +51,7 @@ public class Control_Stream
 		String savePath =  new Control_GetPath().getStreamRipStarPath();
 		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance(); 
 		try {
-			XMLEventWriter writer = outputFactory.createXMLEventWriter( new FileOutputStream(savePath+"/Streams.xml" ) );
+			XMLEventWriter writer = outputFactory.createXMLEventWriter( new FileOutputStream(savePath+"/Streams.xml" ), "UTF-8");
 			XMLEventFactory eventFactory = XMLEventFactory.newInstance();
 			
 			//header for the file
@@ -242,7 +242,7 @@ public class Control_Stream
 		String savePath =  new Control_GetPath().getStreamRipStarPath();
 		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance(); 
 		try {
-			XMLEventWriter writer = outputFactory.createXMLEventWriter( new FileOutputStream(savePath+"/DefaultStream.xml" ) );
+			XMLEventWriter writer = outputFactory.createXMLEventWriter( new FileOutputStream(savePath+"/DefaultStream.xml" ), "UTF-8");
 			XMLEventFactory eventFactory = XMLEventFactory.newInstance();
 			
 			//header for the file
@@ -436,7 +436,7 @@ public class Control_Stream
 		try {
 			XMLInputFactory factory = XMLInputFactory.newInstance(); 
 			XMLStreamReader parser;
-			parser = factory.createXMLStreamReader( new FileInputStream(loadPath+"/Streams.xml" ) );
+			parser = factory.createXMLStreamReader( new FileInputStream(loadPath+"/Streams.xml" ),"UTF-8"  );
 			while ( parser.hasNext() ) { 
 	 
 				switch ( parser.getEventType() ) { 
@@ -636,7 +636,7 @@ public class Control_Stream
 		try {
 			XMLInputFactory factory = XMLInputFactory.newInstance(); 
 			XMLStreamReader parser;
-			parser = factory.createXMLStreamReader( new FileInputStream(loadPath+"/DefaultStream.xml" ) );
+			parser = factory.createXMLStreamReader( new FileInputStream(loadPath+"/DefaultStream.xml" ), "UTF-8" );
 			while ( parser.hasNext() ) { 
 	 
 				switch ( parser.getEventType() ) { 

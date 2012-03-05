@@ -675,7 +675,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 		try {
 			XMLInputFactory factory = XMLInputFactory.newInstance(); 
 			XMLStreamReader parser;
-			parser = factory.createXMLStreamReader( new FileInputStream(loadPath+"/Prefs-MainWindow.xml" ) );
+			parser = factory.createXMLStreamReader( new FileInputStream(loadPath+"/Prefs-MainWindow.xml" ), "UTF-8"  );
 			while ( parser.hasNext() ) { 
 	 
 				switch ( parser.getEventType() ) { 
@@ -728,7 +728,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 		try {
 			XMLInputFactory factory = XMLInputFactory.newInstance(); 
 			XMLStreamReader parser;
-			parser = factory.createXMLStreamReader( new FileInputStream(loadPath+"/Settings-StreamRipStar.xml" ) );
+			parser = factory.createXMLStreamReader( new FileInputStream(loadPath+"/Settings-StreamRipStar.xml" ), "UTF-8"  );
 			while ( parser.hasNext() ) { 
 	 
 				switch ( parser.getEventType() ) { 
@@ -829,7 +829,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 		
 		try {
 			XMLEventWriter writer = outputFactory.createXMLEventWriter(
-					new FileOutputStream(savePath+"/Prefs-MainWindow.xml" ) );
+					new FileOutputStream(savePath+"/Prefs-MainWindow.xml" ), "UTF-8"  );
 			XMLEventFactory eventFactory = XMLEventFactory.newInstance();
 			
 			//header for the file
