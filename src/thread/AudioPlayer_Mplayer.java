@@ -31,6 +31,7 @@ public class AudioPlayer_Mplayer extends Thread {
 	private Vector<String> options = new Vector<String>(0,1);
 	
 	private BufferedReader inStream = null;
+	private BufferedReader errStream = null;
 	private BufferedWriter outStream = null;
 	
 	private Process mplayerProcess = null;
@@ -84,6 +85,7 @@ public class AudioPlayer_Mplayer extends Thread {
 			
 			//create the streams we need to interact
 			inStream = new BufferedReader(new InputStreamReader(mplayerProcess.getInputStream()));
+			errStream = new BufferedReader(new InputStreamReader(mplayerProcess.getErrorStream()));
 			outStream = new BufferedWriter(new OutputStreamWriter(mplayerProcess.getOutputStream()));
 			
 			String messages = "";
@@ -95,6 +97,8 @@ public class AudioPlayer_Mplayer extends Thread {
 				if(messages.startsWith("ICY Info: StreamTitle="))
 				{
 					mainGui.setTitleForAudioPlayer(stream.name ,messages.substring(messages.indexOf("StreamTitle=\'")+13,messages.lastIndexOf("';")),false);
+//					mainGui.setTitleForAudioPlayer(stream.name ,,false);
+					
 				}
 			}
 		 
