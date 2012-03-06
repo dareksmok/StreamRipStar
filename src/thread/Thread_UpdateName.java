@@ -99,7 +99,14 @@ public class Thread_UpdateName extends Thread
 						if(tmpo.startsWith("error") && !isDead) 
 						{
 							tablePanel.setSelectedCurrentNameCellAndTitle(tmpo,row,true);
-							Thread.sleep(8000);
+							
+							//make the 8 seconds stoppable:
+							int sleepTime = 0;		// in ms
+							
+							while(!isDead && sleepTime <=8000) {
+								Thread.sleep(100);
+								sleepTime+=100;
+							}
 							isDead = true;
 						}
 						
@@ -222,7 +229,14 @@ public class Thread_UpdateName extends Thread
 					//and kill the thread
 					if((tmpe != null) && !isDead && tmpe.toLowerCase().startsWith("error")) {
 						tablePanel.setSelectedCurrentNameCellAndTitle(tmpe,row,true);
-						Thread.sleep(8000);
+						
+						//make the 8 seconds stoppable:
+						int sleepTime = 0;		// in ms
+						
+						while(!isDead && sleepTime <=8000) {
+							Thread.sleep(100);
+							sleepTime+=100;
+						}
 						isDead = true;
 					}
 				}
