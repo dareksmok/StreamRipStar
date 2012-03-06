@@ -102,6 +102,8 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 		if(createNew) {
 			
 			Calendar now = Calendar.getInstance();
+			now.setTimeInMillis(System.currentTimeMillis());
+			
 			DateFormat df = DateFormat.getDateInstance (DateFormat.SHORT);
 			startDateTF = new JFormattedTextField(new DateFormatter(df));
 			startDateTF.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(now.getTime()));
@@ -391,11 +393,14 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 			DateFormat df = DateFormat.getDateInstance (DateFormat.SHORT);
 			DateFormat tf = DateFormat.getTimeInstance (DateFormat.SHORT);
 			
+			
+			
 			try
 			{
 				//startTime
 				Calendar now = Calendar.getInstance();
 				Calendar now2 = Calendar.getInstance();
+				
 				Date recDate = df.parse(startDateTF.getText());
 				Date recTime = tf.parse(startTimeTF.getText());
 				now.setTime(recDate);
