@@ -35,9 +35,9 @@ public class Thread_UpdateName extends Thread
 	private BufferedReader b,c;
 	
 	/**
-	 * To create with this construktor you need the stream, you want to record, the table
+	 * To create with this constructor you need the stream, you want to record, the table
 	 * where the new track names will updates in and the row in the table. Make sure there
-	 * really exist. There are no tests for valid paramters.
+	 * really exist. There are no tests for valid parameters.
 	 * @param astream
 	 * @param arow
 	 * @param tablePanel
@@ -82,16 +82,18 @@ public class Thread_UpdateName extends Thread
 				//- it comes no Killsignal to stop this Thread (isDead)
 				//- all data is read correctly (*G)
 				//- and the streamProcess exist (streamProcess != null?
-				while(!isDead && !(streamG && serverG && bitrateG && metaG)&& streamProcess != null )
+				while(!isDead && !(streamG && serverG && bitrateG && metaG)&& streamProcess != null)
 				{
 					//Test if byte are in the cache,
 					testErrorstream();
 					
-					//INPUTSTREAM
-					String tmpo = b.readLine().toLowerCase();
+					String tmpo = b.readLine();
 					
-					if(tmpo != null && !isDead) 
+					if(tmpo == null )
 					{
+						isDead = true;
+					} else {
+						tmpo = tmpo.toLowerCase();
 						//if you can't connect, streamRipStar print out the reason
 						// for 8 seconds
 						if(tmpo.startsWith("error") && !isDead) 
@@ -204,10 +206,10 @@ public class Thread_UpdateName extends Thread
 					//Thread.sleep(200);
 				}
 			} catch (IOException e) {
-				SRSOutput.getInstance().logE(e.getMessage());
+				SRSOutput.getInstance().logE("Controlled IOException: "+e.getMessage());
 				stream.setStatus(false);
 			} catch (InterruptedException f) {
-				SRSOutput.getInstance().logE(f.getMessage());
+				SRSOutput.getInstance().logE("Controlled InterruptedException: "+f.getMessage());
 				stream.setStatus(false);
 			}
 		}
