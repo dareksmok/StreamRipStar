@@ -45,8 +45,20 @@ public class SRSOutput
 	{
 		try 
 		{
+			Boolean append = true;  	// append messages to the log file -> default yes
 			path = new Control_GetPath().getStreamRipStarPath() + "/output.log";
-			writer = new BufferedWriter(new FileWriter(path,true));
+			
+			//delete here the log file first, if it has a large size
+			File logFile = new File(path);
+			
+			//if its larger then ~0.5MB, overwrite it
+			if(logFile.length() > 500000)
+			{
+				append = false;
+			}
+			
+			
+			writer = new BufferedWriter(new FileWriter(path,append));
 			log("StreamRipStar in version "+StreamRipStar.releaseVersion+
 					" and revision "+ StreamRipStar.releaseRevision + " has been started");
 			

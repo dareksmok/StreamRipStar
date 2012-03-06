@@ -273,6 +273,7 @@
     ----------------------------
   0.6 -> 0.6.1
 <<<<<<< OURS
+<<<<<<< OURS
  - fix: can abort endless connecting streams
  - fix: can abort messages when stream has an error and shows the error message for 8 second
  - fix: save and load the .xml files in utf8 coding to avoid corrupt streams and schedules
@@ -282,4 +283,8 @@
  - fix: can abort endless connecting streams 
  - fix: save and load the .xml files in utf8 coding to avoid corrupt streams and schedules
  - delete large log files automatically
+>>>>>>> THEIRS
+=======
+ - save and load the .xml files in utf8 coding to avoid corrupt streams and schedules
+ - delete large log files automatically 
 >>>>>>> THEIRS
