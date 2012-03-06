@@ -389,7 +389,7 @@ public class Gui_SchedulManager extends JFrame implements WindowListener {
 		int[] intOptions = new int[5];
 		
 		try {
-			XMLEventWriter writer = outputFactory.createXMLEventWriter( new FileOutputStream(savePath+"/ScheduleManager.xml" ) );
+			XMLEventWriter writer = outputFactory.createXMLEventWriter( new FileOutputStream(savePath+"/ScheduleManager.xml" ), "UTF-8"  );
 			XMLEventFactory eventFactory = XMLEventFactory.newInstance();
 			
 			//save Intgers of the widths of any cell that is shown
@@ -454,7 +454,7 @@ public class Gui_SchedulManager extends JFrame implements WindowListener {
 		{
 			XMLInputFactory factory = XMLInputFactory.newInstance(); 
 			XMLStreamReader parser;
-			parser = factory.createXMLStreamReader( new FileInputStream(loadPath+"/ScheduleManager.xml" ) );
+			parser = factory.createXMLStreamReader( new FileInputStream(loadPath+"/ScheduleManager.xml" ), "UTF-8"  );
 			while ( parser.hasNext() ) { 
 	 
 				switch ( parser.getEventType() )
