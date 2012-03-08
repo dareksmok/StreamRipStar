@@ -1085,6 +1085,14 @@ public class Control_Stream
 			options.add("-a");
 			String filterPattern = stream.singleFileTF;
 			
+			//if the pattern ends with %/ it describes a folder, but streamripper expects
+			//a name of a FILE. In the case streamripper would ignore the pattern, so we
+			//add here the default streamripper argument for the file name, which is a timestamp
+			if(filterPattern.endsWith("%/"))
+			{
+				filterPattern+="%D";
+			}
+			
 			//now replace the StreamRipStar intern pattern with the correct values
 			//-1, because our pattern has a length of min. 2
 			for( int i=filterPattern.length()-1 ; i >= 0 ; i--)
