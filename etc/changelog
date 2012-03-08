@@ -263,13 +263,23 @@
  - add: complete menu items
     
     ----------------------------
+    
   0.6 Beta6 -> 0.6
  - fix: starts with an endless log cycle
  - fix: import .pls or .m3u streams doesn't work
  
     ----------------------------
+    
   0.6 -> 0.6.1
  - fix: can abort endless connecting streams
  - fix: can abort messages when stream has an error and shows the error message for 8 second
  - fix: save and load the .xml files in utf8 coding to avoid corrupt streams and schedules
  - delete large log files automatically
+ 
+    ----------------------------
+    
+  0.6.1 -> 0.6.2
+  - fix: the -a option (rip into single file) was not parsed for extra StreamRipStar specific arguments
+  - fix: some translation issues
+  - add: if you rip to single file and give a name which is a directory, StreamRipStar add the default streamripper argument to save streams in the folder
+ 
