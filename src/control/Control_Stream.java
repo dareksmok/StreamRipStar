@@ -1082,7 +1082,91 @@ public class Control_Stream
 		//SINGLEFILE_CB
 		if(stream.singleFileCB) {
 			options.add("-a");
-			options.add(stream.singleFileTF);
+
+			String filterPattern = stream.singleFileTF;
+			
+			//if the pattern ends with %/ it describes a folder, but streamripper expects
+			//a name of a FILE. In the case streamripper would ignore the pattern, so we
+			//add here the default streamripper argument for the file name, which is a timestamp
+			if(filterPattern.endsWith("%/"))
+			{
+				filterPattern+="%D";
+			}
+			
+			//now replace the StreamRipStar intern pattern with the correct values
+			//-1, because our pattern has a length of min. 2
+			for( int i=filterPattern.length()-1 ; i >= 0 ; i--)
+			{
+				try {
+					//if we find a % we look what do with it
+					if(filterPattern.substring(i, i+1).equals("%"))
+					{
+						//look if the next String is a of our pattern
+						if(filterPattern.substring(i+1, i+2).equals("G"))
+						{
+							String tmpString = "";
+							
+							//Replace the %G with the Field Genre
+							if(i > 0) {
+								tmpString = filterPattern.substring(0, i);
+							}
+							
+							tmpString += stream.genre;
+							if(filterPattern.length() >= i+2)
+							{
+								tmpString += filterPattern.substring(i+2);
+							}
+							filterPattern = tmpString;
+						}
+						
+						//look if the next String is a of our pattern
+						else if(filterPattern.substring(i+1, i+2).equals("X"))
+						{
+							//Replace %X with the name of the Stream
+							String tmpString = "";
+							
+							//Replace the %G with the Field Genre
+							if(i > 0) {
+								tmpString = filterPattern.substring(0, i);
+							}
+							
+							tmpString += stream.name;
+							if(filterPattern.length() >= i+2)
+							{
+								tmpString += filterPattern.substring(i+2);
+							}
+							filterPattern = tmpString;
+						}
+						
+						//look if the next String is a of our pattern
+						else if(filterPattern.substring(i+1, i+2).equals("/"))
+						{
+							//Replace %/ with the delimiter of your OS
+							String tmpString = "";
+							
+							//Replace the %G with the Field Genre
+							if(i > 0) {
+								tmpString = filterPattern.substring(0, i);
+							}
+							
+							tmpString += System.getProperty("file.separator");
+							if(filterPattern.length() >= i+2)
+							{
+								tmpString += filterPattern.substring(i+2);
+							}
+							filterPattern = tmpString;
+						}
+					}
+				} catch (NullPointerException e) {
+					SRSOutput.getInstance().logE("Filter Options on Stream:"+e.getMessage());
+				} catch (IndexOutOfBoundsException f) {
+					SRSOutput.getInstance().logE("Filter Options on Stream:"+f.getMessage());
+				} catch (Exception g) {
+					SRSOutput.getInstance().logE("Filter Options on Stream:"+g.getMessage());
+				}
+			}
+			
+			options.add(filterPattern);
 		}
 		
 		//MAXTIME_CB
