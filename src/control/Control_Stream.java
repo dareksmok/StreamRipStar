@@ -1080,7 +1080,8 @@ public class Control_Stream
 		
 		//test, witch is activated 
 		//SINGLEFILE_CB
-		if(stream.singleFileCB) {
+		if(stream.singleFileCB)
+		{
 			options.add("-a");
 
 			String filterPattern = stream.singleFileTF;
