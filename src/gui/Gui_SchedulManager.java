@@ -69,6 +69,8 @@ public class Gui_SchedulManager extends JFrame implements WindowListener {
                 case 0: return Integer.class;
                 case 2: return Boolean.class;
                 case 1: return Integer.class;
+    			case 4: return TimeColumn.class;
+    			case 5: return TimeColumn.class;
                 default: return String.class;
             }
         }
@@ -143,6 +145,8 @@ public class Gui_SchedulManager extends JFrame implements WindowListener {
 		table.getTableHeader().setReorderingAllowed(false);
 		//autosorter for rows
 		table.setAutoCreateRowSorter(true);
+		// sort by start time initially
+		table.getRowSorter().toggleSortOrder(4);
 		//set the ID-Fields invisible
 		table.getColumn(schedulHeader[0]).setMinWidth(0);
 		table.getColumn(schedulHeader[0]).setMaxWidth(0);
@@ -220,29 +224,15 @@ public class Gui_SchedulManager extends JFrame implements WindowListener {
 			x[1] = job.getStreamID();
 			x[2] = job.isJobenabled() ;
 			x[3] = controlStreams.getStreamByID(job.getStreamID()).name;
-			//only show the time, if this is not a Job, which starts at the start of StreamRipStar
-			if(job.getJobCount() != 3)
-			{
-				x[4] = job.getStartTimeAsLocaleTime();
-				x[5] = job.getStopTimeAsLocaleTime();
-			} else {
-				
-				try {
-					x[4] = trans.getString("JobMan.AtStart");
-					x[5] = trans.getString("JobMan.Never");
-				} catch (MissingResourceException e) {
-					SRSOutput.getInstance().logE( "Schedulmanager Gui: "+e.getMessage()); 
-					x[4] = "At Start";
-					x[5] = "Never";
-				} catch (NullPointerException e) {
-					SRSOutput.getInstance().logE( "Schedulmanager Gui: "+e.getMessage()); 
-					x[4] = "At Start";
-					x[5] = "Never";
-				}
-			}
+			TimeColumn[] timeColumn = getTimeColumns(job);
+			x[4] = timeColumn[0];
+			x[5] = timeColumn[1];
 			x[6] = job.getComment();
 			
 			model.addRow(x);
+			
+			// fire event for re-sorting
+			model.fireTableDataChanged();
 		} catch (NullPointerException e) {
 			SRSOutput.getInstance().logE("Corrupt schedulJob found. ignore it");
 		}
@@ -294,16 +284,52 @@ public class Gui_SchedulManager extends JFrame implements WindowListener {
 		//update Name
 		table.setValueAt(controlStreams.getStreamByID(job.getStreamID()).name, row, 3);
 		
-		//only show the time, if this is not a Job, which starts at the start of StreamRipStar
-		if(job.getJobCount() != 3)
-		{
-			//update startTime
-			table.setValueAt(job.getStartTimeAsLocaleTime(), row, 4);
-			//update stopTime
-			table.setValueAt(job.getStopTimeAsLocaleTime(), row, 5);
-			//update comment
-		}
+		TimeColumn[] timeColumn = getTimeColumns(job);
+		//update startTime
+		table.setValueAt(timeColumn[0], row, 4);
+		//update stopTime
+		table.setValueAt(timeColumn[1], row, 5);
+		
+		//update comment
 		table.setValueAt(job.getComment(), row, 6);
+		
+		// fire event for re-sorting
+		model.fireTableDataChanged();
+	}
+	
+	/**
+	 * create the TimeColumns objects for the job
+	 * @param job: the job
+	 * @return timeColum[0] is start time, timeColum[1] is stop time
+	 */
+	private TimeColumn[] getTimeColumns(SchedulJob job) {
+		TimeColumn[] timeColum = { new TimeColumn(), new TimeColumn()};
+		
+		//only show the time, if this is not a Job, which starts at the start of StreamRipStar
+		if (job.getJobCount() != 3) {
+			timeColum[0].time = job.getStartTime();
+			timeColum[0].display = job.getStartTimeAsLocaleTime();
+			timeColum[1].time = job.getStopTime();
+			timeColum[1].display = job.getStopTimeAsLocaleTime();
+		} else {
+
+			try {
+				timeColum[0].display = trans.getString("JobMan.AtStart");
+				timeColum[1].display = trans.getString("JobMan.Never");
+			} catch (MissingResourceException e) {
+				SRSOutput.getInstance().logE(
+						"Schedulmanager Gui: " + e.getMessage());
+				timeColum[0].display = "At Start";
+				timeColum[1].display = "Never";
+			} catch (NullPointerException e) {
+				SRSOutput.getInstance().logE(
+						"Schedulmanager Gui: " + e.getMessage());
+				timeColum[0].display = "At Start";
+				timeColum[1].display = "Never";
+			}
+		}
+		
+		return timeColum;
 	}
 	
 	/**
@@ -637,4 +663,20 @@ public class Gui_SchedulManager extends JFrame implements WindowListener {
 		}
 	}
 	
+	public class TimeColumn implements Comparable<TimeColumn> {
+		String display;
+		long time;
+
+		@Override
+		public String toString() {
+			return display;
+		}
+
+		@Override
+		public int compareTo(TimeColumn other) {
+			long t1 = this.time;
+			long t2 = other.time;
+			return (t1 < t2 ? -1 : (t1 == t2 ? 0 : 1));
+		}
+	}
 }
