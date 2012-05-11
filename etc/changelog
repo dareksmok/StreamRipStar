@@ -286,5 +286,6 @@
      ----------------------------
     
   0.6.2 -> 0.6.3
-  - Can sort the streams in schedule table now correct
+  - fix: Can sort the streams in schedule table now correct (thanks to Martin)
+  - add: Can now start hidden in system tray
  

@@ -42,6 +42,8 @@ import javax.swing.KeyStroke;
 import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLInputFactory;
@@ -67,6 +69,7 @@ public class Gui_Settings2 extends JDialog
 	
 	private OnlyOneActivePanel mainPanel = new OnlyOneActivePanel();
 	private JScrollPane mainSP = new JScrollPane(mainPanel);
+	
 	//pathAudioPanel = pathPanel + audioPanel
 	private JPanel pathAudioPanel = new JPanel();
 	private JPanel pathPanel = new JPanel();
@@ -77,6 +80,7 @@ public class Gui_Settings2 extends JDialog
 	private JPanel sysTrayIconPanel = new JPanel();
 	private JPanel otherLookAndFeelPanel = new JPanel(); 
 	private JPanel actionPanel = new JPanel();
+	private JPanel programStartPanel = new JPanel();
 	
 	//langLogPanel = language + log panel
 	private JPanel langLogPanel = new JPanel();
@@ -141,10 +145,12 @@ public class Gui_Settings2 extends JDialog
 	private JComboBox LookAndFeelBox = new JComboBox();
 	private JComboBox logLevelBox = new JComboBox(logLevel);
 	
+	private boolean activeTrayIconTMP = false;
 	private JCheckBox activeTrayIcon = new JCheckBox("Show Systemtray (requires restart)");
 	private JCheckBox showTextCheckBox = new JCheckBox("Show Text under Icons",true);
 	private JCheckBox useInternalAudioPlayerCB = new JCheckBox("Use internal check box (Requires gstreamer installed");
 	private JCheckBox useAnotherLnfBox = new JCheckBox("Use another Look and Feel");
+	private JCheckBox startInSystemTrayCB = new JCheckBox("Start in system tray (minimized)");
 
 	private TitledBorder sysTrayTabTitle = BorderFactory.createTitledBorder("System Tray Icon");
 	private TitledBorder lookAndFeelTabTitle = BorderFactory.createTitledBorder("Look And Feel");
@@ -153,6 +159,7 @@ public class Gui_Settings2 extends JDialog
 	private TitledBorder logTabTitle = BorderFactory.createTitledBorder("Logging");
 	private TitledBorder internalAudioTitle = BorderFactory.createTitledBorder("Audio");
 	private TitledBorder pathTitle = BorderFactory.createTitledBorder("Path To Programs");
+	private TitledBorder programStartTitle = BorderFactory.createTitledBorder("Path To Programs");
 	
 	private UIManager.LookAndFeelInfo[] lookAndFeelInfos;
 
@@ -203,6 +210,7 @@ public class Gui_Settings2 extends JDialog
 		sysTrayIconPanel.setLayout(new GridBagLayout());
 		otherLookAndFeelPanel.setLayout(new GridBagLayout());
 		actionPanel.setLayout(new GridBagLayout());
+		programStartPanel.setLayout(new GridBagLayout());
 		langLogPanel.setLayout(new GridBagLayout());
 		languagePanel.setLayout(new GridBagLayout());
 		logPanel.setLayout(new GridBagLayout());
@@ -213,6 +221,7 @@ public class Gui_Settings2 extends JDialog
 		sysTrayIconPanel.setBorder(sysTrayTabTitle);
 		otherLookAndFeelPanel.setBorder(lookAndFeelTabTitle);
 		actionPanel.setBorder(actionsTabTitle);
+		programStartPanel.setBorder(programStartTitle);
 		languagePanel.setBorder(languageTabTitle);
 		logPanel.setBorder(logTabTitle);
 		internalaudioPanel.setBorder(internalAudioTitle);
@@ -237,6 +246,8 @@ public class Gui_Settings2 extends JDialog
 		c.gridy = 2;
 		lookAndFeelPanel.add(actionPanel,c);
 		c.gridy = 3;
+		lookAndFeelPanel.add(programStartPanel,c);
+		c.gridy = 4;
 		c.weighty = 1;
 		lookAndFeelPanel.add(new JLabel(""),c);
 		
@@ -301,6 +312,16 @@ public class Gui_Settings2 extends JDialog
 			actionPanel.add(currentTrackLabel,c);
 			c.gridx = 1;
 			actionPanel.add(currentTrackBox,c);
+			
+		//TAB 1 - Panel 4: program start Panel
+			c.insets = new Insets( 5, 5, 10, 5);
+			c.weightx = 1.0;
+			c.gridy = 0;
+			c.gridx = 0;
+			programStartPanel.add(startInSystemTrayCB);
+			c.gridx = 1;
+			c.weightx = 1;
+			programStartPanel.add(new JLabel(""),c);
 			
 //TAB 2: Path and Audio	
 		c.insets = new Insets( 1, 1, 1, 1);
@@ -463,6 +484,7 @@ public class Gui_Settings2 extends JDialog
 		activeTrayIcon.addActionListener(new ChangeTrayFields());
 		useAnotherLnfBox.addActionListener(new ChangeTrayFields());
 		useInternalAudioPlayerCB.addActionListener(new ChangeTrayFields());
+		startInSystemTrayCB.addActionListener(new StartProgrammChangeListener());
 		
 		//set new language
 		setLanguage();
@@ -588,6 +610,7 @@ public class Gui_Settings2 extends JDialog
 			currentTrackLabel.setText(trans.getString("curTitle"));
 			lnfLabel.setText(trans.getString("Settings.lnfLabel"));
 			useAnotherLnfBox.setText(trans.getString("Settings.useAnotherLnfBox"));
+			startInSystemTrayCB.setText(trans.getString("Settings.startInSystemTray"));
 			logLabel.setText(trans.getString("Settings.logLabel"));
 			
 			sysTrayTabTitle.setTitle(trans.getString("Settings.title.SysTray"));
@@ -597,6 +620,7 @@ public class Gui_Settings2 extends JDialog
 			logTabTitle.setTitle(trans.getString("Settings.title.Log"));
 			internalAudioTitle.setTitle(trans.getString("Settings.title.InternalAudio"));
 			pathTitle.setTitle(trans.getString("Settings.title.Paths"));
+			programStartTitle.setTitle(trans.getString("Settings.title.ProgramStart"));
 			
 			Object elements[][] = {
 					{trans.getString("Settings.Panel.LookAndFeel"),commonPrefIcon},
@@ -695,7 +719,8 @@ public class Gui_Settings2 extends JDialog
 			//header for the file
 			XMLEvent header = eventFactory.createStartDocument();
 			XMLEvent startRootSettings = eventFactory.createStartElement( "", "", "Settings" );
-
+			
+			XMLEvent startInSystTrayCB_S = eventFactory.createAttribute( "startInSysTray",  String.valueOf(startInSystemTrayCB.isSelected()));
 			XMLEvent activeIconCB_S = eventFactory.createAttribute( "activeTrayIcon",  String.valueOf( activeTrayIcon.isSelected()));
 			XMLEvent lookAndFeelCB_S = eventFactory.createAttribute( "useAnotherLnfBox",  String.valueOf( useAnotherLnfBox.isSelected()));
 			XMLEvent showTextCB_S = eventFactory.createAttribute( "showTextCB", String.valueOf( showTextCheckBox.isSelected()) );
@@ -724,7 +749,8 @@ public class Gui_Settings2 extends JDialog
 			//finally write into file
 			writer.add( header ); 
 			writer.add( startRootSettings );
-			writer.add( activeIconCB_S ); 
+			writer.add( activeIconCB_S );
+			writer.add( startInSystTrayCB_S );
 			writer.add( lookAndFeelCB_S ); 
 			writer.add( showTextCB_S ); 
 			writer.add( useInternalAudioPlayerCB_S ); 
@@ -824,6 +850,9 @@ public class Gui_Settings2 extends JDialog
 				    		}
 				    		else if (parser.getAttributeLocalName( i ).equals("showTextCB")) {
 				    			showTextCheckBox.setSelected(Boolean.valueOf(parser.getAttributeValue(i)));
+				    		}
+				    		else if (parser.getAttributeLocalName( i ).equals("startInSysTray")) {
+				    			startInSystemTrayCB.setSelected(Boolean.valueOf(parser.getAttributeValue(i)));
 				    		}
 				    		else if (parser.getAttributeLocalName( i ).equals("useInternalAudioPlayerCB")) {
 				    			useInternalAudioPlayerCB.setSelected(Boolean.valueOf(parser.getAttributeValue(i)));
@@ -955,6 +984,22 @@ public class Gui_Settings2 extends JDialog
 		public void actionPerformed(ActionEvent e)
 		{
 			repaintCommon();
+		}
+	}
+	
+	public class StartProgrammChangeListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			if(startInSystemTrayCB.isSelected())
+			{
+				activeTrayIconTMP = activeTrayIcon.isSelected();
+				activeTrayIcon.setSelected(true);
+			} else {
+				activeTrayIcon.setSelected(activeTrayIconTMP);
+				startInSystemTrayCB.setSelected(false);
+			}
 		}
 	}
 	

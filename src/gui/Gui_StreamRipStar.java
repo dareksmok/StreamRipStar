@@ -73,6 +73,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	
 	//for runtime
 	private Boolean tray = false;				// false = hide tray icon
+	private Boolean startInvisibleInTray = false;// false = hide at start in systray
 	private Boolean showText = false; 			//false = don't show text under Icons
 	private Boolean useInternalPlayer = true;	//true, if we use the internal player
 	private int winAction = 1;					//1= close window
@@ -217,7 +218,11 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
         int y = (screenDim.height - frameDim.height)/2;
         //set location
         setLocation(x, y);
-        setVisible(true);
+        
+        //show only if it should not start invisible in system tray
+        if(!startInvisibleInTray) {
+        	setVisible(true);
+        }
         
         //create object to control the next 2 Threads
         Control_Threads controlThreads = new Control_Threads();
@@ -748,6 +753,9 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 				    	for ( int i = 0; i < parser.getAttributeCount(); i++ ) {
 				    		if(parser.getAttributeLocalName( i ).equals("activeTrayIcon")) {
 				    			tray = Boolean.valueOf(parser.getAttributeValue(i));
+				    		}
+				    		else if (parser.getAttributeLocalName( i ).equals("startInSysTray")) {
+				    			 startInvisibleInTray = Boolean.valueOf(parser.getAttributeValue(i));
 				    		}
 				    		else if (parser.getAttributeLocalName( i ).equals("showTextCB")) {
 				    			showText = Boolean.valueOf(parser.getAttributeValue(i));
