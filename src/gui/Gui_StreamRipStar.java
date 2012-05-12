@@ -48,6 +48,8 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
+
+import misc.Commandline;
 import misc.Stream;
 import thread.Thread_Control_Schedul;
 import thread.Thread_FillTableWithStreams;
@@ -172,7 +174,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	private JToolBar iconBar = new JToolBar();
 	
 	//if openPreferences == true -> it opens the preferences 
-	public Gui_StreamRipStar(Boolean openPreferences)
+	public Gui_StreamRipStar(Boolean openPreferences, Commandline cmd)
 	{
 		super("StreamRipStar");
 		setIconImage( windowIcon.getImage() );
@@ -191,6 +193,16 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
         
         buildMenuBar();
         loadProp();
+        
+        //after loading the settings from file, override the variables with the 
+        //from command line
+        if(cmd.isTmpEnableSystray()) {
+        	tray = true;
+        } 
+        if(cmd.isTmpStartInSystray()) {
+        	startInvisibleInTray = true;
+        }
+        
         buildIconBar();
 		setSystemTray();
 		setLanguage();

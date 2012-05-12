@@ -23,54 +23,61 @@ import control.SRSOutput;
  */
 public class StreamRipStar
 {	
-	public static final int releaseRevision = 604;
-	public static final String releaseVersion = "0.6.2";
+	public static final int releaseRevision = 605;
+	public static final String releaseVersion = "0.6.3 - Beta1";
 	private static boolean noConfiFileFound = false;
 	private static String lang="",reg ="", lnfClassName = null;
 	
 	public static void main(String[] args) {
-		start();
+		start(args);
 	}
 	
-	private static void start() {
-
-		//get language from file
-		// 0 = english
-		// 1 = german
-		// else = system
-		Short langs = getPrefsFromFile();
-		if(langs==0){
-			lang="en";
-		} else if (langs==1) {
-			lang="de";
-			reg ="DE";
-		} else if (langs==2) {
-			lang="system";
-		} else {
-			lang="system";
-		}
-
-		setLookAndFeel();
+	private static void start(String[] args)
+	{
+		//check the command line arguments
+		Commandline cmd = new Commandline(args);
 		
-		//if the settings file is empty use
-		//default language and open preferences on startup
-		if(lang==null || noConfiFileFound)
-			new Gui_StreamRipStar(true);
-		
-		//if system is selected, use system language
-		//and don't open settings at startup
-		else if(lang.equals("system"))
-			new Gui_StreamRipStar(false);
-		
-		//else set the selected language
-		else {
-			if(reg.equals(""))
-				Locale.setDefault(new Locale(lang));
-			else
-				Locale.setDefault(new Locale(lang,reg));
+		//don't start if the command line arguments are printed
+		if(!cmd.requestHelpMessage())
+		{
+			//get language from file
+			// 0 = english
+			// 1 = german
+			// else = system
+			Short langs = getPrefsFromFile();
+			if(langs==0){
+				lang="en";
+			} else if (langs==1) {
+				lang="de";
+				reg ="DE";
+			} else if (langs==2) {
+				lang="system";
+			} else {
+				lang="system";
+			}
+	
+			setLookAndFeel();
 			
-			//and open StreamRipStar with new language
-			new Gui_StreamRipStar(false);
+			//if the settings file is empty use
+			//default language and open preferences on startup
+			if(lang==null || noConfiFileFound)
+				new Gui_StreamRipStar(true,cmd);
+			
+			//if system is selected, use system language
+			//and don't open settings at startup
+			else if(lang.equals("system"))
+				new Gui_StreamRipStar(false,cmd);
+			
+			//else set the selected language
+			else {
+				if(reg.equals(""))
+					Locale.setDefault(new Locale(lang));
+				else
+					Locale.setDefault(new Locale(lang,reg));
+				
+				//and open StreamRipStar with new language
+				new Gui_StreamRipStar(false,cmd);
+			}
 		}
 	}
 	

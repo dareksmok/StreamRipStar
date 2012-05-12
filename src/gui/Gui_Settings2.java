@@ -511,7 +511,7 @@ public class Gui_Settings2 extends JDialog
 		repaintCommon();
 
 		//get new dimension of the window
-        Dimension frameDim = new Dimension(800,440);
+        Dimension frameDim = new Dimension(860,500);
         setSize(frameDim);
     	
         //get resolution
