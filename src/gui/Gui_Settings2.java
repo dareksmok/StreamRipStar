@@ -940,6 +940,7 @@ public class Gui_Settings2 extends JDialog
 			windowClosing.setEnabled(false);
 			//set status: close when click on x
 			windowActionBox.setSelectedIndex(1);
+			startInSystemTrayCB.setSelected(false);
 		}
 		
 		if(useAnotherLnfBox.isSelected()) {
@@ -996,9 +997,11 @@ public class Gui_Settings2 extends JDialog
 			{
 				activeTrayIconTMP = activeTrayIcon.isSelected();
 				activeTrayIcon.setSelected(true);
+				repaintCommon();
 			} else {
 				activeTrayIcon.setSelected(activeTrayIconTMP);
 				startInSystemTrayCB.setSelected(false);
+				repaintCommon();
 			}
 		}
 	}
