@@ -289,4 +289,5 @@
   - fix: Can sort the streams in schedule table now correct (thanks to Martin)
   - add: Can now start hidden in system tray
   - add: Command line arguments enabled for some options at start
+  - fix: Right-click on system tray icon now just opens the popup menu
  
