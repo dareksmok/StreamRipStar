@@ -18,8 +18,8 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.FileInputStream;
@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -271,14 +272,12 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 				setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
 			    sysTray = SystemTray.getSystemTray();
 			    Image image =  new ImageIcon((URL)getClass().getResource("/Icons/streamRipStar.png")).getImage();
-			    MouseListener mouseListener = new MouseListener() {
-			        public void mouseClicked(MouseEvent e) {
-			        	changeStatus();
+			    MouseAdapter mouseListener = new MouseAdapter() {
+			        public void mouseReleased(MouseEvent e) {
+			            if(!e.isPopupTrigger()){
+			                changeStatus();
+			            }
 			        }
-			        public void mouseEntered(MouseEvent e) {}
-			        public void mouseExited(MouseEvent e) {}
-			        public void mousePressed(MouseEvent e) {}
-			        public void mouseReleased(MouseEvent e) {}
 			    };
 			    
 			    //build right-click menu
