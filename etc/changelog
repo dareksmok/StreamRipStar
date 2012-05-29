@@ -290,4 +290,6 @@
   - add: Can now start hidden in system tray
   - add: Command line arguments enabled for some options at start
   - fix: Right-click on system tray icon now just opens the popup menu
- 
+  - fix: Localization of system tray popup menu
+  - fix: Immediate removal of system tray icon when exiting application
+  - fix: Windows XP did not show the system tray icon when starting StreamRipStar with autostart

@@ -206,6 +206,20 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
         
         buildIconBar();
 		setSystemTray();
+		
+		if(System.getProperty("os.name").equals("Windows XP")) {
+    	// If StreamRipStar has been started during autostart on Windows XP
+    	// the icon will not appear. This is a known problem on Windows XP.
+    	// The only way to fix this is to wait some time before adding the
+		// icon. So we just just add the icon again after 30 seconds.
+    	new java.util.Timer().schedule(new java.util.TimerTask() {
+			@Override
+    		public void run(){
+		    	setSystemTray();
+    		}
+			}, 30000);
+		}
+		
 		setLanguage();
 		
 		//and pre-load the audio system; if it fails, the internal audio player is
@@ -255,10 +269,6 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
     		new Gui_Settings2(this);
         }
 	}
-//
-//	public ResourceBundle getTrans() {
-//		return trans;
-//	}
 	
 	/**
 	 * enables the system tray and set
@@ -267,8 +277,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	private void setSystemTray() {
 		if(tray) {
 			if (SystemTray.isSupported()) {
-				if(sysTray != null)
-					sysTray.remove(trayIcon);
+				unsetSystemTray();
 				setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
 			    sysTray = SystemTray.getSystemTray();
 			    Image image =  new ImageIcon((URL)getClass().getResource("/Icons/streamRipStar.png")).getImage();
@@ -282,13 +291,13 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			    
 			    //build right-click menu
 			    PopupMenu popup = new PopupMenu();
-			    MenuItem exitItem = new MenuItem("Exit StreamRipStar");
-			    MenuItem showMainWindowItem = new MenuItem("Show StreamRipStar");
+			    MenuItem exitItem = new MenuItem(trans.getString("SystemTray.exit"));
+			    MenuItem mainWindowItem = new MenuItem(trans.getString("SystemTray.window"));
 			    exitItem.addActionListener(new ExitListener(Gui_StreamRipStar.this));
-			    showMainWindowItem.addActionListener(new ShowStreamRipStarListener());
+			    mainWindowItem.addActionListener(new ShowStreamRipStarListener());
 			    
 			    //visible
-			    popup.add(showMainWindowItem);
+			    popup.add(mainWindowItem);
 			    popup.addSeparator();
 			    popup.add(exitItem);
 	
@@ -303,10 +312,20 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			    }
 			}
 		} else {
-			if(sysTray != null)
-				sysTray.remove(trayIcon);
+			unsetSystemTray();
 		}
 		
+	}
+	
+	/**
+	 * Removes the system tray icon.
+	 */
+	private void unsetSystemTray() {
+		if(sysTray != null) {
+			sysTray.remove(trayIcon);
+			sysTray = null;
+			trayIcon = null;
+		}
 	}
 	
 	/**
@@ -904,6 +923,9 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 				//save the vector with all schedule jobs
 				controlJob.saveScheduleVector();
 				
+				//remove system tray icon
+				unsetSystemTray();
+				
 				System.exit(0);
 			}
 		}
@@ -919,7 +941,10 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			
 			//save the vector with all schedule jobs
 			controlJob.saveScheduleVector();
-			
+
+			//remove system tray icon
+			unsetSystemTray();
+		
 			System.exit(0);
 		}
 	}
