@@ -35,10 +35,19 @@ public class AudioPlayer extends Thread{
 	{
 		this.stream = stream;
 		this.mainGui = mainGui;
-		playbin = new PlayBin2("AudioPlayer");
-		//set the valume for this new player to avoid a wrong gain at start
-		playbin.setVolumePercent(mainGui.getVolumeManager().getVolume());
-		lg.logD("AudioPlayer: Player created");
+		try {
+			playbin = new PlayBin2("AudioPlayer");
+			//set the valume for this new player to avoid a wrong gain at start
+			playbin.setVolumePercent(mainGui.getVolumeManager().getVolume());
+			lg.logD("AudioPlayer: Player created");
+		}
+		//if we get here an exception, we should disable the internal audio player with gstreamer
+		catch(java.lang.UnsatisfiedLinkError e) {
+			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled")
+					+"\n\n"+e.getMessage());
+			lg.logE("AudioPlayer: No gstreamer on System installed\n"+e.getMessage());
+			mainGui.setUseInternalAudioPlayer(false);
+		}
 	}
 	
 	/**
@@ -129,16 +138,16 @@ public class AudioPlayer extends Thread{
 	        Gst.main();
 
 		} catch (java.lang.UnsatisfiedLinkError e) {
-			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled"));
+			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled")+"\n"+e.getMessage());
 			lg.logD("AudioPlayer: UnsatisfiedLinkError\n"+e.getMessage());
 		} catch (ExceptionInInitializerError e) {
-			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled"));
+			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled")+"\n"+e.getMessage());
 			lg.logD("AudioPlayer: ExceptionInInitializerError\n"+e.getMessage());
 		} catch (IllegalArgumentException e) {
-			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled"));
+			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled")+"\n"+e.getMessage());
 			lg.logD("AudioPlayer: IllegalArgumentException\n"+e.getMessage());
 		} catch (NoClassDefFoundError e) {
-			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled"));
+			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled")+"\n"+e.getMessage());
 			lg.logD("AudioPlayer: NoClassDefFoundError\n"+e.getMessage());
 		}
 	}
