@@ -52,6 +52,8 @@ public class AudioPlayer extends Thread{
 		}
 		//if we get here an exception, we should disable the internal audio player with gstreamer
 		catch(java.lang.UnsatisfiedLinkError e) {
+			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled")
+					+"\n\n"+e.getMessage());
 			lg.logE("AudioPlayer: No gstreamer on System installed\n"+e.getMessage());
 			mainGui.setUseInternalAudioPlayer(false);
 		}
@@ -128,12 +130,16 @@ public class AudioPlayer extends Thread{
 
 		} catch (java.lang.UnsatisfiedLinkError e) {
 			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled"));
+			lg.logD("AudioPlayer: UnsatisfiedLinkError\n"+e.getMessage());
 		} catch (ExceptionInInitializerError e) {
 			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled"));
+			lg.logD("AudioPlayer: ExceptionInInitializerError\n"+e.getMessage());
 		} catch (IllegalArgumentException e) {
 			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled"));
+			lg.logD("AudioPlayer: IllegalArgumentException\n"+e.getMessage());
 		} catch (NoClassDefFoundError e) {
 			mainGui.showErrorMessageInPopUp(trans.getString("audioplayer.noGstreamerInstalled"));
+			lg.logD("AudioPlayer: NoClassDefFoundError\n"+e.getMessage());
 		}
 	}
 	
