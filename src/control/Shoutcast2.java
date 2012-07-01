@@ -142,7 +142,7 @@ public class Shoutcast2 {
 		tmpGenres[6] = "World Folk";
 
 		genres[7] = tmpGenres;
-		tmpGenres = new String[16];
+		tmpGenres = new String[12];
 		
 		tmpGenres[0] = "Inspirational";
 		tmpGenres[1] = "Christian";
@@ -158,7 +158,7 @@ public class Shoutcast2 {
 		tmpGenres[11] = "Traditional Gospel";
 		
 		genres[8] = tmpGenres;
-		tmpGenres = new String[29];
+		tmpGenres = new String[30];
 		
 		tmpGenres[0] = "International";
 		tmpGenres[1] = "African";
@@ -173,22 +173,23 @@ public class Shoutcast2 {
 		tmpGenres[10] = "Filipino";
 		tmpGenres[11] = "French";
 		tmpGenres[12] = "Greek";
-		tmpGenres[13] = "Hawaiian/Pacific";
-		tmpGenres[14] = "Hindi";
-		tmpGenres[15] = "Indian";
-		tmpGenres[16] = "Japanese";
-		tmpGenres[17] = "Jewish";
-		tmpGenres[18] = "Klezmer";
-		tmpGenres[19] = "Korean";
-		tmpGenres[20] = "Mediterranean";
-		tmpGenres[21] = "Middle Eastern";
-		tmpGenres[22] = "North American";
-		tmpGenres[23] = "Soca";
-		tmpGenres[24] = "South American";
-		tmpGenres[25] = "Tamil";
-		tmpGenres[26] = "World";
-		tmpGenres[27] = "Worldbeat";
-		tmpGenres[28] = "Zouk";
+		tmpGenres[13] = "German";
+		tmpGenres[14] = "Hawaiian/Pacific";
+		tmpGenres[15] = "Hindi";
+		tmpGenres[16] = "Indian";
+		tmpGenres[17] = "Japanese";
+		tmpGenres[18] = "Jewish";
+		tmpGenres[19] = "Klezmer";
+		tmpGenres[20] = "Korean";
+		tmpGenres[21] = "Mediterranean";
+		tmpGenres[22] = "Middle Eastern";
+		tmpGenres[23] = "North American";
+		tmpGenres[24] = "Soca";
+		tmpGenres[25] = "South American";
+		tmpGenres[26] = "Tamil";
+		tmpGenres[27] = "World";
+		tmpGenres[28] = "Worldbeat";
+		tmpGenres[29] = "Zouk";
 		
 		genres[9] = tmpGenres;
 		tmpGenres = new String[14];
