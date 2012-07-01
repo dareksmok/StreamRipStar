@@ -22,7 +22,7 @@ public class Control_http_Shoutcast_2 {
 	private Boolean stopSearching = false; // stop an action
 	private int currentPage = 0;
 	private int totalPages = 0;
-	private int maxResults = 100;
+	private int maxResults = 10;
 	
 	// streaminfo[0] = Name
 	// streaminfo[1] = Website
@@ -245,7 +245,12 @@ public class Control_http_Shoutcast_2 {
 							
 							//look for the current title
 							readNextHtmlLine().trim();
-							streamInfo[1] = text.substring(text.indexOf("\" title=\"")+9, text.indexOf("\">Recently played"));
+							
+							if(text.contains("\">Recently played")) {
+								streamInfo[1] = text.substring(text.indexOf("\" title=\"")+9, text.indexOf("\">Recently played"));
+							} else {
+								streamInfo[1] = text.substring(text.indexOf("\" title=\"")+9, text.indexOf("\">Now Playing:"));
+							}
 							
 							//look for the amount of listeners to the stream
 							streamInfo[2] = readNextHtmlLine();
@@ -329,7 +334,7 @@ public class Control_http_Shoutcast_2 {
 		    data += "&" + URLEncoder.encode("strIndex", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(startInt), "UTF-8");
 
 		    // Send the POST request
-		    URL url = new URL("http://www.shoutcast.com/search-ajax/"+keyword+"");
+		    URL url = new URL("http://www.shoutcast.com/search-ajax/"+keyword);
 		    URLConnection conn = url.openConnection();
 		    conn.setDoOutput(true);
 		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
@@ -371,7 +376,12 @@ public class Control_http_Shoutcast_2 {
 						streamInfo[0] = text.substring(text.indexOf("\" title=\"")+9, text.indexOf("\" href=\""));
 
 						//look for the Genres the stream belongs to
-						streamInfo[6] = readNextHtmlLine().trim().substring(6);
+						text = readNextHtmlLine();
+						if(text.trim().length() > 6) {
+							streamInfo[6] = text.trim().substring(6);
+						} else {
+							streamInfo[6] = "";
+						}
 						
 						//The link to the website
 						bw.readLine();
