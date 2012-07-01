@@ -1,4 +1,4 @@
-package control;
+package thread;
 
 import gui.Gui_searchUpdate;
 
@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+
+import control.SRSOutput;
 
 import misc.StreamRipStar;
 
@@ -21,7 +23,7 @@ import misc.StreamRipStar;
 public class SearchUpdate extends Thread {
 
 	private boolean killThread = false;
-	private String updateURLString = "http://streamripstar.berlios.de/streamripstar.update";
+	private String updateURLString = "https://raw.github.com/Eule/StreamRipStar/info/streamripstar.update";
 	private URL updateURL;
 	private BufferedReader bw;
 	private String text = "";

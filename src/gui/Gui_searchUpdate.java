@@ -21,6 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import thread.SearchUpdate;
+
 import control.*;
 
 /* This program is licensed under the terms of the GPL V3 or newer*/
