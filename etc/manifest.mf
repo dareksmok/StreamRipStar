@@ -1,6 +1,0 @@
-Manifest-Version: 1.1
-Created-By: Johannes Putzke
-Main-Class: misc.StreamRipStar
-Specification-Version: 1.4
-Implementation-Version: 1.4.2
-target: 1.4
