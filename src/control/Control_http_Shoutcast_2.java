@@ -22,7 +22,7 @@ public class Control_http_Shoutcast_2 {
 	private Boolean stopSearching = false; // stop an action
 	private int currentPage = 0;
 	private int totalPages = 0;
-	private int maxResults = 10;
+	private int maxResults = 100;
 	
 	// streaminfo[0] = Name
 	// streaminfo[1] = Website
