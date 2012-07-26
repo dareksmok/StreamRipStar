@@ -52,6 +52,9 @@ public class StreamRipStar
 				reg ="DE";
 			} else if (langs==2) {
 				lang="system";
+			}  else if (langs==3) {
+				lang="fr";
+				reg="FR";
 			} else {
 				lang="system";
 			}
