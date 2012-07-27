@@ -44,14 +44,16 @@ public class About_StreamRipStar extends JDialog
 	private Control_Stream controlStreams = null;
 	
 	private SRSLabel programming = new SRSLabel("Programming :");
-	private SRSTextfield programmerName = new SRSTextfield("Johannes Putzke"); 
+	private SRSTextfield programmerName = new SRSTextfield("Johannes Putzke (die_eule@gmx.net"); 
 	private SRSLabel IconsAndGrap = new SRSLabel("Icons and Graphics :");
 	private SRSTextArea iconAndGrapName = new SRSTextArea("Christian Putzke (EdMolf) - Icons Mainwindow," +
-			"	\n\tLogo and other graphics\nOxygen Icon Projekt - Streambrowser, Updatedialog");
+			"\nLogo and other graphics\nOxygen Icon Projekt - Streambrowser, Updatedialog");
 	private SRSLabel license = new SRSLabel("License :");
 	private SRSTextfield licenceName = new SRSTextfield("GPLV3");
 	private SRSLabel version = new SRSLabel("Version :");
 	private SRSTextfield versionName = new SRSTextfield(misc.StreamRipStar.releaseVersion);
+	private SRSLabel frenchTranslation = new SRSLabel("French Translation :");
+	private SRSTextfield frenchTranslationName = new SRSTextfield("Philippe Augustin");
 	private SRSLabel streamRipStarSourceforgeSite = new SRSLabel("StreamRipStars Projektpage :");
 	private SRSTextfield streamRipStarSourceforgeAddress = new SRSTextfield("http://developer.berlios.de/projects/streamripstar/");
 	private SRSLabel streamRipStarHomepage = new SRSLabel("StreamRipStars Wiki :");
@@ -128,6 +130,11 @@ public class About_StreamRipStar extends JDialog
 		panel.add(versionName,c);
 		c.gridx = 0;
 		c.gridy = 6;
+		panel.add(frenchTranslation,c);
+		c.gridx = 1;
+		panel.add(frenchTranslationName,c);
+		c.gridx = 0;
+		c.gridy = 7;
 		panel.add(streamRipStarSourceforgeSite,c);
 		c.gridx = 1;
 		panel.add(streamRipStarSourceforgeAddress,c);
@@ -220,6 +227,7 @@ public class About_StreamRipStar extends JDialog
     		IconsAndGrap.setText(trans.getString("IconsAndGrap"));
     		license.setText(trans.getString("license"));
     		version.setText(trans.getString("version"));
+    		frenchTranslation.setText(trans.getString("frenchTranslation"));
     		streamRipStarSourceforgeSite.setText(trans.getString("streamRipStarSourceforgeSite"));
     		streamRipStarHomepage.setText(trans.getString("streamRipStarHomepage"));
     		externPrograms.setText(trans.getString("about.externPrograms"));
