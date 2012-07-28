@@ -563,7 +563,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			browseGenreButton.setFont(textUnderIconsFont);
 		}
 		//if there is a use of the intern player, update the text, too
-		if(useInternalPlayer & audioPanel != null) 
+		if(useInternalPlayer && audioPanel != null) 
 		{
 			audioPanel.setTextUnderIcons(showText);
 		}

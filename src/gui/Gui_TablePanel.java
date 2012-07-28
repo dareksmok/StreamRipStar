@@ -456,7 +456,11 @@ public class Gui_TablePanel extends JPanel
 	 */
 	public void loadFirstAudioPlayer()
 	{
-		player = new AudioPlayer(mainGui);
+		//only load the player, if we want to use the internal audio player
+		if(mainGui.useInternalAudioPlayer())
+		{
+			player = new AudioPlayer(mainGui);
+		}
 	}
 	
 	/**
