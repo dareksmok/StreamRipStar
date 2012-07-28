@@ -277,6 +277,25 @@ public class Gui_StreamOptions extends JFrame implements WindowListener {
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(this);
+		
+		//set size of window
+		//pack together
+		pack();
+		//get new dimension of the window
+        Dimension frameDim = getSize();
+    	
+        //get resolution
+        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        //calculates the app. values
+        int x = (screenDim.width - frameDim.width)/2;
+        int y = (screenDim.height - frameDim.height)/2;
+        
+        //set location
+        setLocation(x, y);
+        
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
 	}
 	
 	//Set all Button etc
@@ -812,27 +831,6 @@ public class Gui_StreamOptions extends JFrame implements WindowListener {
 			add(tabbedPane, BorderLayout.CENTER);
 			add(buttonPanel, BorderLayout.SOUTH);
 			
-			//set size of window
-			//pack together
-	
-//			setSize(new Dimension(650,700));
-			pack();
-			//get new dimension of the window
-	        Dimension frameDim = getSize();
-	    	
-	        //get resolution
-	        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-	        
-	        //calculates the app. values
-	        int x = (screenDim.width - frameDim.width)/2;
-	        int y = (screenDim.height - frameDim.height)/2;
-	        
-	        //set location
-	        setLocation(x, y);
-	        
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setVisible(true);
-
 			
 	        //escape for exit
 	        KeyStroke escStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true);
