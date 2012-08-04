@@ -295,7 +295,10 @@ public class Gui_StreamOptions extends JFrame implements WindowListener {
         setLocation(x, y);
         
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
+		
+		//just show, if we want it
+		if(setVisible)
+			setVisible(true);
 	}
 	
 	//Set all Button etc
