@@ -40,6 +40,7 @@ public class Thread_Control_Schedul extends Thread{
 	private Boolean updateView = false;
 	private Control_Threads controlThread = null;
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
+	private java.util.GregorianCalendar gc =new java.util.GregorianCalendar();
 	
 	public Thread_Control_Schedul(Gui_StreamRipStar mainGui, Control_Threads controlThread) {
 		this.mainGui = mainGui;
@@ -255,9 +256,9 @@ public class Thread_Control_Schedul extends Thread{
 				    		} else if (parser.getAttributeLocalName( i ).equals("schedulID")) {
 				    			schedulID = Integer.valueOf(parser.getAttributeValue(i));
 				    		} else if (parser.getAttributeLocalName( i ).equals("startTime")) {
-				    			startTime = Long.valueOf(parser.getAttributeValue(i));
+				    			startTime = Long.valueOf(parser.getAttributeValue(i)) + gc.get(Calendar.DST_OFFSET);
 				    		} else if (parser.getAttributeLocalName( i ).equals("stopTime")) {
-				    			stopTime = Long.valueOf(parser.getAttributeValue(i));
+				    			stopTime = Long.valueOf(parser.getAttributeValue(i)) + gc.get(Calendar.DST_OFFSET);
 				    		} else if (parser.getAttributeLocalName( i ).equals("howOftenID")) {
 				    			howOftenID = Integer.valueOf(parser.getAttributeValue(i));
 				    		} else if (parser.getAttributeLocalName( i ).equals("enableJob")) {
@@ -477,7 +478,7 @@ public class Thread_Control_Schedul extends Thread{
 	public void saveScheduleVector() {
 		String savePath =  new Control_GetPath().getStreamRipStarPath();
 		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance(); 
-		
+
 		try {
 			XMLEventWriter writer = outputFactory.createXMLEventWriter(
 					new FileOutputStream(savePath+"/Scheduls.xml" ), "UTF-8"  );
@@ -495,8 +496,8 @@ public class Thread_Control_Schedul extends Thread{
 				XMLEvent Job = eventFactory.createStartElement( "", "", "SchedulJob" );
 				XMLEvent streamID = eventFactory.createAttribute( "streamID",  String.valueOf( schedulVector.get(i).getStreamID())); 
 				XMLEvent schedulID = eventFactory.createAttribute( "schedulID",  String.valueOf( schedulVector.get(i).getSchedulID())); 
-				XMLEvent startTime = eventFactory.createAttribute( "startTime",  String.valueOf( schedulVector.get(i).getStartTime())); 
-				XMLEvent stopTime = eventFactory.createAttribute( "stopTime",  String.valueOf( schedulVector.get(i).getStopTime())); 
+				XMLEvent startTime = eventFactory.createAttribute( "startTime",  String.valueOf( schedulVector.get(i).getStartTime() - gc.get(Calendar.DST_OFFSET))); 
+				XMLEvent stopTime = eventFactory.createAttribute( "stopTime",  String.valueOf( schedulVector.get(i).getStopTime() - gc.get(Calendar.DST_OFFSET))); 
 				XMLEvent howOftenID = eventFactory.createAttribute( "howOftenID",  String.valueOf( schedulVector.get(i).getJobCount())); 
 				XMLEvent enableJob = eventFactory.createAttribute( "enableJob",  String.valueOf( schedulVector.get(i).isJobenabled())); 
 				XMLEvent comment = eventFactory.createAttribute( "comment",  String.valueOf( schedulVector.get(i).getComment()));
