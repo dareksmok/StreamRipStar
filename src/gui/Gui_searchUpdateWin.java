@@ -7,22 +7,12 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.net.URL;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import thread.SearchUpdate;
-
 import control.*;
 
 /* This program is licensed under the terms of the GPL V3 or newer*/
@@ -51,8 +41,7 @@ public class Gui_searchUpdateWin extends JDialog
 		super(mainWin);
 
 		this.setTitle("Check for Updates");
-
-		updatePanel = new Gui_searchUpdatePanel(controlStream, mainWin, quiteSearch);
+		updatePanel = new Gui_searchUpdatePanel(controlStream, this, quiteSearch);
 		panel.setLayout(new GridBagLayout());
 		
 		//set Constrains defaults
@@ -88,7 +77,10 @@ public class Gui_searchUpdateWin extends JDialog
         //set location
         setLocation(x, y);
         setLanguage();
-		setVisible(true);
+        
+        //only show if the user wants it
+        if(!quiteSearch)
+        	setVisible(true);
 	}
 	
 	/**

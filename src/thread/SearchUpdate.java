@@ -89,11 +89,7 @@ public class SearchUpdate extends Thread {
 				
 				//an new version is available
 				else {
-					if(!quiteSearch) {
-						gui.setNewVersionAvailable(revision, name, download);
-					} else {
-						gui.setVisible(true);
-					}
+					gui.setNewVersionAvailable(revision, name, download);
 				}
 			}
 

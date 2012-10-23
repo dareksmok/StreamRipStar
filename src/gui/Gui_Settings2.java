@@ -207,7 +207,7 @@ public class Gui_Settings2 extends JDialog
 
 		translationTA.setEditable(false);
 		
-		searchUpdatePanel = new Gui_searchUpdatePanel(mainGui.getControlStream(), mainGui, false);
+		searchUpdatePanel = new Gui_searchUpdatePanel(mainGui.getControlStream(), false);
 		
 		//pack the basic layout
 		setLayout(new BorderLayout());
@@ -388,7 +388,7 @@ public class Gui_Settings2 extends JDialog
 			c.gridx = 2;
 			c.weightx = 0.0;
 			pathPanel.add(browseRipper,c);
-			//3. line: path to generall savepath for the stream
+			//3. line: path to general save path for the stream
 			c.gridy = 1;
 			c.gridx = 0;
 			pathPanel.add(generellPathLabel,c);
@@ -760,6 +760,8 @@ public class Gui_Settings2 extends JDialog
 			XMLEvent header = eventFactory.createStartDocument();
 			XMLEvent startRootSettings = eventFactory.createStartElement( "", "", "Settings" );
 			
+			XMLEvent checkForUpdatesOnStartCB_S = eventFactory.createAttribute( "checkForUpdatesOnStartCB",  String.valueOf(checkForUpdatesOnStartCB.isSelected()));
+			XMLEvent hideUpateWindowCB_S = eventFactory.createAttribute( "hideUpateWindowCB",  String.valueOf(hideUpateWindowCB.isSelected()));
 			XMLEvent startInSystTrayCB_S = eventFactory.createAttribute( "startInSysTray",  String.valueOf(startInSystemTrayCB.isSelected()));
 			XMLEvent activeIconCB_S = eventFactory.createAttribute( "activeTrayIcon",  String.valueOf( activeTrayIcon.isSelected()));
 			XMLEvent lookAndFeelCB_S = eventFactory.createAttribute( "useAnotherLnfBox",  String.valueOf( useAnotherLnfBox.isSelected()));
@@ -789,6 +791,8 @@ public class Gui_Settings2 extends JDialog
 			//finally write into file
 			writer.add( header ); 
 			writer.add( startRootSettings );
+			writer.add( checkForUpdatesOnStartCB_S );
+			writer.add( hideUpateWindowCB_S );
 			writer.add( activeIconCB_S );
 			writer.add( startInSystTrayCB_S );
 			writer.add( lookAndFeelCB_S ); 
@@ -835,7 +839,8 @@ public class Gui_Settings2 extends JDialog
 		actions[3] = windowActionBox.getSelectedIndex();
 		
 		mainGui.setNewRuntimePrefs(actions,showTextCheckBox.isSelected(),activeTrayIcon.isSelected(),
-				newlnfClassName,useInternalAudioPlayerCB.isSelected());
+				newlnfClassName,useInternalAudioPlayerCB.isSelected(), checkForUpdatesOnStartCB.isSelected(),
+				hideUpateWindowCB.isSelected());
 		mainGui.getControlStream().setPaths(path);
 		
 		//update the log Level
@@ -887,6 +892,12 @@ public class Gui_Settings2 extends JDialog
 				    	for ( int i = 0; i < parser.getAttributeCount(); i++ ) {
 				    		if(parser.getAttributeLocalName( i ).equals("activeTrayIcon")) {
 				    			activeTrayIcon.setSelected(Boolean.valueOf(parser.getAttributeValue(i)));
+				    		}
+				    		else if (parser.getAttributeLocalName( i ).equals("checkForUpdatesOnStartCB")) {
+				    			checkForUpdatesOnStartCB.setSelected(Boolean.valueOf(parser.getAttributeValue(i)));
+				    		}
+				    		else if (parser.getAttributeLocalName( i ).equals("hideUpateWindowCB")) {
+				    			hideUpateWindowCB.setSelected(Boolean.valueOf(parser.getAttributeValue(i)));
 				    		}
 				    		else if (parser.getAttributeLocalName( i ).equals("showTextCB")) {
 				    			showTextCheckBox.setSelected(Boolean.valueOf(parser.getAttributeValue(i)));
@@ -941,6 +952,7 @@ public class Gui_Settings2 extends JDialog
 				    		else if (parser.getAttributeLocalName( i ).equals("logLevel_index")) {
 				    			this.logLevelBox.setSelectedIndex(Integer.valueOf(parser.getAttributeValue(i)));
 				    		}
+		
 				    	}
 				    	break; 
 				 

@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -28,6 +27,7 @@ public class Gui_searchUpdatePanel extends JPanel {
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
 	private Control_Stream controlStream;
 	private SearchUpdate searchUpdate;
+	private Gui_searchUpdateWin updateWin;
 	private ImageIcon loadingIcon = new ImageIcon((URL)getClass().getResource("/Icons/update_loading.png"));
 	private ImageIcon okIcon = new ImageIcon((URL)getClass().getResource("/Icons/update_ok.png"));
 	private ImageIcon availableIcon = new ImageIcon((URL)getClass().getResource("/Icons/update_available.png"));
@@ -36,6 +36,7 @@ public class Gui_searchUpdatePanel extends JPanel {
 	private JLabel iconLabel = new JLabel(loadingIcon);
 	private JLabel infoLabel = new JLabel("Searching for new Version. Please wait...");
 	private boolean quiteSearch = false;
+
 	
 	/**
 	 * Create the GUI as an dialog 
@@ -43,14 +44,28 @@ public class Gui_searchUpdatePanel extends JPanel {
 	 * @param controlStream The controlstream, where this dialog can find the webbrowsser
 	 * @param mainWin The parent for this Dialog
 	 */
-	public Gui_searchUpdatePanel(Control_Stream controlStream, JFrame mainWin, boolean quiteSearch) {
+	public Gui_searchUpdatePanel(Control_Stream controlStream, boolean quiteSearch) {
 		super();
 		this.controlStream = controlStream;
 		this.quiteSearch = quiteSearch;
 		
+		init();
+	}
+	
+	public Gui_searchUpdatePanel(Control_Stream controlStream, Gui_searchUpdateWin updateWin, boolean quiteSearch) {
+		super();
+		this.controlStream = controlStream;
+		this.quiteSearch = quiteSearch;
+		this.updateWin = updateWin;
+		
+		init();
+	}
+	
+	private void init()
+	{
+
 		searchUpdate = new SearchUpdate(this,this.quiteSearch);
 
-		searchUpdate.start();
 		panel.setLayout(new GridBagLayout());
 		
 		//set Constrains defaults
@@ -67,8 +82,10 @@ public class Gui_searchUpdatePanel extends JPanel {
 		panel.add(infoLabel,c);
 
 		add(panel);
+		
+
+		searchUpdate.start();
 	}
-	
 	
 	/**
 	 * Set the Dialog with the information, the the user knows, that this
@@ -129,6 +146,12 @@ public class Gui_searchUpdatePanel extends JPanel {
 		panel.add(new JLabel(trans.getString("searchUpdate.download")),c);
 		c.gridx = 1;
 		panel.add(downloadTF,c);
+		
+		//if the window should only be visible at this point, try to make it visible
+		if(quiteSearch && updateWin != null)
+		{
+			updateWin.setVisible(true);
+		}
 	}
 	
 	/**

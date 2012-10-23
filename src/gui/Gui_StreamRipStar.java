@@ -79,7 +79,8 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	private Boolean startInvisibleInTray = false;// false = hide at start in systray
 	private Boolean showText = false; 			//false = don't show text under Icons
 	private Boolean useInternalPlayer = true;	//true, if we use the internal player
-	private Boolean searchForUpdate = false;
+	private Boolean searchForUpdate = false;	//true if we want to search for updates on startup
+	private Boolean hideAutoUpdateWindow = true; //true if we want to search invisible for updates
 	private int winAction = 1;					//1= close window
 	private int action0 = -1;
 	private int action1 = -1;
@@ -205,6 +206,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
         if(cmd.isTmpStartInSystray()) {
         	startInvisibleInTray = true;
         }
+
         
         buildIconBar();
 		setSystemTray();
@@ -260,7 +262,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
         Thread_FillTableWithStreams fill =  new Thread_FillTableWithStreams(controlStreams,table,controlThreads);
         fill.start();
         
-        //the schedul control is an thread -> start it
+        //the schedule control is an thread -> start it
 		controlJob = new Thread_Control_Schedul(this,controlThreads);
 		controlJob.start();
 		
@@ -269,6 +271,13 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
         {
     		JOptionPane.showMessageDialog(this, trans.getString("firstTime"));
     		new Gui_Settings2(this);
+        }
+        
+        
+        //look for updates if the user wants it
+        if(this.searchForUpdate)
+        {
+        	new Gui_searchUpdateWin(controlStreams, this, hideAutoUpdateWindow);
         }
 	}
 	
@@ -821,9 +830,17 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 				    		}
 				    		else if (parser.getAttributeLocalName( i ).equals("windowActionBox_index")) {
 				    			winAction = Integer.valueOf(parser.getAttributeValue(i));
-				    		} else if (parser.getAttributeLocalName( i ).equals("logLevel_index")) {
+				    		}
+				    		else if (parser.getAttributeLocalName( i ).equals("logLevel_index")) {
 				    			level = Integer.valueOf(parser.getAttributeValue(i));
 				    		}
+				    		else if (parser.getAttributeLocalName( i ).equals("checkForUpdatesOnStartCB")) {
+				    			searchForUpdate = Boolean.valueOf(parser.getAttributeValue(i));
+				    		}
+				    		else if (parser.getAttributeLocalName( i ).equals("hideUpateWindowCB")) {
+				    			hideAutoUpdateWindow = Boolean.valueOf(parser.getAttributeValue(i));
+				    		}
+				    		
 				    	}
 				    	controlStreams.setPaths(path);
 						setTextUnderIcons();
@@ -1016,11 +1033,15 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	 * @param useInternalPlayer: Shall we listen to an stream, with the internal audio player?
 	 */
 	public void setNewRuntimePrefs(int[] actions, Boolean newShowText, Boolean newTray,
-			String newlnfClassName, boolean useInternalPlayer) {
+			String newlnfClassName, boolean useInternalPlayer, boolean searchUpdatesOnStartUp,
+			boolean quiteSearchUpdates)
+	{
 		action0 = actions[0];
 		action1 = actions[1];
 		action2 = actions[2];
 		winAction = actions[3];
+		searchForUpdate = searchUpdatesOnStartUp;
+		hideAutoUpdateWindow = quiteSearchUpdates;
 		
 		showText = newShowText;
 		this.useInternalPlayer = useInternalPlayer;
