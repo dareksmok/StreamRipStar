@@ -661,6 +661,11 @@ public class Gui_Settings2 extends JDialog
 			pathTitle.setTitle(trans.getString("Settings.title.Paths"));
 			programStartTitle.setTitle(trans.getString("Settings.title.ProgramStart"));
 			
+			autoSearchUpdateTitle.setTitle(trans.getString("Settings.Updates.Header.AutoUpdate"));
+			searchNowUpdatesTitle.setTitle(trans.getString("Settings.Updates.Header.UpdateSearch"));
+			checkForUpdatesOnStartCB.setText(trans.getString("Settings.Updates.CheckStartup"));
+			hideUpateWindowCB.setText(trans.getString("Settings.Updates.HideUpdateWindow"));
+			
 			Object elements[][] = {
 					{trans.getString("Settings.Panel.LookAndFeel"),commonPrefIcon},
 					{trans.getString("Settings.Panel.AudioAndPrograms"),pathPrefIcon},
