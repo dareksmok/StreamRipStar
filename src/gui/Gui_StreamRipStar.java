@@ -79,10 +79,12 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	private Boolean startInvisibleInTray = false;// false = hide at start in systray
 	private Boolean showText = false; 			//false = don't show text under Icons
 	private Boolean useInternalPlayer = true;	//true, if we use the internal player
+	private Boolean searchForUpdate = false;
 	private int winAction = 1;					//1= close window
 	private int action0 = -1;
 	private int action1 = -1;
 	private int action2 = -1;
+
 	
 	//Icons for the icon bar
 	private ImageIcon startRecordIcon = new ImageIcon((URL)getClass().getResource("/Icons/record.png"));
@@ -1459,7 +1461,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	
 	class SearchUpdateListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			new Gui_searchUpdate(controlStreams,Gui_StreamRipStar.this);
+			new Gui_searchUpdateWin(controlStreams,Gui_StreamRipStar.this, false);
 		}
 	}
 	/**

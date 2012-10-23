@@ -303,4 +303,5 @@
      ----------------------------
     
   0.6.3 -> 0.6.4
-  - fix: don't show the streamoptions in fast-record-mode from the stream browser 
+  - fix: don't show the streamoptions in fast-record-mode from the stream browser
+  - fix: recognize the daylight change when saving schedules (#3432018)

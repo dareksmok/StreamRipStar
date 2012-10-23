@@ -42,8 +42,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLInputFactory;
@@ -66,6 +64,7 @@ public class Gui_Settings2 extends JDialog
 	private ImageIcon commonPrefIcon = new ImageIcon((URL)getClass().getResource("/Icons/preferences/LookAndFeel1.png"));
 	private ImageIcon pathPrefIcon = new ImageIcon((URL)getClass().getResource("/Icons/preferences/AudioAndPrograms1.png"));
 	private ImageIcon audioPlayerPrefIcon = new ImageIcon((URL)getClass().getResource("/Icons/preferences/Language1.png"));
+	private ImageIcon udpatePrefIcon = new ImageIcon((URL)getClass().getResource("/Icons/preferences/update.png"));
 	
 	private OnlyOneActivePanel mainPanel = new OnlyOneActivePanel();
 	private JScrollPane mainSP = new JScrollPane(mainPanel);
@@ -87,8 +86,15 @@ public class Gui_Settings2 extends JDialog
 	private JPanel languagePanel = new JPanel();
 	private JPanel logPanel = new JPanel();
 	
+	//update Panel
+	private JPanel updatePanel = new JPanel();
+	private JPanel autoUpdatePanel = new JPanel();
+//	private JPanel searchUpdatePanel = new JPanel();
+	private JPanel searchUpdatePanel;
+	
 	private JPanel buttonPanel = new JPanel();
 	private JPanel commonPanel = new JPanel();
+
 	
 	private JTextField ripperPathField = new JTextField("",30) ;
 	private JTextField shoutcastPlayer = new JTextField("",30) ;
@@ -151,7 +157,9 @@ public class Gui_Settings2 extends JDialog
 	private JCheckBox useInternalAudioPlayerCB = new JCheckBox("Use internal check box (Requires gstreamer installed");
 	private JCheckBox useAnotherLnfBox = new JCheckBox("Use another Look and Feel");
 	private JCheckBox startInSystemTrayCB = new JCheckBox("Start in system tray (minimized)");
-
+	private JCheckBox checkForUpdatesOnStartCB = new JCheckBox("Automatically check for updates on start",true);
+	private JCheckBox hideUpateWindowCB = new JCheckBox("Hide update window until a new update is available",true);
+	
 	private TitledBorder sysTrayTabTitle = BorderFactory.createTitledBorder("System Tray Icon");
 	private TitledBorder lookAndFeelTabTitle = BorderFactory.createTitledBorder("Look And Feel");
 	private TitledBorder actionsTabTitle = BorderFactory.createTitledBorder("Actions On Columns");
@@ -160,6 +168,8 @@ public class Gui_Settings2 extends JDialog
 	private TitledBorder internalAudioTitle = BorderFactory.createTitledBorder("Audio");
 	private TitledBorder pathTitle = BorderFactory.createTitledBorder("Path To Programs");
 	private TitledBorder programStartTitle = BorderFactory.createTitledBorder("Path To Programs");
+	private TitledBorder autoSearchUpdateTitle = BorderFactory.createTitledBorder("Auto update configuration");
+	private TitledBorder searchNowUpdatesTitle = BorderFactory.createTitledBorder("Search for updates");
 	
 	private UIManager.LookAndFeelInfo[] lookAndFeelInfos;
 
@@ -175,7 +185,8 @@ public class Gui_Settings2 extends JDialog
 		Object elements[][] = {
 				{"Look And Feel",commonPrefIcon},
 				{"Audio and Programs",pathPrefIcon},
-				{"Language and Log",audioPlayerPrefIcon}};
+				{"Language and Log",audioPlayerPrefIcon},
+				{"Updates",udpatePrefIcon}};
 		
 		list = new JList(elements);
 		list.setCellRenderer(new IconCellRenderer());
@@ -195,7 +206,9 @@ public class Gui_Settings2 extends JDialog
 		LookAndFeelBox = new JComboBox(lookAndFeelList);
 
 		translationTA.setEditable(false);
-
+		
+		searchUpdatePanel = new Gui_searchUpdatePanel(mainGui.getControlStream(), mainGui, false);
+		
 		//pack the basic layout
 		setLayout(new BorderLayout());
 		add(new JScrollPane(list), BorderLayout.WEST);
@@ -216,6 +229,9 @@ public class Gui_Settings2 extends JDialog
 		logPanel.setLayout(new GridBagLayout());
 		buttonPanel.setLayout(new GridBagLayout());
 		commonPanel.setLayout(new GridBagLayout());
+		updatePanel.setLayout(new GridBagLayout());
+		autoUpdatePanel.setLayout(new GridBagLayout());
+		searchUpdatePanel.setLayout(new GridBagLayout());
 		
 		//set borders
 		sysTrayIconPanel.setBorder(sysTrayTabTitle);
@@ -226,6 +242,9 @@ public class Gui_Settings2 extends JDialog
 		logPanel.setBorder(logTabTitle);
 		internalaudioPanel.setBorder(internalAudioTitle);
 		pathPanel.setBorder(pathTitle);
+		autoUpdatePanel.setBorder(autoSearchUpdateTitle);
+		searchUpdatePanel.setBorder(searchNowUpdatesTitle);
+		
 		
 		//now pack them together
 		GridBagConstraints c = new GridBagConstraints();
@@ -451,10 +470,30 @@ public class Gui_Settings2 extends JDialog
 			c.weightx = 1.0;
 			logPanel.add(logLevelBox,c);
 
-		
-
+//TAB 4: Updates
+			c.insets = new Insets( 15, 5, 5 ,5 );
+			c.gridy = 0;
+			c.weighty = 0;
+			updatePanel.add(autoUpdatePanel,c);
+			c.gridy = 1;
+			c.weightx = 1.0;
+			updatePanel.add(searchUpdatePanel,c);
+			c.gridy = 2;
+			c.weighty = 1;
+			updatePanel.add(new JLabel(""),c);
+			
+	// autoUpdatePanel
+			c.insets = new Insets( 5, 5, 0 ,5 );
+			c.gridy = 0;
+			c.weighty = 0;
+			autoUpdatePanel.add(checkForUpdatesOnStartCB,c);
+			c.insets = new Insets( 0, 5, 5 ,5 );
+			c.gridy = 1;
+			c.weighty = 0;
+			autoUpdatePanel.add(hideUpateWindowCB,c);
+			
 	//BUTTONPANEL
-		c.insets = new Insets( 5, 5,5 ,5 );
+		c.insets = new Insets( 5, 5, 5 ,5 );
 		c.weightx = 0;
 		c.gridy = 0;
 		c.gridx = 0;
@@ -625,7 +664,8 @@ public class Gui_Settings2 extends JDialog
 			Object elements[][] = {
 					{trans.getString("Settings.Panel.LookAndFeel"),commonPrefIcon},
 					{trans.getString("Settings.Panel.AudioAndPrograms"),pathPrefIcon},
-					{trans.getString("Settings.Panel.LanguageAndLog"),audioPlayerPrefIcon}};
+					{trans.getString("Settings.Panel.LanguageAndLog"),audioPlayerPrefIcon},
+					{trans.getString("Settings.Panel.Update"),udpatePrefIcon}};
 			list.setListData(elements);
 
 		} catch ( MissingResourceException e ) { 
@@ -1023,6 +1063,9 @@ public class Gui_Settings2 extends JDialog
 						break;
 					case 2:
 						mainPanel.add(langLogPanel);
+						break;
+					case 3:
+						mainPanel.add(updatePanel);
 						break;
 					default:
 						mainPanel.add(lookAndFeelPanel);

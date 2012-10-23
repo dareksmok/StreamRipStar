@@ -55,13 +55,13 @@ public class About_StreamRipStar extends JDialog
 	private SRSLabel frenchTranslation = new SRSLabel("French Translation :");
 	private SRSTextfield frenchTranslationName = new SRSTextfield("Philippe Augustin");
 	private SRSLabel streamRipStarSourceforgeSite = new SRSLabel("StreamRipStars Projektpage :");
-	private SRSTextfield streamRipStarSourceforgeAddress = new SRSTextfield("http://developer.berlios.de/projects/streamripstar/");
+	private SRSTextfield streamRipStarSourceforgeAddress = new SRSTextfield("https://github.com/Eule/StreamRipStar");
 	private SRSLabel streamRipStarHomepage = new SRSLabel("StreamRipStars Wiki :");
-	private SRSTextfield streamRipStarHomepageAddress = new SRSTextfield("http://sourceforge.net/apps/mediawiki/stripper");
+	private SRSTextfield streamRipStarHomepageAddress = new SRSTextfield("https://github.com/Eule/StreamRipStar/wiki");
 	private SRSLabel edmolfHomepage = new SRSLabel("EdMolfs Homepage");
 	private SRSTextfield edmolfHomepageAddress = new SRSTextfield("http://www.edmolf.net");
 	private SRSLabel streamripperHomepage = new SRSLabel("Streamrippers Homepage");
-	private SRSTextfield streamripperHomepageAddress = new SRSTextfield("http://developer.berlios.de/projects/streamripstar/");
+	private SRSTextfield streamripperHomepageAddress = new SRSTextfield("https://github.com/Eule/StreamRipStar");
 	private SRSLabel externPrograms = new SRSLabel("Extern Programms");
 	private SRSTextArea externProgramsTA = new SRSTextArea("gstreamer-java (GPL)");
 	

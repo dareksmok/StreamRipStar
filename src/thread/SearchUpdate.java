@@ -1,6 +1,6 @@
 package thread;
 
-import gui.Gui_searchUpdate;
+import gui.Gui_searchUpdatePanel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,10 +30,17 @@ public class SearchUpdate extends Thread {
 	private String revision = "";
 	private String name = "";
 	private String download = "";
-	private Gui_searchUpdate gui;
+	private Gui_searchUpdatePanel gui;
+	private boolean quiteSearch = false;
 	
-	public SearchUpdate(Gui_searchUpdate gui) {
+	/**
+	 * Search for an update
+	 * @param gui
+	 * @param quiteSearch don't update the gui, if no update is available
+	 */
+	public SearchUpdate(Gui_searchUpdatePanel gui, boolean quiteSearch) {
 		this.gui = gui;
+		this.quiteSearch = quiteSearch;
 	}
 	
 	//start the thread
@@ -67,17 +74,26 @@ public class SearchUpdate extends Thread {
 				
 				//look, if the revision is the same -> this version is up to date
 				if(Integer.valueOf(revision) == StreamRipStar.releaseRevision) {
-					gui.setAllOk();
+					//if quite search, close the not visible frame to save memory
+					if(!quiteSearch) {
+						gui.setAllOk();
+					}
 				} 
 				
-				//look, if the version of StreamRipStar is a new one! -> this version is up to date
+				//look, if the version of StreamRipStar is a newer one! -> this version is up to date
 				else if(Integer.valueOf(revision) < StreamRipStar.releaseRevision) {
-					gui.setNewVersion();
+					if(!quiteSearch) {
+						gui.setNewVersion();
+					}
 				} 
 				
 				//an new version is available
 				else {
-					gui.setNewVersionAvailable(revision, name, download);
+					if(!quiteSearch) {
+						gui.setNewVersionAvailable(revision, name, download);
+					} else {
+						gui.setVisible(true);
+					}
 				}
 			}
 
