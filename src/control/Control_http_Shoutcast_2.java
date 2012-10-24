@@ -195,6 +195,7 @@ public class Control_http_Shoutcast_2 {
 
 			    // Send the POST request
 			    URL url = new URL("http://www.shoutcast.com/genre-ajax/"+genre+"");
+			    SRSOutput.getInstance().logD("Shoutcast query for genres: "+url);
 			    URLConnection conn = url.openConnection();
 			    conn.setDoOutput(true);
 			    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
@@ -236,7 +237,9 @@ public class Control_http_Shoutcast_2 {
 							streamInfo[0] = text.substring(text.indexOf("\" title=\"")+9, text.indexOf("\" href=\""));
 
 							//look for the Genres the stream belongs to
-							streamInfo[6] = readNextHtmlLine().trim().substring(6);
+							String tmp = readNextHtmlLine().trim();
+							if(tmp.length() > 6)
+								streamInfo[6] = tmp.substring(6);
 							
 							//look for the current title
 							bw.readLine();
@@ -269,12 +272,16 @@ public class Control_http_Shoutcast_2 {
 						}
 
 					} catch (NullPointerException e) {
-						SRSOutput.getInstance().log("Error while loading from shoutcast website 1");
+						SRSOutput.getInstance().logE("Error while loading from shoutcast website: NullPointer");
+						SRSOutput.getInstance().logE("Current text string was: " + text);
+						e.printStackTrace();
 					} catch (StringIndexOutOfBoundsException e) {
-						SRSOutput.getInstance().log("Error while loading from shoutcast website 2");
+						SRSOutput.getInstance().logE("Error while loading from shoutcast website: IndexOutOfBoundsException");
+						SRSOutput.getInstance().logE("Current text string was: " + text);
 						e.printStackTrace();
 					} catch (NumberFormatException e) {
 						SRSOutput.getInstance().logE("Controled Crash in StreamBrowser");
+						SRSOutput.getInstance().logE("Current text string was: " + text);
 						e.printStackTrace();
 					}
 				}
