@@ -9,10 +9,10 @@ import gui.Gui_SchedulManager;
 public class Thread_KeepTableSchedulUpdated extends Thread{
 	
 	private Gui_SchedulManager sM = null;
-	private Thread_Control_Schedul control = null;
+	private Thread_Control_Schedules control = null;
 	private Boolean stop = false;
 	
-	public Thread_KeepTableSchedulUpdated(Gui_SchedulManager sM, Thread_Control_Schedul control) {
+	public Thread_KeepTableSchedulUpdated(Gui_SchedulManager sM, Thread_Control_Schedules control) {
 		this.sM = sM;
 		this.control = control;
 	}

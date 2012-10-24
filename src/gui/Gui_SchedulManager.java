@@ -24,7 +24,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import misc.SchedulJob;
 
-import thread.Thread_Control_Schedul;
+import thread.Thread_Control_Schedules;
 import thread.Thread_KeepTableSchedulUpdated;
 
 
@@ -81,10 +81,10 @@ public class Gui_SchedulManager extends JFrame implements WindowListener {
 	private Gui_JTTable table = new Gui_JTTable(model);
 	private JScrollPane scrollPane  = new JScrollPane(table);
 	private Control_Stream controlStreams = null;
-	private Thread_Control_Schedul controlJob = null;
+	private Thread_Control_Schedules controlJob = null;
 	
 	
-	public Gui_SchedulManager(Control_Stream controlStreams, Thread_Control_Schedul controlJob) {
+	public Gui_SchedulManager(Control_Stream controlStreams, Thread_Control_Schedules controlJob) {
 		super("Schedul Manager");
 		this.controlStreams = controlStreams;
 		this.controlJob = controlJob;

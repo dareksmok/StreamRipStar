@@ -17,7 +17,7 @@ import javax.swing.text.DateFormatter;
 import misc.SchedulJob;
 import misc.Stream;
 
-import thread.Thread_Control_Schedul;
+import thread.Thread_Control_Schedules;
 
 
 import control.Control_Stream;
@@ -64,7 +64,7 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 	private Vector<Stream> streams;
 	private boolean createNew = false;
 	private SchedulJob oldJob = null; 
-	private Thread_Control_Schedul controlJob = null;
+	private Thread_Control_Schedules controlJob = null;
 	private Gui_SchedulManager schedulManager = null;
 	
 	
@@ -78,7 +78,7 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 	 * @param oldJob: the job witch should be updated
 	 */
 	public Add_Schedule_Task(Gui_SchedulManager schedulManager, boolean createNew,
-			Control_Stream controlStreams, Thread_Control_Schedul controlJob, SchedulJob oldJob)
+			Control_Stream controlStreams, Thread_Control_Schedules controlJob, SchedulJob oldJob)
 	{
 		super(schedulManager,"Add Schedule Job");
 		this.schedulManager = schedulManager;

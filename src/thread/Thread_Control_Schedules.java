@@ -31,7 +31,7 @@ import control.Control_Threads;
 import control.SRSOutput;
 
 
-public class Thread_Control_Schedul extends Thread{
+public class Thread_Control_Schedules extends Thread{
 	
 	//contains all scheduljobs
 	private Vector<SchedulJob> schedulVector = new Vector<SchedulJob>(0,1);
@@ -42,7 +42,7 @@ public class Thread_Control_Schedul extends Thread{
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
 	private java.util.GregorianCalendar gc =new java.util.GregorianCalendar();
 	
-	public Thread_Control_Schedul(Gui_StreamRipStar mainGui, Control_Threads controlThread) {
+	public Thread_Control_Schedules(Gui_StreamRipStar mainGui, Control_Threads controlThread) {
 		this.mainGui = mainGui;
 		this.controlThread = controlThread;
 	}
@@ -256,9 +256,17 @@ public class Thread_Control_Schedul extends Thread{
 				    		} else if (parser.getAttributeLocalName( i ).equals("schedulID")) {
 				    			schedulID = Integer.valueOf(parser.getAttributeValue(i));
 				    		} else if (parser.getAttributeLocalName( i ).equals("startTime")) {
-				    			startTime = Long.valueOf(parser.getAttributeValue(i)) + gc.get(Calendar.DST_OFFSET);
+				    			if(mainGui.getDaylightChangeTimeCalculated()) {
+				    				startTime = Long.valueOf(parser.getAttributeValue(i)) + gc.get(Calendar.DST_OFFSET);
+				    			} else {
+				    				startTime = Long.valueOf(parser.getAttributeValue(i));
+				    			}
 				    		} else if (parser.getAttributeLocalName( i ).equals("stopTime")) {
-				    			stopTime = Long.valueOf(parser.getAttributeValue(i)) + gc.get(Calendar.DST_OFFSET);
+				    			if(mainGui.getDaylightChangeTimeCalculated()) {
+				    				stopTime = Long.valueOf(parser.getAttributeValue(i)) + gc.get(Calendar.DST_OFFSET);
+				    			} else {
+				    				stopTime = Long.valueOf(parser.getAttributeValue(i));
+				    			}
 				    		} else if (parser.getAttributeLocalName( i ).equals("howOftenID")) {
 				    			howOftenID = Integer.valueOf(parser.getAttributeValue(i));
 				    		} else if (parser.getAttributeLocalName( i ).equals("enableJob")) {

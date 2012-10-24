@@ -52,7 +52,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import misc.Commandline;
 import misc.Stream;
-import thread.Thread_Control_Schedul;
+import thread.Thread_Control_Schedules;
 import thread.Thread_FillTableWithStreams;
 import thread.Thread_UpdateName;
 import control.Control_GetPath;
@@ -66,10 +66,12 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 {
 	private static final long serialVersionUID = 1L;
 
+	
+	
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
 	private Control_Stream controlStreams = null;
 	private Gui_TablePanel table = null; 	//Table that shows all streams
-	private Thread_Control_Schedul controlJob = null;
+	private Thread_Control_Schedules controlJob = null;
 	private Gui_StreamBrowser2 streamBrowser = null;
 	private InternAudioControlPanel audioPanel = null;
 	private VolumeManager volumeManager = new VolumeManager(this);
@@ -85,7 +87,8 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	private int action0 = -1;
 	private int action1 = -1;
 	private int action2 = -1;
-
+	//update fix variables
+	private Boolean daylightChangeTimeCalculated = false;
 	
 	//Icons for the icon bar
 	private ImageIcon startRecordIcon = new ImageIcon((URL)getClass().getResource("/Icons/record.png"));
@@ -263,7 +266,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
         fill.start();
         
         //the schedule control is an thread -> start it
-		controlJob = new Thread_Control_Schedul(this,controlThreads);
+		controlJob = new Thread_Control_Schedules(this,controlThreads);
 		controlJob.start();
 		
         //if preferences should open, do it here
@@ -749,7 +752,11 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 				    			widths[1] = Integer.valueOf(parser.getAttributeValue(i));
 				    		} else if (parser.getAttributeLocalName( i ).equals("tableCol3")) {
 				    			widths[2] = Integer.valueOf(parser.getAttributeValue(i));
+				    		} else if (parser.getAttributeLocalName( i ).equals("daylightChange")) {
+				    			daylightChangeTimeCalculated = Boolean.valueOf(parser.getAttributeValue(i));
 				    		}
+				    		
+				    		
 				    	}
 				    	table.setColumWidths(widths);
 				    	setSize(new Dimension(width,hight));
@@ -876,6 +883,14 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 		}
 	}
 	
+	public Boolean getDaylightChangeTimeCalculated() {
+		return daylightChangeTimeCalculated;
+	}
+
+	public void setDaylightChangeTimeCalculated(Boolean daylightChangeTimeCalculated) {
+		this.daylightChangeTimeCalculated = daylightChangeTimeCalculated;
+	}
+
 	/**
 	 * try to save the window properties some components
 	 * for the next start
@@ -897,7 +912,8 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			XMLEvent winSizeHeight = eventFactory.createAttribute( "winSizeHeight",  String.valueOf(getSize().height )); 
 			XMLEvent tableCol1 = eventFactory.createAttribute( "tableCol1",  String.valueOf( table.getColumnWidths()[0])); 
 			XMLEvent tableCol2 = eventFactory.createAttribute( "tableCol2",  String.valueOf( table.getColumnWidths()[1])); 
-			XMLEvent tableCol3 = eventFactory.createAttribute( "tableCol3",  String.valueOf( table.getColumnWidths()[2])); 
+			XMLEvent tableCol3 = eventFactory.createAttribute( "tableCol3",  String.valueOf( table.getColumnWidths()[2]));
+			XMLEvent daylightChange = eventFactory.createAttribute( "daylightChange",  String.valueOf( true));
 			
 			XMLEvent endRoot = eventFactory.createEndElement( "", "", "Prefs" ); 
 			XMLEvent endDocument = eventFactory.createEndDocument();
@@ -911,6 +927,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			writer.add( tableCol1 ); 
 			writer.add( tableCol2 ); 
 			writer.add( tableCol3 ); 
+			writer.add( daylightChange );
 			
 			writer.add( endRoot ); 
 			writer.add( endDocument ); 
