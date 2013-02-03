@@ -210,7 +210,9 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
         	startInvisibleInTray = true;
         }
 
-        
+		
+		setLanguage();
+		
         buildIconBar();
 		setSystemTray();
 		
@@ -226,8 +228,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
     		}
 			}, 30000);
 		}
-		
-		setLanguage();
+
 		
 		//and pre-load the audio system; if it fails, the internal audio player is
 		//disabled automatically 

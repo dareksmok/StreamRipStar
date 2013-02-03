@@ -119,21 +119,31 @@ public class SchedulJob {
 	public void setJobEnabled(boolean enable) {
 		enableJob = enable;
 	}
-	
+
 	/**
 	 * set the right parameter for the job
 	 * @param howOftenID: 0=daily; 1=weekly; 2=monthly; else once
 	 */
-	public void setJobCounts(int howOftenID) {
-		if(howOftenID == 0) {
+	public void setJobCounts(int howOftenID)
+	{
+		if (howOftenID == 0) {
+			clearJobCounts();
 			daily = true;
 		} else if (howOftenID == 1) {
+			clearJobCounts();
 			weekly = true;
 		} else if (howOftenID == 2) {
+			clearJobCounts();
 			monthly = true;
-		} 
+		}
 	}
 	
+	private void clearJobCounts() {
+		daily = false;
+		weekly = false;
+		monthly = false;
+	}
+
 	/**
 	 * the the comment for the scheduljob
 	 * @param newComment: the new comment
