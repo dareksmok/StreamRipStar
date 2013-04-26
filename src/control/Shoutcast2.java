@@ -19,7 +19,7 @@ public class Shoutcast2 {
 		
 		tmpGenres[0] = "Alternative";
 		tmpGenres[1] = "Adult Altergenres";
-		tmpGenres[2] = "nativeBritpop";
+		tmpGenres[2] = "Britpop";
 		tmpGenres[3] = "Classic Alternative";
 		tmpGenres[4] = "College";
 		tmpGenres[5] = "Dancepunk";
@@ -31,11 +31,11 @@ public class Shoutcast2 {
 		tmpGenres[11] = "Indie Pop";
 		tmpGenres[12] = "Indie Rock";
 		tmpGenres[13] = "Industrial";
-		tmpGenres[14] = "Lo-Fi";
+		tmpGenres[14] = "LoFi";
 		tmpGenres[15] = "Modern Rock";
 		tmpGenres[16] = "New Wave";
 		tmpGenres[17] = "Noise Pop";
-		tmpGenres[18] = "Post-Punk";
+		tmpGenres[18] = "Post Punk";
 		tmpGenres[19] = "Power Pop";
 		tmpGenres[20] = "Punk";
 		tmpGenres[21] = "Ska";
@@ -46,7 +46,7 @@ public class Shoutcast2 {
 		
 		tmpGenres[0] = "Blues";
 		tmpGenres[1] = "Acoustic Blues";
-		tmpGenres[2] = "Cajun/Zydeco";
+		tmpGenres[2] = "Cajun and Zydeco";
 		tmpGenres[3] = "Chicago Blues";
 		tmpGenres[4] = "Contemporary Blues";
 		tmpGenres[5] = "Country Blues";
@@ -73,7 +73,7 @@ public class Shoutcast2 {
 		tmpGenres = new String[10];
 		
 		tmpGenres[0] = "Country";
-		tmpGenres[1] = "Alt-Country";
+		tmpGenres[1] = "Alt Country";
 		tmpGenres[2] = "Americana";
 		tmpGenres[3] = "Bluegrass";
 		tmpGenres[4] = "Classic Country";
@@ -84,16 +84,17 @@ public class Shoutcast2 {
 		tmpGenres[9] = "Western";
 		
 		genres[3] = tmpGenres;
-		tmpGenres = new String[8];
+		tmpGenres = new String[9];
 		
 		tmpGenres[0] = "Decades";
-		tmpGenres[1] = "30s";
-		tmpGenres[2] = "40s";
-		tmpGenres[3] = "50s";
-		tmpGenres[4] = "60s";
-		tmpGenres[5] = "70s";
-		tmpGenres[6] = "80s";
-		tmpGenres[7] = "90s";
+		tmpGenres[1] = "00s";
+		tmpGenres[2] = "30s";
+		tmpGenres[3] = "40s";
+		tmpGenres[4] = "50s";
+		tmpGenres[5] = "60s";
+		tmpGenres[6] = "70s";
+		tmpGenres[7] = "80s";
+		tmpGenres[8] = "90s";
 
 		genres[4] = tmpGenres;
 		tmpGenres = new String[7];
@@ -107,7 +108,7 @@ public class Shoutcast2 {
 		tmpGenres[6] = "Space Age Pop";
 		
 		genres[5] = tmpGenres;
-		tmpGenres = new String[20];
+		tmpGenres = new String[21];
 		
 		tmpGenres[0] = "Electronic";
 		tmpGenres[1] = "Acid House";
@@ -122,24 +123,26 @@ public class Shoutcast2 {
 		tmpGenres[10] = "Electro";
 		tmpGenres[11] = "Garage";
 		tmpGenres[12] = "Hard House";
-		tmpGenres[13] = "HouseIDM";
-		tmpGenres[14] = "Jungle";
-		tmpGenres[15] = "Progressive";
-		tmpGenres[16] = "Techno";
-		tmpGenres[17] = "Trance";
-		tmpGenres[18] = "Tribal";
-		tmpGenres[19] = "Trip Hop";
+		tmpGenres[13] = "House";
+		tmpGenres[14] = "IDM";
+		tmpGenres[15] = "Jungle";
+		tmpGenres[16] = "Progressive";
+		tmpGenres[17] = "Techno";
+		tmpGenres[18] = "Trance";
+		tmpGenres[19] = "Tribal";
+		tmpGenres[20] = "Trip Hop";
 		
 		genres[6] = tmpGenres;
-		tmpGenres = new String[7];
+		tmpGenres = new String[8];
 		
 		tmpGenres[0] = "Folk";
 		tmpGenres[1] = "Alternative Folk";
 		tmpGenres[2] = "Contemporary Folk";
 		tmpGenres[3] = "Folk Rock";
 		tmpGenres[4] = "New Acoustic";
-		tmpGenres[5] = "Traditional Folk";
-		tmpGenres[6] = "World Folk";
+		tmpGenres[5] = "Old Time";
+		tmpGenres[6] = "Traditional Folk";
+		tmpGenres[7] = "World Folk";
 
 		genres[7] = tmpGenres;
 		tmpGenres = new String[12];
@@ -152,7 +155,7 @@ public class Shoutcast2 {
 		tmpGenres[5] = "Classic Christian";
 		tmpGenres[6] = "Contemporary Gospel";
 		tmpGenres[7] = "Gospel";
-		tmpGenres[8] = "Praise/Worship";
+		tmpGenres[8] = "Praise and Worship";
 		tmpGenres[9] = "Sermons/Services";
 		tmpGenres[10] = "Southern Gospel";
 		tmpGenres[11] = "Traditional Gospel";
@@ -174,7 +177,7 @@ public class Shoutcast2 {
 		tmpGenres[11] = "French";
 		tmpGenres[12] = "Greek";
 		tmpGenres[13] = "German";
-		tmpGenres[14] = "Hawaiian/Pacific";
+		tmpGenres[14] = "Hawaiian and Pacific";
 		tmpGenres[15] = "Hindi";
 		tmpGenres[16] = "Indian";
 		tmpGenres[17] = "Japanese";
@@ -219,7 +222,7 @@ public class Shoutcast2 {
 		tmpGenres[4] = "Cumbia";
 		tmpGenres[5] = "Latin Dance";
 		tmpGenres[6] = "Latin Pop";
-		tmpGenres[7] = "Latin Rap/Hip-Hop";
+		tmpGenres[7] = "Latin Rap and Hip-Hop";
 		tmpGenres[8] = "Latin Rock";
 		tmpGenres[9] = "Mariachi";
 		tmpGenres[10] = "Merengue";
@@ -257,19 +260,21 @@ public class Shoutcast2 {
 		tmpGenres[5] = "Spiritual";
 
 		genres[13] = tmpGenres;
-		tmpGenres = new String[11];
+		tmpGenres = new String[13];
 		
 		tmpGenres[0] = "Pop";
 		tmpGenres[1] = "Adult Contemporary";
 		tmpGenres[2] = "Barbershop";
 		tmpGenres[3] = "Bubblegum Pop";
 		tmpGenres[4] = "Dance Pop";
-		tmpGenres[5] = "IdolsJPOP";
-		tmpGenres[6] = "Oldies";
-		tmpGenres[7] = "Soft Rock";
-		tmpGenres[8] = "Teen Pop";
-		tmpGenres[9] = "Top 40";
-		tmpGenres[10] = "World Pop";
+		tmpGenres[5] = "Idols";
+		tmpGenres[6] = "JPOP";
+		tmpGenres[7] = "KPOP";
+		tmpGenres[8] = "Oldies";
+		tmpGenres[9] = "Soft Rock";
+		tmpGenres[10] = "Teen Pop";
+		tmpGenres[11] = "Top 40";
+		tmpGenres[12] = "World Pop";
 	
 		genres[14] = tmpGenres;
 		tmpGenres = new String[5];
@@ -281,18 +286,18 @@ public class Shoutcast2 {
 		tmpGenres[4] = "Talk";
 		
 		genres[15] = tmpGenres;
-		tmpGenres = new String[10];
+		tmpGenres = new String[1];
 		
-		tmpGenres[0] = "R&B/Urban";
-		tmpGenres[1] = "Classic R&B";
-		tmpGenres[2] = "Contemporary R&B";
-		tmpGenres[3] = "Doo Wop";
-		tmpGenres[4] = "Funk";
-		tmpGenres[5] = "Motown";
-		tmpGenres[6] = "Neo-Soul";
-		tmpGenres[7] = "Quiet Storm";
-		tmpGenres[8] = "Soul";
-		tmpGenres[9] = "Urban Contemporary";
+		tmpGenres[0] = "R&B and Urban";
+//		tmpGenres[1] = "Classic R&B";
+//		tmpGenres[2] = "Contemporary R&B";
+//		tmpGenres[3] = "Doo Wop";
+//		tmpGenres[4] = "Funk";
+//		tmpGenres[5] = "Motown";
+//		tmpGenres[6] = "Neo-Soul";
+//		tmpGenres[7] = "Quiet Storm";
+//		tmpGenres[8] = "Soul";
+//		tmpGenres[9] = "Urban Contemporary";
 
 		genres[16] = tmpGenres;
 		tmpGenres = new String[12];
@@ -317,13 +322,13 @@ public class Shoutcast2 {
 		tmpGenres[1] = "Contemporary Reggae";
 		tmpGenres[2] = "Dancehall";
 		tmpGenres[3] = "Dub";
-		tmpGenres[4] = "Pop-Reggae";
+		tmpGenres[4] = "Pop Reggae";
 		tmpGenres[5] = "Ragga";
 		tmpGenres[6] = "Reggae Roots";
 		tmpGenres[7] = "Rock Steady";
 		
 		genres[18] = tmpGenres;
-		tmpGenres = new String[14];
+		tmpGenres = new String[16];
 
 		tmpGenres[0] = "Rock";
 		tmpGenres[1] = "Adult Album Alternative";
@@ -333,27 +338,29 @@ public class Shoutcast2 {
 		tmpGenres[5] = "Glam";
 		tmpGenres[6] = "Hard Rock";
 		tmpGenres[7] = "Jam Bands";
-		tmpGenres[8] = "Piano Rock";
-		tmpGenres[9] = "Prog Rock";
-		tmpGenres[10] = "Psychedelic";
-		tmpGenres[11] = "Rock & Roll";
-		tmpGenres[12] = "Rockabilly";
-		tmpGenres[13] = "Singer/SongwriterSurf";
+		tmpGenres[8] = "JROCK";
+		tmpGenres[9] = "Piano Rock";
+		tmpGenres[10] = "Prog Rock";
+		tmpGenres[11] = "Psychedelic";
+		tmpGenres[12] = "Rock & Roll";
+		tmpGenres[13] = "Rockabilly";
+		tmpGenres[14] = "Singer and SongwriterSurf";
+		tmpGenres[15] = "Surf";
 		
 		genres[19] = tmpGenres;
-		tmpGenres = new String[11];
+		tmpGenres = new String[1];
 		
 		tmpGenres[0] = "Seasonal/Holiday";
-		tmpGenres[1] = "Anniversary";
-		tmpGenres[2] = "Birthday";
-		tmpGenres[3] = "Christmas";
-		tmpGenres[4] = "Halloween";
-		tmpGenres[5] = "Hanukkah";
-		tmpGenres[6] = "Honeymoon";
-		tmpGenres[7] = "Kwanzaa";
-		tmpGenres[8] = "Valentine";
-		tmpGenres[9] = "Wedding";
-		tmpGenres[10] = "Winter";
+//		tmpGenres[1] = "Anniversary";
+//		tmpGenres[2] = "Birthday";
+//		tmpGenres[3] = "Christmas";
+//		tmpGenres[4] = "Halloween";
+//		tmpGenres[5] = "Hanukkah";
+//		tmpGenres[6] = "Honeymoon";
+//		tmpGenres[7] = "Kwanzaa";
+//		tmpGenres[8] = "Valentine";
+//		tmpGenres[9] = "Wedding";
+//		tmpGenres[10] = "Winter";
 		
 		genres[20] = tmpGenres;
 		tmpGenres = new String[6];
@@ -366,23 +373,22 @@ public class Shoutcast2 {
 		tmpGenres[5] = "Video Game Music";
 		
 		genres[21] = tmpGenres;
-		tmpGenres = new String[15];
+		tmpGenres = new String[14];
 		
 		tmpGenres[0] = "Talk";
 		tmpGenres[1] = "Blog";
-		tmpGenres[2] = "Talk";
-		tmpGenres[3] = "Comedy";
-		tmpGenres[4] = "Community";
-		tmpGenres[5] = "Educational";
-		tmpGenres[6] = "Government";
-		tmpGenres[7] = "News";
-		tmpGenres[8] = "Old Time Radio";
-		tmpGenres[9] = "Other Talk";
-		tmpGenres[10] = "Political";
-		tmpGenres[11] = "Scanner";
-		tmpGenres[12] = "Spoken Word";
-		tmpGenres[13] = "Sports";
-		tmpGenres[14] = "Technology";
+		tmpGenres[2] = "Comedy";
+		tmpGenres[3] = "Community";
+		tmpGenres[4] = "Educational";
+		tmpGenres[5] = "Government";
+		tmpGenres[6] = "News";
+		tmpGenres[7] = "Old Time Radio";
+		tmpGenres[8] = "Other Talk";
+		tmpGenres[9] = "Political";
+		tmpGenres[10] = "Scanner";
+		tmpGenres[11] = "Spoken Word";
+		tmpGenres[12] = "Sports";
+		tmpGenres[13] = "Technology";
 
 		genres[22] = tmpGenres;
 		tmpGenres = new String[21];
@@ -397,7 +403,7 @@ public class Shoutcast2 {
 		tmpGenres[7] = "Heartache";
 		tmpGenres[8] = "Instrumental";
 		tmpGenres[9] = "LGBT";
-		tmpGenres[10] = "Love/Romance";
+		tmpGenres[10] = "Love and Romance";
 		tmpGenres[11] = "Party Mix";
 		tmpGenres[12] = "Patriotic";
 		tmpGenres[13] = "Rainy Day Mix";
@@ -411,11 +417,6 @@ public class Shoutcast2 {
 
 		genres[23] = tmpGenres;
 		return genres;
-		
-		
-		
-		 
-		
-		
+
 	}
 }

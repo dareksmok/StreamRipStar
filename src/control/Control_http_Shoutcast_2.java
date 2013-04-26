@@ -336,8 +336,8 @@ public class Control_http_Shoutcast_2 {
 			// Construct the POST request
 		    String data = URLEncoder.encode("ajax", "UTF-8") + "=" + URLEncoder.encode("true", "UTF-8");
 		    data += "&" + URLEncoder.encode("count", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(maxResults), "UTF-8");
-		    data += "&" + URLEncoder.encode("criteria", "UTF-8") + "=" + URLEncoder.encode("listenershead", "UTF-8");
-		    data += "&" + URLEncoder.encode("order", "UTF-8") + "=" + URLEncoder.encode("desc", "UTF-8");
+//		    data += "&" + URLEncoder.encode("criteria", "UTF-8") + "=" + URLEncoder.encode("listenershead", "UTF-8");
+//		    data += "&" + URLEncoder.encode("order", "UTF-8") + "=" + URLEncoder.encode("desc", "UTF-8");
 		    data += "&" + URLEncoder.encode("strIndex", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(startInt), "UTF-8");
 
 		    // Send the POST request

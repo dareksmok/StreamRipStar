@@ -314,4 +314,6 @@
   - fix: don't close the complete program when closing the option window via the window buttons (thx Andreas)
   - fix: don't show the text under icons, when not selected in the settings (thx Andreas)
   - fix: can't change between the kind of schdules in the scheduler (thx Andreas)
+  - fix: Update genres in the shoutcast streambrowser
+  - fix: Searching keywords in the shoutcast streambrowser
   
