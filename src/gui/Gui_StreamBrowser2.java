@@ -10,9 +10,13 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
@@ -65,7 +69,7 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 	
 	private ResourceBundle toolTips = ResourceBundle.getBundle("translations.ToolTips");
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
-	
+	private Boolean isOpen = false;  // is the search dialog opened?!
 	private Control_http_Shoutcast_2 controlHttp = new Control_http_Shoutcast_2();
 	private Object[] browseHeader = {"ID","Name", "Playing Now", "Genres",
 			"Listeners","Bitrate","Type","Website"};
@@ -359,6 +363,8 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 		lastPageButton.addActionListener(new LastPageListener());
 		
 		addWindowListener(this);
+		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(new SearchKeyDispatcher());
 		
 		//no extra space for the genretable
 		splitView.setResizeWeight(0.0d);
@@ -1234,6 +1240,28 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 	}
 	
 	/**
+	 * Is called when we pressed STRG+S do activate the search button
+	 */
+	public class SearchKeyListener extends KeyAdapter {
+		public void keyPressesd(KeyEvent e) {
+			 if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()){
+				 showSearchInputField();
+			 }
+		}
+	}
+	
+	private class SearchKeyDispatcher implements KeyEventDispatcher {
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+        	if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown() && !isOpen){
+				 showSearchInputField();
+				 return true;
+			}
+        	return false;
+        }
+    }
+	
+	/**
 	 * This Listener looks for a click an the JTree
 	 * and execute the command to fill the table
 	 * streams
@@ -1245,22 +1273,10 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 			//get selected path and look for last element
 			if(e.getClickCount() == 2 && !disableClick) {
 				if(browseTree.getSelectionPath() != null) {
-					selectedGenre = browseTree.getSelectionPath()
-						.getLastPathComponent().toString();
+					selectedGenre = browseTree.getSelectionPath().getLastPathComponent().toString();
 
 					if(selectedGenre.equals(trans.getObject("GetGenres.search"))) {
-						selectedGenre =	JOptionPane.showInputDialog(getMe(),
-								trans.getString("Message.search"),
-								trans.getString("Message.searchHeader"),
-                                JOptionPane.PLAIN_MESSAGE);
-						if(selectedGenre == null) {
-							stop = true;
-						} else {
-							isKeyword = true;
-							getStreams = new Thread_GetStreams_FromShoutcast(getMe(),selectedGenre.replace(" ", "%20"),trans,isKeyword,false,false);
-				    		getStreams.start();
-						}
-
+						showSearchInputField();
 					} else {
 				    	//fill table with streams
 				    	if(!stop) {
@@ -1272,6 +1288,20 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 				}
 			}
 		}
+	}
+
+	public void showSearchInputField() {
+		isOpen = true;
+		selectedGenre =	JOptionPane.showInputDialog(getMe(),
+				trans.getString("Message.search"),
+				trans.getString("Message.searchHeader"),
+                JOptionPane.PLAIN_MESSAGE);
+		isOpen = false;
+		if(selectedGenre != null) {
+			isKeyword = true;
+			getStreams = new Thread_GetStreams_FromShoutcast(getMe(),selectedGenre.replace(" ", "%20"),trans,isKeyword,false,false);
+    		getStreams.start();
+		} 
 	}
 	
 	public void windowActivated(WindowEvent e) {}
