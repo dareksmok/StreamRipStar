@@ -336,12 +336,13 @@ public class Control_http_Shoutcast_2 {
 			// Construct the POST request
 		    String data = URLEncoder.encode("ajax", "UTF-8") + "=" + URLEncoder.encode("true", "UTF-8");
 		    data += "&" + URLEncoder.encode("count", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(maxResults), "UTF-8");
-//		    data += "&" + URLEncoder.encode("criteria", "UTF-8") + "=" + URLEncoder.encode("listenershead", "UTF-8");
-//		    data += "&" + URLEncoder.encode("order", "UTF-8") + "=" + URLEncoder.encode("desc", "UTF-8");
+		    data += "&" + URLEncoder.encode("criteria", "UTF-8") + "=" + URLEncoder.encode("listenershead", "UTF-8");
+		    data += "&" + URLEncoder.encode("order", "UTF-8") + "=" + URLEncoder.encode("desc", "UTF-8");
 		    data += "&" + URLEncoder.encode("strIndex", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(startInt), "UTF-8");
 
 		    // Send the POST request
 		    URL url = new URL("http://www.shoutcast.com/search-ajax/"+keyword);
+
 		    URLConnection conn = url.openConnection();
 		    conn.setDoOutput(true);
 		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
@@ -384,12 +385,16 @@ public class Control_http_Shoutcast_2 {
 
 						//look for the Genres the stream belongs to
 						text = readNextHtmlLine();
-						if(text.trim().length() > 6) {
-							streamInfo[6] = text.trim().substring(6);
-						} else {
-							streamInfo[6] = "";
-						}
 						
+						streamInfo[6] = "";
+						if(text.trim().length() > 6) {
+							String[] tmp = text.trim().substring(6).split(",");
+
+							for(int i=0; i<tmp.length; i++) {
+								streamInfo[6] += tmp[i].trim()+", ";
+							}
+						}
+
 						//The link to the website
 						bw.readLine();
 						text = bw.readLine();
