@@ -59,7 +59,7 @@ import javax.xml.stream.events.XMLEvent;
 import misc.Stream;
 import thread.Thread_GetStreams_FromShoutcast;
 import control.Control_GetPath;
-import control.Control_http_Shoutcast_2;
+import control.Control_http_Shoutcast_3;
 import control.SRSOutput;
 import control.Shoutcast2;
 
@@ -70,7 +70,7 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 	private ResourceBundle toolTips = ResourceBundle.getBundle("translations.ToolTips");
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
 	private Boolean isOpen = false;  // is the search dialog opened?!
-	private Control_http_Shoutcast_2 controlHttp = new Control_http_Shoutcast_2();
+	private Control_http_Shoutcast_3 controlHttp = new Control_http_Shoutcast_3();
 	private Object[] browseHeader = {"ID","Name", "Playing Now", "Genres",
 			"Listeners","Bitrate","Type","Website"};
 	
@@ -135,7 +135,8 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 	private JButton nextPageButton = new JButton("Next Page", nextPageIcon );
 	private JButton lastPageButton = new JButton("Previous Page", previousIcon );
 	
-	private JLabel pagesLabel = new JLabel("Page 0 of 0");
+	private JLabel pagesLabel = new JLabel("Page 0");
+	private boolean lastSearchWasASearch = false;
 	
 	//label for status
 	private JLabel stautsLabel = new JLabel("");
@@ -191,7 +192,6 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 	
 	//the genre we loaded at last
 	private String selectedGenre = "";
-	private boolean isKeyword = false;
 	
 	public Gui_StreamBrowser2(Gui_StreamRipStar StreamRipStar) {
 		super("StreamBrowser");
@@ -472,7 +472,7 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 		return browseTree;
 	}
 	
-	public Control_http_Shoutcast_2  getControlHttp() {
+	public Control_http_Shoutcast_3  getControlHttp() {
 		return controlHttp;
 	}
 	
@@ -651,7 +651,8 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 			
 			if(streams != null) {
 				//save main address from site (e.g www.shoutcast.com)
-				String url  = controlHttp.getBaseAddress()+streams.get(nr)[5];
+//				String url  = controlHttp.getBaseAddress()+streams.get(nr)[5];
+				String url  = streams.get(nr)[5];
 				
 				//get address from .pls file
 				address[0] = controlHttp.getfirstStreamFromURL(url);
@@ -1179,8 +1180,7 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 	 */
 	public void updatePageBar() {
 		//update the amount of pages
-		pagesLabel.setText(trans.getString("iconPanel.page")+ " " +controlHttp.getCurrentPage()+ " " 
-				+trans.getString("iconPanel.of")+ " " + controlHttp.getTotalPages());
+		pagesLabel.setText(trans.getString("iconPanel.page")+ " " +controlHttp.getCurrentPage());
 		
 		//activate the correct one
 		if(controlHttp.getCurrentPage() <= 1) {
@@ -1207,8 +1207,13 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 				SRSOutput.getInstance().log("Can load the previous page, because the current page is the first one");
 				setStatusText("Can load the previous page, because the current page is the first one",false);
 			} else {
-				getStreams = new Thread_GetStreams_FromShoutcast(getMe(),selectedGenre.replace(" ", "%20"),trans,isKeyword,false,true);
-	    		getStreams.start();
+				if(lastSearchWasASearch) {
+					getStreams = new Thread_GetStreams_FromShoutcast(getMe(),"",selectedGenre,trans,false,true);
+	    			getStreams.start();
+				} else {
+    				getStreams = new Thread_GetStreams_FromShoutcast(getMe(),selectedGenre,"", trans,false,true);
+	    			getStreams.start();
+    			}
 			}
 		}
 	}
@@ -1226,8 +1231,13 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 				SRSOutput.getInstance().log("Can load the next page, because the current page is the last one");
 				setStatusText("Can load the next page, because the current page is the last one",false);
 			} else {
-				getStreams = new Thread_GetStreams_FromShoutcast(getMe(),selectedGenre.replace(" ", "%20"),trans,isKeyword,true,false);
-	    		getStreams.start();
+				if(lastSearchWasASearch) {
+					getStreams = new Thread_GetStreams_FromShoutcast(getMe(),"",selectedGenre,trans,true,false);
+	    			getStreams.start();
+				} else {
+    				getStreams = new Thread_GetStreams_FromShoutcast(getMe(),selectedGenre,"", trans,true,false);
+	    			getStreams.start();
+    			}
 			}
 		}
 	}
@@ -1280,9 +1290,9 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 					} else {
 				    	//fill table with streams
 				    	if(!stop) {
-				    		isKeyword = false;
-				    		getStreams = new Thread_GetStreams_FromShoutcast(getMe(),selectedGenre.replace(" ", "%20"),trans, isKeyword,false,false);
+				    		getStreams = new Thread_GetStreams_FromShoutcast(getMe(),selectedGenre,"",trans,false,false);
 				    		getStreams.start();
+				    		lastSearchWasASearch = false;
 				    	}
 					}
 				}
@@ -1298,8 +1308,8 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
                 JOptionPane.PLAIN_MESSAGE);
 		isOpen = false;
 		if(selectedGenre != null) {
-			isKeyword = true;
-			getStreams = new Thread_GetStreams_FromShoutcast(getMe(),selectedGenre.replace(" ", "%20"),trans,isKeyword,false,false);
+			getStreams = new Thread_GetStreams_FromShoutcast(getMe(),"",selectedGenre,trans,false,false);
+			lastSearchWasASearch = true;
     		getStreams.start();
 		} 
 	}

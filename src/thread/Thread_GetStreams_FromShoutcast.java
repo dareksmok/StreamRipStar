@@ -16,23 +16,23 @@ import java.util.Vector;
 public class Thread_GetStreams_FromShoutcast extends Thread
 {
 	private boolean killMe = false;	//if true; ignore all other
-	private boolean isKeyword = false;
 	private boolean nextPage = false;
 	private boolean lastPage = false;
 	private Gui_StreamBrowser2 streamBrowser = null;
+	private String keyWord = "";
 	private String genre = "";
 	private Vector<String[]> streamsPG = null;
 	private Vector<String[]> streamTmp = null;
 	private ResourceBundle trans = null;
 	
 	public Thread_GetStreams_FromShoutcast(Gui_StreamBrowser2 streamBrowser,
-			String genre,ResourceBundle trans, boolean isKeyword, boolean nextPage, boolean lastPage) {
+			String genre, String keyWord, ResourceBundle trans, boolean nextPage, boolean lastPage) {
 		this.streamBrowser = streamBrowser;
 		this.genre = genre;
 		this.trans = trans;
 		this.nextPage = nextPage;
 		this.lastPage = lastPage;
-		this.isKeyword = isKeyword;
+		this.keyWord = keyWord;
 	}
 	
 	public void killMe() {
@@ -67,7 +67,7 @@ public class Thread_GetStreams_FromShoutcast extends Thread
 		
 		//receive streams from site in Vector...
 		if(!killMe) {
-			streamBrowser.getControlHttp().getStreamsPerGenre(genre, isKeyword);
+			streamBrowser.getControlHttp().getStreamsPerGenre(genre, keyWord);
 		}
 		
 		//...and get this vector
