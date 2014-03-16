@@ -195,7 +195,7 @@ public class Gui_TablePanel extends JPanel
 		try  {
 			columnLabel1.setText(trans.getString("streamname"));
 			columnLabel2.setText(trans.getString("curTitle"));
-			//TODO letzte Spalte noch übersetzen
+			columnLabel3.setText(trans.getString("Gui_TablePanel.ColumnGenre"));
 		} catch ( MissingResourceException e ) { 
 			SRSOutput.getInstance().logE( e.getMessage()); 
 		}

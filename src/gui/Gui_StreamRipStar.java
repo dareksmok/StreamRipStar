@@ -597,6 +597,8 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			streamMenu.setText(trans.getString("stream"));
 			programmMenu.setText(trans.getString("program"));
 			helpMenu.setText(trans.getString("helpMenu"));
+			viewMenu.setText(trans.getString("mainWin.MenuBar.ViewMenu"));
+			
 			//Menubar programs
 			streamRipStarPref.setText(trans.getString("pref"));
 			importStream.setText(trans.getString("importStream"));
@@ -617,6 +619,8 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			streamOptions.setText(trans.getString("options"));
 			stream4AllOptions.setText(trans.getString("4AllOptions"));
 			streamDefaultOptions.setText(trans.getString("DefaultOptions"));
+			//Menubar view
+			showGenreColumnAction.setText(trans.getString("mainWin.MenuBar.ShowColumn4"));
 			
 			//Menubar help
 			onlineHelp.setText(trans.getString("onlineHelp"));
