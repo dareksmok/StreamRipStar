@@ -1121,6 +1121,9 @@ public class Gui_StreamOptions extends JFrame implements WindowListener {
 			timeoutReconnectField.setEditable(false);
 	}
 	
+	/**
+	 * Saves all visible information into the stream object
+	 */
 	public void save() {
 		//the name and the url must entered at least
 		if((streamNameTF.getText().trim().equals("") 
@@ -1226,9 +1229,8 @@ public class Gui_StreamOptions extends JFrame implements WindowListener {
 					mainGui.getControlStream().saveStreamVector();
 				} else {
 					//update the table panel
-					mainGui.getTabel().setNameValueWithConvert(streamNameTF.getText(), 
-							mainGui.getControlStream().getPlaceInStreamVector(stream.id));
-	
+					mainGui.getTabel().setNameValueWithConvert(streamNameTF.getText(), mainGui.getControlStream().getPlaceInStreamVector(stream.id));
+					mainGui.getTabel().setGenreValueWithConvert(streamGenreTF.getText(), mainGui.getControlStream().getPlaceInStreamVector(stream.id));
 				}
 			}
 		}

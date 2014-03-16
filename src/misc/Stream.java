@@ -178,9 +178,13 @@ public class Stream
 	 * to the table in the mainwindow.
 	 * @return object includes the shown information
 	 * 			 in table + the stream id
+	 * x[0] = recording?
+	 * x[1] = Shown stream name
+	 * x[2] = Current title
+	 * x[4] = Genre  
 	 */
 	public Object[] getBase() {	
-		Object[] x = {null,name,"",id};
+		Object[] x = {null,name,"",genre};
 		return x;
 	}
 	

@@ -739,7 +739,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 				    	break; 
 				 
 				    case XMLStreamConstants.START_ELEMENT: 
-				    	int[] widths = new int[3];
+				    	int[] widths = new int[4];
 				    	int hight = 0;
 				    	int width = 0;
 				    	for ( int i = 0; i < parser.getAttributeCount(); i++ ) {
@@ -753,6 +753,8 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 				    			widths[1] = Integer.valueOf(parser.getAttributeValue(i));
 				    		} else if (parser.getAttributeLocalName( i ).equals("tableCol3")) {
 				    			widths[2] = Integer.valueOf(parser.getAttributeValue(i));
+				    		} else if (parser.getAttributeLocalName( i ).equals("tableCol4")) {
+				    			widths[3] = Integer.valueOf(parser.getAttributeValue(i));
 				    		} else if (parser.getAttributeLocalName( i ).equals("daylightChange")) {
 				    			daylightChangeTimeCalculated = Boolean.valueOf(parser.getAttributeValue(i));
 				    		}
@@ -914,6 +916,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			XMLEvent tableCol1 = eventFactory.createAttribute( "tableCol1",  String.valueOf( table.getColumnWidths()[0])); 
 			XMLEvent tableCol2 = eventFactory.createAttribute( "tableCol2",  String.valueOf( table.getColumnWidths()[1])); 
 			XMLEvent tableCol3 = eventFactory.createAttribute( "tableCol3",  String.valueOf( table.getColumnWidths()[2]));
+			XMLEvent tableCol4 = eventFactory.createAttribute( "tableCol4",  String.valueOf( table.getColumnWidths()[3]));
 			XMLEvent daylightChange = eventFactory.createAttribute( "daylightChange",  String.valueOf( true));
 			
 			XMLEvent endRoot = eventFactory.createEndElement( "", "", "Prefs" ); 
@@ -927,7 +930,8 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			writer.add( winSizeHeight ); 
 			writer.add( tableCol1 ); 
 			writer.add( tableCol2 ); 
-			writer.add( tableCol3 ); 
+			writer.add( tableCol3 );
+			writer.add( tableCol4 ); 
 			writer.add( daylightChange );
 			
 			writer.add( endRoot ); 

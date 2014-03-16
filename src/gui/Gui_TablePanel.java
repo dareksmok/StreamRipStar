@@ -54,7 +54,7 @@ public class Gui_TablePanel extends JPanel
 	
 	
 
-	private Object[] tableheader ={"Rec","Stream","Aktual Title"};
+	private Object[] tableheader ={"Rec","Stream","Current Title","Genre"};
 	private String[][] Daten = {};
 	private DefaultTableModel model = new DefaultTableModel(Daten,tableheader)
 		{private static final long serialVersionUID = 1L;
@@ -70,11 +70,14 @@ public class Gui_TablePanel extends JPanel
 	private JLabel columnLabel0 = new JLabel(recordSmallIcon,JLabel.CENTER);
 	private JLabel columnLabel1 = new JLabel(tableheader[1].toString(),JLabel.CENTER);
 	private JLabel columnLabel2 = new JLabel(tableheader[2].toString(),JLabel.CENTER);
+	private JLabel columnLabel3 = new JLabel(tableheader[3].toString(),JLabel.CENTER);
+
 	private TableCellRenderer renderer = new JComponentTableCellRenderer();
 	private TableColumnModel columnModel = table.getColumnModel();
 	private TableColumn column0 = columnModel.getColumn(0);
 	private TableColumn column1 = columnModel.getColumn(1);
 	private TableColumn column2 = columnModel.getColumn(2);
+	private TableColumn column3 = columnModel.getColumn(3);
 	
 	private Gui_StreamRipStar mainGui = null;
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
@@ -98,6 +101,7 @@ public class Gui_TablePanel extends JPanel
         columnLabel0.setBorder(UIManager.getBorder("TableHeader.cellBorder"));
         columnLabel1.setBorder(UIManager.getBorder("TableHeader.cellBorder"));
         columnLabel2.setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+        columnLabel3.setBorder(UIManager.getBorder("TableHeader.cellBorder"));
         
         column0.setHeaderRenderer(renderer);
         column0.setHeaderValue(columnLabel0);
@@ -105,6 +109,8 @@ public class Gui_TablePanel extends JPanel
         column1.setHeaderValue(columnLabel1);
         column2.setHeaderRenderer(renderer);
         column2.setHeaderValue(columnLabel2);
+        column3.setHeaderRenderer(renderer);
+        column3.setHeaderValue(columnLabel3);
         
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		table.changeSelection(0,0,true,false );
@@ -196,10 +202,11 @@ public class Gui_TablePanel extends JPanel
 
 	//gets the width of the "name" and "title" column
 	public int[] getColumnWidths(){
-		int[] widths = new int[3];
+		int[] widths = new int[4];
 		widths[0] = column0.getWidth();
 		widths[1] = column1.getWidth();
 		widths[2] = column2.getWidth();
+		widths[3] = column3.getWidth();
 		
 		return widths;
 	}
@@ -207,9 +214,15 @@ public class Gui_TablePanel extends JPanel
 	//set the width of "name" and "title" column
 	public void setColumWidths(int[] widths)
 	{
-		column0.setPreferredWidth(widths[0]);
-		column1.setPreferredWidth(widths[1]);
-		column2.setPreferredWidth(widths[2]);
+		if(widths.length >= 4) {
+			column0.setPreferredWidth(widths[0]);
+			column1.setPreferredWidth(widths[1]);
+			column2.setPreferredWidth(widths[2]);
+			column3.setPreferredWidth(widths[3]);
+
+		} else {
+			SRSOutput.getInstance().logE("Gui_TablePanel: SetColumWidths. The length of the given array is wrong: "+widths.length); 
+		}
 	}
 	
 	/**
@@ -411,6 +424,10 @@ public class Gui_TablePanel extends JPanel
 	
 	public void setNameValueWithConvert(String newName,int row){
 		table.setValueAt(newName, table.convertRowIndexToView(row), 1);
+	}
+	
+	public void setGenreValueWithConvert(String newGenre,int row){
+		table.setValueAt(newGenre, table.convertRowIndexToView(row), 3);
 	}
 	
 	public int getSelectedRow(){
