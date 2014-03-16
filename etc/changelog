@@ -317,3 +317,11 @@
   - fix: Update genres in the shoutcast streambrowser
   - fix: Searching keywords in the shoutcast streambrowser
   
+     ----------------------------
+    
+  0.6.5 -> 0.6.6
+  - add: Column in the main window to show the genre (can be hidden)
+  - add: CTRL+S in the stream browser open now the search field
+  - update: the gstreamer-java libs has been updated to 1.6
+  - fix: Shotcast does not find streams anymore
+  

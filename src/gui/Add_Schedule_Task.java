@@ -56,7 +56,7 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 	private JCheckBox weeklyCB = new JCheckBox("weekly");
 	private JCheckBox atStartCB = new JCheckBox("at Start");
 	
-	private JComboBox nameBox;
+	private JComboBox<String> nameBox;
 	private String[] streamNames;
 	private String[] streamNames_short;
 	private final int MAX_STREAM_NAME_LENGTH = 40;
@@ -144,7 +144,7 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 			}
 			
 			//finally create nameBox
-			nameBox = new JComboBox(streamNames_short);
+			nameBox = new JComboBox<String>(streamNames_short);
 			
 			
 		} else {
@@ -209,7 +209,7 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 			}
 			
 			//finally create nameBox
-			nameBox = new JComboBox(streamNames_short);
+			nameBox = new JComboBox<String>(streamNames_short);
 			
 			//look for the right streamID and select the appropriate name
 			for(int i=0; i < streams.capacity(); i++) {
@@ -486,21 +486,15 @@ public class Add_Schedule_Task extends JDialog implements WindowListener{
 	{
 		private static final long serialVersionUID = 8399268144344845430L;
 
-		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
-		{
-			if (isSelected)
-			{
+		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+			if (isSelected) {
 				setBackground(list.getSelectionBackground());
 				setForeground(list.getSelectionForeground());
 				
-				if (-1 < index)
-				{
+				if (-1 < index) {
 					list.setToolTipText(streamNames[index]);
 				}
-			}
-			
-			else
-			{
+			} else {
 				setBackground(list.getBackground());
 				setForeground(list.getForeground());
 			}
