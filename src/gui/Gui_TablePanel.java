@@ -195,11 +195,24 @@ public class Gui_TablePanel extends JPanel
 		try  {
 			columnLabel1.setText(trans.getString("streamname"));
 			columnLabel2.setText(trans.getString("curTitle"));
+			//TODO letzte Spalte noch übersetzen
 		} catch ( MissingResourceException e ) { 
 			SRSOutput.getInstance().logE( e.getMessage()); 
 		}
 	}
 
+	/**
+	 * Hides or show the column "genre" in the main window
+	 * @param setVisible true if the column should be visible
+	 */
+	public void setGenreColumnVisible(Boolean setVisible) {
+		if(setVisible) {
+			table.removeColumn(column3);
+		} else {
+			table.addColumn(column3);
+		}
+	}
+	
 	//gets the width of the "name" and "title" column
 	public int[] getColumnWidths(){
 		int[] widths = new int[4];
@@ -427,7 +440,9 @@ public class Gui_TablePanel extends JPanel
 	}
 	
 	public void setGenreValueWithConvert(String newGenre,int row){
-		table.setValueAt(newGenre, table.convertRowIndexToView(row), 3);
+		if(table.getColumnCount() >= 4) {
+			table.setValueAt(newGenre, table.convertRowIndexToView(row), 3);
+		}
 	}
 	
 	public int getSelectedRow(){
@@ -626,8 +641,8 @@ public class Gui_TablePanel extends JPanel
 			action = mainGui.getAction(1);
 		}
 		
-		//column: current track
-		if(selCol==2) {
+		//column: current track or genre
+		if(selCol==2 || selCol==3) {
 			action = mainGui.getAction(2);
 		}
 		

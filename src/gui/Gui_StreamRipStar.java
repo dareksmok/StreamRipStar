@@ -30,6 +30,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -66,8 +67,6 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 {
 	private static final long serialVersionUID = 1L;
 
-	
-	
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
 	private Control_Stream controlStreams = null;
 	private Gui_TablePanel table = null; 	//Table that shows all streams
@@ -137,6 +136,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	private JMenuBar menu = new JMenuBar();
 	private JMenu streamMenu = new JMenu("Stream");
 	private JMenu programmMenu = new JMenu("Program");
+	private JMenu viewMenu = new JMenu("View");
 	private JMenu helpMenu = new JMenu("Help");
 
 	private JMenuItem startRecordStream = new JMenuItem("Start Recording",recordMenu);
@@ -158,6 +158,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 	private JMenuItem streamDefaultOptions = new JMenuItem("Edit The Default Options For A New Stream");
 	private JMenuItem playNextStream = new JMenuItem("Play Next Stream");
 	private JMenuItem playLastStream = new JMenuItem("Play Last Stream");
+	private JCheckBoxMenuItem showGenreColumnAction = new JCheckBoxMenuItem("Show genre column",true);
 	private JMenuItem onlineHelp = new JMenuItem("Online Help");
 	private JMenuItem updateMenuItem = new JMenuItem("Look for an Update");
 	private JMenuItem about = new JMenuItem("About StreamRipStar",aboutStreamRipStarMenu);
@@ -421,6 +422,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 		
 		menu.add(programmMenu);
 		menu.add(streamMenu);	
+		menu.add(viewMenu);
 		menu.add(helpMenu);
 		
 		streamMenu.add(startRecordStream);
@@ -450,6 +452,8 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 		programmMenu.add(openMusicFolder);
 		programmMenu.addSeparator();
 		programmMenu.add(exit);
+		
+		viewMenu.add(showGenreColumnAction);
 		
 		helpMenu.add(onlineHelp);
 		helpMenu.add(streamRipStarSite);
@@ -511,6 +515,8 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 		stopRecPopupIcon.addActionListener(new StopRecordListener());
 		tuneStreamPopupIcon.addActionListener(new PlayMusikListener());
 		optionPopupIcon.addActionListener(new EditStreamListener());
+		
+		showGenreColumnAction.addActionListener(new ShowGenreColumnListener());
 		
 		//build pop up menu
 		table.setTTablePopup(tablePopup);
@@ -755,11 +761,17 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 				    			widths[2] = Integer.valueOf(parser.getAttributeValue(i));
 				    		} else if (parser.getAttributeLocalName( i ).equals("tableCol4")) {
 				    			widths[3] = Integer.valueOf(parser.getAttributeValue(i));
+				    		} else if (parser.getAttributeLocalName( i ).equals("tableCol4Vsisible")) {
+				    			//default selection of the "genre visisble" menu item is true
+				    			//if we load something other them true, we just change it with clicking once on it
+				    			Boolean tmp = Boolean.valueOf(parser.getAttributeValue(i));
+				    			if(!tmp) {
+				    				showGenreColumnAction.doClick();
+				    			}
 				    		} else if (parser.getAttributeLocalName( i ).equals("daylightChange")) {
 				    			daylightChangeTimeCalculated = Boolean.valueOf(parser.getAttributeValue(i));
 				    		}
-				    		
-				    		
+
 				    	}
 				    	table.setColumWidths(widths);
 				    	setSize(new Dimension(width,hight));
@@ -917,6 +929,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			XMLEvent tableCol2 = eventFactory.createAttribute( "tableCol2",  String.valueOf( table.getColumnWidths()[1])); 
 			XMLEvent tableCol3 = eventFactory.createAttribute( "tableCol3",  String.valueOf( table.getColumnWidths()[2]));
 			XMLEvent tableCol4 = eventFactory.createAttribute( "tableCol4",  String.valueOf( table.getColumnWidths()[3]));
+			XMLEvent tableCol4Visible = eventFactory.createAttribute( "tableCol4Vsisible",  String.valueOf( showGenreColumnAction.isSelected()));
 			XMLEvent daylightChange = eventFactory.createAttribute( "daylightChange",  String.valueOf( true));
 			
 			XMLEvent endRoot = eventFactory.createEndElement( "", "", "Prefs" ); 
@@ -931,7 +944,8 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			writer.add( tableCol1 ); 
 			writer.add( tableCol2 ); 
 			writer.add( tableCol3 );
-			writer.add( tableCol4 ); 
+			writer.add( tableCol4 );
+			writer.add( tableCol4Visible ); 
 			writer.add( daylightChange );
 			
 			writer.add( endRoot ); 
@@ -1355,7 +1369,21 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 		}
 	}
 	
+	/**
+	 * Is called, when you like to hear music 
+	 * @author Johannes Putzke	
+	 */
+	public class  ShowGenreColumnListener implements ActionListener  {
+		public void actionPerformed(ActionEvent e) {
+			if(showGenreColumnAction.isSelected()) {
+				Gui_StreamRipStar.this.table.setGenreColumnVisible(false);
+			} else {
+				Gui_StreamRipStar.this.table.setGenreColumnVisible(true);
+			}
+		}
+	}
 	
+
 	/**
 	 * Show an field where you can find the runtime options 
 	 * for the first selected stream.
