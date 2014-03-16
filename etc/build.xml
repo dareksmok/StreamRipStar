@@ -36,7 +36,7 @@
         <copy todir="${build.classes}" >
             <fileset dir="${src}" includes="**/*.properties" />
 	    <fileset dir="${src}" includes="**/*.png" />
-	     <zipfileset excludes="META-INF/*.SF" src="lib/gstreamer-java-1.4.jar"/>
+	     <zipfileset excludes="META-INF/*.SF" src="lib/gstreamer-java-1.6.jar"/>
 	      <zipfileset excludes="META-INF/*.SF" src="lib/jna-3.2.4.jar"/>
         </copy>
     </target>
