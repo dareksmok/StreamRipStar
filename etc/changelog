@@ -324,4 +324,10 @@
   - add: CTRL+S in the stream browser open now the search field
   - update: the gstreamer-java libs has been updated to 1.6
   - fix: Shotcast does not find streams anymore
+ 
+      ----------------------------
+    
+  0.6.6 -> 0.6.7
+  - fix: Shotcast does not find streams anymore
+  - fix: find an update but can not find the correct download path 
   
