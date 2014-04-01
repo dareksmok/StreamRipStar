@@ -241,10 +241,11 @@ public class Control_http_Shoutcast_3 {
 					else if(text.contains("<tr>")) {
 						
 						//the link to the stream
+						bw.readLine();
 						text = bw.readLine();
 				
 						//now find the ID for the stream
-						streamInfo[5] = text.substring(text.indexOf("href=\"")+6, text.indexOf("\" target=\""));
+						streamInfo[5] = text.substring(text.indexOf("\" href=\"")+6, text.indexOf("\">"));
 
 						//the name
 						streamInfo[0] = readNextHtmlLine().trim();
@@ -372,10 +373,11 @@ public class Control_http_Shoutcast_3 {
 					else if(text.contains("<tr>")) {
 						
 						//the link to the stream
+						bw.readLine();
 						text = bw.readLine();
 				
 						//now find the ID for the stream
-						streamInfo[5] = text.substring(text.indexOf("href=\"")+6, text.indexOf("\" target=\""));
+						streamInfo[5] = text.substring(text.indexOf("\" href=\"")+6, text.indexOf("\">"));
 
 						//the name
 						streamInfo[0] = readNextHtmlLine().trim();
