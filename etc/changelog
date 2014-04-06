@@ -329,5 +329,11 @@
     
   0.6.6 -> 0.6.7
   - fix: Shoutcast does not find streams anymore
-  - fix: find an update but can not find the correct download path 
+  - fix: find an update but can not find the correct download path
+  
+      ----------------------------
+    
+  0.6.7 -> 0.6.8
+  - fix: sommer/winter time change changes all schedules for 1 hour
+  - fix: can't save and hear streams in the stream browser
   
