@@ -28,7 +28,6 @@ import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
@@ -772,7 +771,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 				    			if(!tmp) {
 				    				showGenreColumnAction.doClick();
 				    			}
-				    		} else if (parser.getAttributeLocalName( i ).equals("daylightChange")) {
+				    		} else if (parser.getAttributeLocalName( i ).equals("DST_CORRECTION_ON")) {
 				    			daylightChangeTimeCalculated = Boolean.valueOf(parser.getAttributeValue(i));
 				    		}
 
@@ -934,7 +933,7 @@ public class Gui_StreamRipStar extends JFrame implements WindowListener
 			XMLEvent tableCol3 = eventFactory.createAttribute( "tableCol3",  String.valueOf( table.getColumnWidths()[2]));
 			XMLEvent tableCol4 = eventFactory.createAttribute( "tableCol4",  String.valueOf( table.getColumnWidths()[3]));
 			XMLEvent tableCol4Visible = eventFactory.createAttribute( "tableCol4Vsisible",  String.valueOf( showGenreColumnAction.isSelected()));
-			XMLEvent daylightChange = eventFactory.createAttribute( "daylightChange",  String.valueOf( true));
+			XMLEvent daylightChange = eventFactory.createAttribute( "DST_CORRECTION_ON",  String.valueOf( daylightChangeTimeCalculated ));
 			
 			XMLEvent endRoot = eventFactory.createEndElement( "", "", "Prefs" ); 
 			XMLEvent endDocument = eventFactory.createEndDocument();

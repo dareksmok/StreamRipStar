@@ -40,7 +40,6 @@ public class Thread_Control_Schedules extends Thread{
 	private Boolean updateView = false;
 	private Control_Threads controlThread = null;
 	private ResourceBundle trans = ResourceBundle.getBundle("translations.StreamRipStar");
-	private java.util.GregorianCalendar gc =new java.util.GregorianCalendar();
 	
 	public Thread_Control_Schedules(Gui_StreamRipStar mainGui, Control_Threads controlThread) {
 		this.mainGui = mainGui;
@@ -222,6 +221,7 @@ public class Thread_Control_Schedules extends Thread{
 	 * all jobs
 	 */
 	public void loadScheduleJobsOnStart() {
+		java.util.GregorianCalendar gc =new java.util.GregorianCalendar();
 		String loadPath =  new Control_GetPath().getStreamRipStarPath();
 		try {
 			XMLInputFactory factory = XMLInputFactory.newInstance(); 
@@ -484,6 +484,7 @@ public class Thread_Control_Schedules extends Thread{
 	 * saves all jobs in the vector 
 	 */
 	public void saveScheduleVector() {
+		java.util.GregorianCalendar gc =new java.util.GregorianCalendar();
 		String savePath =  new Control_GetPath().getStreamRipStarPath();
 		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance(); 
 
@@ -504,8 +505,20 @@ public class Thread_Control_Schedules extends Thread{
 				XMLEvent Job = eventFactory.createStartElement( "", "", "SchedulJob" );
 				XMLEvent streamID = eventFactory.createAttribute( "streamID",  String.valueOf( schedulVector.get(i).getStreamID())); 
 				XMLEvent schedulID = eventFactory.createAttribute( "schedulID",  String.valueOf( schedulVector.get(i).getSchedulID())); 
-				XMLEvent startTime = eventFactory.createAttribute( "startTime",  String.valueOf( schedulVector.get(i).getStartTime() - gc.get(Calendar.DST_OFFSET))); 
-				XMLEvent stopTime = eventFactory.createAttribute( "stopTime",  String.valueOf( schedulVector.get(i).getStopTime() - gc.get(Calendar.DST_OFFSET))); 
+
+				XMLEvent startTime;
+				XMLEvent stopTime;
+				if(mainGui.getDaylightChangeTimeCalculated()) {
+					startTime = eventFactory.createAttribute( "startTime",  String.valueOf( schedulVector.get(i).getStartTime() - gc.get(Calendar.DST_OFFSET))); 
+				} else {
+					startTime = eventFactory.createAttribute( "startTime",  String.valueOf( schedulVector.get(i).getStartTime()));
+				}
+				if(mainGui.getDaylightChangeTimeCalculated()) {
+					stopTime = eventFactory.createAttribute( "stopTime",  String.valueOf( schedulVector.get(i).getStopTime() - gc.get(Calendar.DST_OFFSET)));
+				} else {
+					stopTime = eventFactory.createAttribute( "stopTime",  String.valueOf( schedulVector.get(i).getStopTime())); 
+				}
+
 				XMLEvent howOftenID = eventFactory.createAttribute( "howOftenID",  String.valueOf( schedulVector.get(i).getJobCount())); 
 				XMLEvent enableJob = eventFactory.createAttribute( "enableJob",  String.valueOf( schedulVector.get(i).isJobenabled())); 
 				XMLEvent comment = eventFactory.createAttribute( "comment",  String.valueOf( schedulVector.get(i).getComment()));
