@@ -1097,10 +1097,9 @@ public class Gui_StreamBrowser2 extends JFrame implements WindowListener {
 				String[] content = getStreamInfo();
 				
 				//if url = "" it fails
-				if(content[0].equals("")) {
+				if(content == null || content[0].equals("")) {
 					SRSOutput.getInstance().logE("Error while fetching streamaddress\n");
-				}
-				else {
+				} else {
 					Gui_StreamOptions dialog = new Gui_StreamOptions(null,StreamRipStar,true,true,false);
 					dialog.setBasics(content);
 				}

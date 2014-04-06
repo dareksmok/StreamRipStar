@@ -239,16 +239,18 @@ public class Control_http_Shoutcast_3 {
 					
 					//here starts a stream
 					else if(text.contains("<tr>")) {
-						
-						//the link to the stream
-						bw.readLine();
-						text = bw.readLine();
-				
-						//now find the ID for the stream
-						streamInfo[5] = text.substring(text.indexOf("\" href=\"")+6, text.indexOf("\">"));
-
 						//the name
 						streamInfo[0] = readNextHtmlLine().trim();
+						
+						//now find the ID for the stream
+						String[] spt = text.split("\"");
+						
+						for(int j=0; j<spt.length; j++) {
+							if(spt[j].startsWith("http://yp.shoutcast.com/sbin/tunein-station.pls?")) {
+								streamInfo[5] = spt[j];
+								break;
+							}
+						}
 
 						//the genre
 						streamInfo[6] = readNextHtmlLine().trim();
