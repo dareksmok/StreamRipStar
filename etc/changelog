@@ -336,4 +336,8 @@
   0.6.7 -> 0.6.8
   - fix: sommer/winter time change changes all schedules for 1 hour
   - fix: can't save and hear streams in the stream browser
+        ----------------------------
+    
+  0.6.8 -> 0.6.9
+  - fix: can't save and hear streams in the stream browser
   

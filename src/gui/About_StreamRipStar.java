@@ -63,7 +63,7 @@ public class About_StreamRipStar extends JDialog
 	private SRSLabel streamripperHomepage = new SRSLabel("Streamrippers Homepage");
 	private SRSTextfield streamripperHomepageAddress = new SRSTextfield("https://github.com/Eule/StreamRipStar");
 	private SRSLabel externPrograms = new SRSLabel("Extern Programms");
-	private SRSTextArea externProgramsTA = new SRSTextArea("gstreamer-java (GPL)");
+	private SRSTextArea externProgramsTA = new SRSTextArea("gstreamer-java (GPL)\nsimple JSON (Apache 2.0)");
 	
 	private SRSLabel copyRight = new SRSLabel("Copyright @ Johannes Putzke");
 	
