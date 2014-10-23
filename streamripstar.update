@@ -1,6 +1,6 @@
 [Stable]
-revision=611
-name=StreamRipStar 0.6.7
+revision=613
+name=StreamRipStar 0.6.9
 download=https://github.com/Eule/StreamRipStar/releases/download/0.6.7/StreamRipStar0.6.7.jar
 
 [Beta]
